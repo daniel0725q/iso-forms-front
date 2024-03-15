@@ -70,54 +70,54 @@ const Login = (props: LoginProps) => {
   return (
     <div className='parentContainer'>
         <div className={'centered'}>
-        <div className={'mainContainer'}>
-            <div className={'titleContainer'}>
-                <h1>¡Bienvenido!</h1>
+            <div className={'mainContainer'}>
+                <div className={'titleContainer'}>
+                    <h1>¡Bienvenido!</h1>
+                </div>
+                <div className={'inputContainer'}>
+                    <input
+                    value={email}
+                    placeholder="Ingresa tu email"
+                    onChange={(ev) => setEmail(ev.target.value)}
+                    className={'inputBox'}
+                    />
+                    <br />
+                    {
+                        emailError ? (
+                            <div className='error'>
+                                <label className="errorLabel">{emailError}</label>
+                                <br />
+                            </div>
+                        ) : (
+                            ''
+                        )
+                    }
+                    
+                </div>
+                <div className={'inputContainer'}>
+                    <input
+                    value={password}
+                    placeholder="Ingresa tu contraseña"
+                    onChange={(ev) => setPassword(ev.target.value)}
+                    className={'inputBox'}
+                    type={'password'}
+                    />
+                    <br />
+                    {
+                        passwordError ? (
+                            <div className='error'>
+                                <label className="errorLabel">{passwordError}</label>
+                                <br />
+                            </div>
+                        ) : (
+                            ''
+                        )
+                    }
+                </div>
+                <div className={'inputContainer'}>
+                    <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Iniciar sesión'} />
+                </div>
             </div>
-            <div className={'inputContainer'}>
-                <input
-                value={email}
-                placeholder="Ingresa tu email"
-                onChange={(ev) => setEmail(ev.target.value)}
-                className={'inputBox'}
-                />
-                <br />
-                {
-                    emailError ? (
-                        <div className='error'>
-                            <label className="errorLabel">{emailError}</label>
-                            <br />
-                        </div>
-                    ) : (
-                        ''
-                    )
-                }
-                
-            </div>
-            <div className={'inputContainer'}>
-                <input
-                value={password}
-                placeholder="Ingresa tu contraseña"
-                onChange={(ev) => setPassword(ev.target.value)}
-                className={'inputBox'}
-                type={'password'}
-                />
-                <br />
-                {
-                    passwordError ? (
-                        <div className='error'>
-                            <label className="errorLabel">{passwordError}</label>
-                            <br />
-                        </div>
-                    ) : (
-                        ''
-                    )
-                }
-            </div>
-            <div className={'inputContainer'}>
-                <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Iniciar sesión'} />
-            </div>
-        </div>
         </div>
         <div className='secondaryContainer'></div>
     </div>
