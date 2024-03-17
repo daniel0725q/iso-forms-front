@@ -7,6 +7,7 @@ import AdminDashboard from './AdminDashboard/AdminDashboard'
 import PageLayout from './PageLayout'
 import RecoverPassword from './RecoverPassword/RecoverPassword'
 import ChangePassword from './ChangePassword/ChangePassword'
+import Companies from './Companies/Companies'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -18,6 +19,7 @@ function App() {
         <Routes>
         <Route path="/" element={<PageLayout />} >
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/companies" element={<Companies />} />
           <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
