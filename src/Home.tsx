@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import './Home.css'
-import Sidebar from './Sidebar/Sidebar';
 
 interface HomeProps { 
     loggedIn: boolean;
@@ -26,6 +25,7 @@ const Home = (props: HomeProps) => {
 
   return (
     <div>
+      <h1>GSIntegral</h1>
       <div className="mainContainer">
         <div className={'titleContainer'}>
           <div>Welcome!</div>

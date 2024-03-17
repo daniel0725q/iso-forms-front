@@ -1,7 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { faUser, faPenToSquare, faBuilding } from '@fortawesome/free-solid-svg-icons'
 import './Sidebar.css'
 
 const Sidebar = () => {
@@ -50,9 +48,9 @@ const Sidebar = () => {
         {
             !!localStorage.getItem('user') ?
         <div className="sidebar">
-            <Link className={isHomeActive ? "active" : ''} to="/" onClick={onHomeLinkClick}>Inicio</Link>
+            <Link className={isHomeActive ? "active" : ''} to="/home" onClick={onHomeLinkClick}>Inicio</Link>
             <Link className={isAboutActive ? "active" : ''} to="/companies" onClick={onCompaniesLinkClick}>Empresas</Link>
-            <Link className={isNewsActive ? "active" : ''} to="/admin" onClick={onUsersLinkClick}>Usuarios</Link>
+            <Link className={isNewsActive ? "active" : ''} to="/admin" onClick={onUsersLinkClick}>Administrador</Link>
             <Link className={isContactActive ? "active" : ''} to="/contact" onClick={onFormsLinkClick}>Formularios</Link>
             <Link className={'changePassword'} to="/change-password">Cambiar contraseña</Link>
             <Link className={'signout'} to="/login" onClick={onButtonClick}>Cerrar sesión</Link>

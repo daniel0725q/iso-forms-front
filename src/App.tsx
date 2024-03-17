@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './Home'
 import Login from './Login/Login'
 import './App.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import AdminDashboard from './AdminDashboard/AdminDashboard'
 import PageLayout from './PageLayout'
 import RecoverPassword from './RecoverPassword/RecoverPassword'
@@ -18,6 +18,7 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<PageLayout />} >
+          <Route path="/home" element={<Home loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/companies" element={<Companies />} />
           <Route path="/recover-password" element={<RecoverPassword />} />
