@@ -83,7 +83,8 @@ const Login = (props: LoginProps) => {
     })
       .then((r) => r.json())
       .then((r) => {
-        console.log(r);
+        alert("Se ha enviado un email con las instrucciones para el cambio de contraseña.")
+        setIsPasswordForgotten(false);
       })
   }
 
