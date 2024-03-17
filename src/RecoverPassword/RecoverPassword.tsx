@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 // import './Login.css'
 
-const ChangePassword = () => {
+const RecoverPassword = () => {
   const [password, setPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
-  const [newPasswordError, setNewPasswordError] = useState('')
   const [confirmPasswordError, setConfirmPasswordError] = useState('')
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,14 +21,9 @@ const ChangePassword = () => {
       setPasswordError('Por favor ingresa una contraseña')
       isError = true;
     }
-
-    if ('' === newPassword) {
-      setNewPasswordError('Por favor ingresa una contraseña')
-      isError = true;
-    }
   
-    if (newPassword.length < 7) {
-      setNewPasswordError('La contraseña debe tener 8 caracteres o más')
+    if (password.length < 7) {
+      setPasswordError('La contraseña debe tener 8 caracteres o más')
       isError = true;
     }
 
@@ -44,7 +37,7 @@ const ChangePassword = () => {
         isError = true;
       }
 
-    if (newPassword != confirmPassword) {
+    if (password != confirmPassword) {
         setConfirmPasswordError('Las contraseñas deben coincidir')
         isError = true;
     }
@@ -54,13 +47,13 @@ const ChangePassword = () => {
   }
 
   const changePassword = () => {
-    fetch(`http://localhost:8080/api/v1/auth/change-password`, {
+    const token = searchParams.get("token")
+    fetch(`http://localhost:8080/api/v1/auth/recover-password`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ password, newPassword }),
+      body: JSON.stringify({ token, password }),
     })
       .then((r) => r.json())
       .then((r) => {
@@ -79,7 +72,7 @@ const ChangePassword = () => {
                 <div className={'inputContainer'}>
                     <input
                     value={password}
-                    placeholder="Contraseña actual"
+                    placeholder="Ingresa tu contraseña"
                     onChange={(ev) => setPassword(ev.target.value)}
                     className={'inputBox'}
                     type={'password'}
@@ -98,37 +91,17 @@ const ChangePassword = () => {
                 </div>
                 <div className={'inputContainer'}>
                     <input
-                    value={newPassword}
-                    placeholder="Nueva contraseña"
-                    onChange={(ev) => setNewPassword(ev.target.value)}
-                    className={'inputBox'}
-                    type={'password'}
-                    />
-                    <br />
-                    {
-                        newPasswordError ? (
-                            <div className='error'>
-                                <label className="errorLabel">{newPasswordError}</label>
-                                <br />
-                            </div>
-                        ) : (
-                            ''
-                        )
-                    }
-                </div>
-                <div className={'inputContainer'}>
-                    <input
                     value={confirmPassword}
-                    placeholder="Confirmar contraseña"
+                    placeholder="Ingresa tu contraseña"
                     onChange={(ev) => setConfirmPassword(ev.target.value)}
                     className={'inputBox'}
                     type={'password'}
                     />
                     <br />
                     {
-                        confirmPasswordError ? (
+                        passwordError ? (
                             <div className='error'>
-                                <label className="errorLabel">{confirmPasswordError}</label>
+                                <label className="errorLabel">{passwordError}</label>
                                 <br />
                             </div>
                         ) : (
@@ -146,4 +119,4 @@ const ChangePassword = () => {
   )
 }
 
-export default ChangePassword
+export default RecoverPassword

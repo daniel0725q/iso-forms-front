@@ -35,6 +35,19 @@
     position: absolute;
     bottom: 0px;
   }
+
+    /* Active/current link */
+.sidebar a.changePassword {
+    background-color: hsl(34, 52%, 64%);
+    display: block;
+    width: 100%;
+    overflow: auto;
+    color: white;
+    padding: 16px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 32px;
+}
   
   /* Links on mouse-over */
   .sidebar a:hover:not(.active) {

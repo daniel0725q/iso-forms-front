@@ -5,6 +5,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import AdminDashboard from './AdminDashboard/AdminDashboard'
 import PageLayout from './PageLayout'
+import RecoverPassword from './RecoverPassword/RecoverPassword'
 import ChangePassword from './ChangePassword/ChangePassword'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Routes>
         <Route path="/" element={<PageLayout />} >
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
         </Route>
