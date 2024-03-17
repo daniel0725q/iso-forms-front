@@ -1,0 +1,14 @@
+.category {
+    width: 300px;
+    height: 300px;
+    font-size: large;
+    border: 10px black;
+    padding: 50px;
+    text-align: center;
+    display: inline-block;
+}
+
+.category:hover {
+    color: turquoise;
+    cursor: pointer;
+}

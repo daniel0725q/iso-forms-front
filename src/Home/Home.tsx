@@ -1,7 +1,7 @@
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './Home.css'
-import Sidebar from './Sidebar/Sidebar';
+import Sidebar from '../Sidebar/Sidebar';
 
 interface HomeProps { 
     loggedIn: boolean;
@@ -11,9 +11,6 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const navigate = useNavigate()
-
-  const location = useLocation()
-  console.log(location.pathname)
 
   const onButtonClick = () => {
     if (props.loggedIn) {

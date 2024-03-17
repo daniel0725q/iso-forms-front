@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
 
 interface LoginProps {
@@ -12,6 +12,7 @@ const Login = (props: LoginProps) => {
   const [password, setPassword] = useState('')
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
+  const [isPasswordForgotten, setIsPasswordForgotten] = useState(false)
 
   const navigate = useNavigate()
 
@@ -30,6 +31,11 @@ const Login = (props: LoginProps) => {
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
       setEmailError('Por favor ingresa un email válido')
       isError = true;
+    }
+
+    if (isPasswordForgotten) {
+        recoverPassword();
+        return;
     }
   
     if ('' === password) {
@@ -67,12 +73,27 @@ const Login = (props: LoginProps) => {
       })
   }
 
+  const recoverPassword = () => {
+    fetch(`http://localhost:8080/api/v1/auth/recovery`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        console.log(r);
+      })
+  }
+
   return (
     <div className='parentContainer'>
         <div className={'centered'}>
             <div className={'mainContainer'}>
                 <div className={'titleContainer'}>
-                    <h1>¡Bienvenido!</h1>
+                    <h1>GSIntegral</h1>
+                    <h3>Sistemas integrados de gestión</h3>
                 </div>
                 <div className={'inputContainer'}>
                     <input
@@ -94,32 +115,40 @@ const Login = (props: LoginProps) => {
                     }
                     
                 </div>
+                {
+                    isPasswordForgotten ? (
+                        ''
+                    ) : (
+                        <div className={'inputContainer'}>
+                            <input
+                            value={password}
+                            placeholder="Ingresa tu contraseña"
+                            onChange={(ev) => setPassword(ev.target.value)}
+                            className={'inputBox'}
+                            type={'password'}
+                            />
+                            <br />
+                            {
+                                passwordError ? (
+                                    <div className='error'>
+                                        <label className="errorLabel">{passwordError}</label>
+                                        <br />
+                                    </div>
+                                ) : (
+                                    ''
+                                )
+                            }
+                        </div>
+                    )
+                }
                 <div className={'inputContainer'}>
-                    <input
-                    value={password}
-                    placeholder="Ingresa tu contraseña"
-                    onChange={(ev) => setPassword(ev.target.value)}
-                    className={'inputBox'}
-                    type={'password'}
-                    />
-                    <br />
-                    {
-                        passwordError ? (
-                            <div className='error'>
-                                <label className="errorLabel">{passwordError}</label>
-                                <br />
-                            </div>
-                        ) : (
-                            ''
-                        )
-                    }
+                    <input className={'inputButton'} type="button" onClick={onButtonClick} value={isPasswordForgotten ? 'Recuperar contraseña' : 'Iniciar sesión'} />
                 </div>
                 <div className={'inputContainer'}>
-                    <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Iniciar sesión'} />
+                    <Link to={'#'} onClick={() => setIsPasswordForgotten(true)}>{isPasswordForgotten ? '' : '¿Olvidó su contraseña?'}</Link>
                 </div>
             </div>
         </div>
-        <div className='secondaryContainer'></div>
     </div>
   )
 }
