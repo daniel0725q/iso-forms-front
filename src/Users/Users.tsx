@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import './Companies.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
-import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
+import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import CreateUser from '../CreateUser/CreateUser'
 
-const Companies = () => {
+const Users = () => {
   const navigate = useNavigate()
 
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
   const [data, setData] = useState([]);
-  const [companyId, setCompanyId] = useState(1);
-  const [companyName, setCompanyName] = useState('');
-  const [companySocialName, setCompanySocialName] = useState('');
-  const [companyLogo, setCompanyLogo] = useState('');
   const [show, setShow] =  useState(false);
   const [reload, setReload] = useState(true);
   const [isCreate, setIsCreate] = useState(true);
 
-  useEffect(() => loadCompanies);
+  useEffect(() => loadUsers);
 
-  const loadCompanies = () => {
+  const loadUsers = () => {
     if (reload) {
-        fetch(`http://localhost:8080/api/v1/companies`, {
+        fetch(`http://localhost:8080/api/v1/users`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -36,9 +31,7 @@ const Companies = () => {
                 else if (e1.id == e2.id) return 0;
                 else return -1;
             });
-            console.log(r2);
             setData(r2);
-            console.log(data);
             setReload(false);
         });
     }
@@ -46,44 +39,26 @@ const Companies = () => {
 
   const columns = [
     {
-        Header: 'NIT',  
+        Header: 'ID',  
         accessor: 'id'  
     },
     {  
-        Header: 'Nombre',  
-        accessor: 'name'  
+        Header: 'Email',  
+        accessor: 'email'  
     },
     {
-        Header: 'Razón social',
-        accessor: 'socialName'  
-    },
-    {  
-        Header: 'Logo',  
-        accessor: 'logo'  
+        Header: 'Compañía',
+        accessor: 'companyId'  
     }
   ];
 
   const onCreateClick = () => {
-    setCompanyId(0);
-    setCompanyName('');
-    setCompanySocialName('');
-    setCompanyLogo('');
-    setIsCreate(true);
-    setShow(true);
-  }
-
-  const onEditClick = (id: number, name: string, socialName: string, logo: string) => {
-    setCompanyId(id);
-    setCompanyName(name);
-    setCompanySocialName(socialName);
-    setCompanyLogo(logo);
-    setIsCreate(false);
     setShow(true);
   }
 
   const onDeleteClick = (id: number) => {
-    if (window.confirm('¿Estás seguro que deseas eliminar la empresa?')) {
-        fetch(`http://localhost:8080/api/v1/companies/${id}`, {
+    if (window.confirm('¿Estás seguro que deseas eliminar el usuario?')) {
+        fetch(`http://localhost:8080/api/v1/users/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -92,7 +67,7 @@ const Companies = () => {
         })
         .then((r) => r.json())
         .then((r) => {
-            loadCompanies();
+            loadUsers();
         });
     }
   }
@@ -106,19 +81,11 @@ const Companies = () => {
         {
             columns.map(function(column) {
                 return <td>{
-                    column.accessor != "logo" ?
                     row[column.accessor]
-                    : <img className='logo' src={row["logo"]}></img>
                     }</td>;
               })
         }
             <td>
-                <FontAwesomeIcon icon={faPen} onClick={() => {
-                    onEditClick(row['id'], row['name'], row['socialName'], row['logo']
-                    );
-                }
-                }/>
-                &nbsp;
                 <FontAwesomeIcon icon={faTrash}onClick={() => {
                     onDeleteClick(row['id']);
                 }
@@ -130,7 +97,7 @@ const Companies = () => {
 
   return (
     <div>
-        <h1>Empresas</h1>
+        <h1>Usuarios</h1>
         <div className='companies'>
             <table>
                 <thead>
@@ -146,14 +113,14 @@ const Companies = () => {
         </div>
         <Link to={'#'} className='link' onClick={onCreateClick}>
             <FontAwesomeIcon icon={faPlus} size='2x' />
-            <b className='linkDesc'>Nueva empresa</b>
+            <b className='linkDesc'>Nuevo usuario</b>
         </Link>
         {show ?
-        <CreateOrEditCompany id={companyId} setShow={setShow} companyName={companyName} companySocialName={companySocialName} companyLogo={companyLogo} show={show} reload={loadCompanies} isCreate={isCreate}  />
+        <CreateUser setShow={setShow} show={show}  />
     : <div></div>
     }
     </div>
   )
 }
 
-export default Companies;
+export default Users;

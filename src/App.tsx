@@ -8,6 +8,7 @@ import PageLayout from './PageLayout'
 import RecoverPassword from './RecoverPassword/RecoverPassword'
 import ChangePassword from './ChangePassword/ChangePassword'
 import Companies from './Companies/Companies'
+import Users from './Users/Users'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -24,6 +25,7 @@ function App() {
           <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/users" element={<Users />} />
         </Route>
         </Routes>
       </BrowserRouter>

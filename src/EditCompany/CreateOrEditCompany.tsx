@@ -9,12 +9,14 @@ interface EditCompanyProps {
     companySocialName: string;
     companyLogo: string;
     reload: any;
+    isCreate: boolean;
 }
 
-const EditCompany = (props: EditCompanyProps) => {
+const CreateOrEditCompany = (props: EditCompanyProps) => {
     console.log(props);
 
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
+  const [companyId, setCompanyId] = useState('');
   const [companyName, setCompanyName] = useState(props.companyName);
   const [companySocialName, setCompanySocialName] = useState(props.companySocialName);
   const [companyLogo, setCompanyLogo] = useState(props.companyLogo);
@@ -24,6 +26,27 @@ const EditCompany = (props: EditCompanyProps) => {
     method: 'PATCH',
     body: JSON.stringify({
         id: props.id,
+        name: companyName,
+        socialName: companySocialName,
+        logo: companyLogo
+    }),
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorageUser.token}`
+    }
+    })
+    .then((r) => r.json())
+    .then((r) => {
+        props.reload();
+        props.setShow(false);
+    })
+  }
+
+  const createCompany = () => {
+    fetch(`http://localhost:8080/api/v1/companies`, {
+    method: 'POST',
+    body: JSON.stringify({
+        id: companyId,
         name: companyName,
         socialName: companySocialName,
         logo: companyLogo
@@ -66,6 +89,18 @@ const EditCompany = (props: EditCompanyProps) => {
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
+      {props.isCreate ?
+      <div className={'inputContainer'}>
+      <h3>NIT de la companía</h3> 
+       <input
+           value={companyId}
+           onChange={(ev) => setCompanyId(ev.target.value)}
+           className={'inputBox'}
+           type={'number'}
+           />
+       </div>
+       : <></>
+      }
       <div className={'inputContainer'}>
        <h3>Nombre de la companía</h3> 
         <input
@@ -97,7 +132,11 @@ const EditCompany = (props: EditCompanyProps) => {
           Cancelar
         </button>
         <button type="button" className='save' onClick={() => {
+          if (props.isCreate) {
+            createCompany()
+          } else {
             updateCompany()
+          }
             }}>
           Guardar
         </button>
@@ -107,4 +146,4 @@ const EditCompany = (props: EditCompanyProps) => {
   );
 };
 
-export default EditCompany;
+export default CreateOrEditCompany;

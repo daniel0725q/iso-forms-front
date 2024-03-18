@@ -7,3 +7,12 @@
     height: 30px;
     width: 30px;
 }
+
+.link {
+
+}
+
+.linkDesc {
+    position: absolute;
+    margin-top: 6px;
+}
