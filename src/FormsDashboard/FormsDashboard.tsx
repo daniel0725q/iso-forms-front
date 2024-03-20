@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
 import { randomUUID } from 'crypto'
+import './FormsDashboard.css'
 
 const FormsDashboard = () => {
   const navigate = useNavigate()
@@ -87,7 +88,7 @@ const FormsDashboard = () => {
   }
   */
 
-  const data: any = {
+  var myData: any = {
     "title": "Mi primer formulario",
     "description": "Breve descripcion del formulario",
     "version": "1.0",
@@ -100,7 +101,7 @@ const FormsDashboard = () => {
                 {
                     "id": "nombre",
                     "description": "Descripción del campo",
-                    "type": "textfield",
+                    "type": "text",
                     "value": "Valor por defecto"
                 },
                 {
@@ -183,7 +184,7 @@ const FormsDashboard = () => {
                     ],
                     "columnsType": [
                         {
-                            "type":"textfield"
+                            "type":"text"
                         },
                         {
                             "type": "number"
@@ -197,7 +198,8 @@ const FormsDashboard = () => {
                                 },
                                 {
                                     "value": "España",
-                                    "type": "option"
+                                    "type": "option",
+                                    "selected": true
                                 },
                                 {
                                     "value": "Colombia",
@@ -233,7 +235,8 @@ const FormsDashboard = () => {
                     "options": [
                         {
                             "value": "Espresso",
-                            "type": "checkbox-option"
+                            "type": "checkbox-option",
+                            "isChecked": true
                         },
                         {
                             "value": "Latte",
@@ -252,7 +255,8 @@ const FormsDashboard = () => {
                     "options": [
                         {
                             "value": "Masculino",
-                            "type": "radio-item"
+                            "type": "radio-item",
+                            "checked": true
                         },
                         {
                             "value": "Femenino",
@@ -267,7 +271,8 @@ const FormsDashboard = () => {
                 {
                     "id": "historia",
                     "description": "Historia de vida del usuario",
-                    "type": "textarea"
+                    "type": "textarea",
+                    "value": "Default value"
                 }
             ]
         }
@@ -276,80 +281,126 @@ const FormsDashboard = () => {
 
 var c = 0;
 
-  const parse = (array: any): Array<any> => {
-    let par = [];
-    for (var i in array) {
-        let obj = array[i];
-        if(i == "title") {
-            par.push(<h1 key="title">{obj}</h1>);
-        } else if (i == "description") {
-            par.push(<p key="mainDesc">{obj}</p>)
-        } else if (i == "section") {
-            par.push(
-                obj.map((el: any) => {
-                    const id = window.crypto.randomUUID();
-                return <section id={id} key={id}>
-                    {parse(el)}
-                </section>
-                }
-            ));
-        } else if (i == "version") {
-            par.push(<input key={window.crypto.randomUUID()} type="text" value={obj} readOnly></input>)
-        } else if (i == "fields") {
-            par.push(obj.map((el: any) => {
-                return parse(el)}));
-        } else if (i == "type" && obj == "checkbox") {
-            par.push(
-                <div key={window.crypto.randomUUID()}>
-                    {array.options.map((el: any) => {
-                        return <label key={window.crypto.randomUUID()}><input type='checkbox' value={el.value}/>{ el.value }</label>
-                    })}
-                </div>
-            )
-        } else if (i == "type" && obj == "textfield") {
-            par.push(<input type="textfield" key={window.crypto.randomUUID()} value={array.value}/>);
-        } else if (i == "type" && obj == "number") {
-            par.push(<input type="number" key={window.crypto.randomUUID()} value={array.value}/>);
-        } else if (i == "type" && obj == "radio") {
-            const id = window.crypto.randomUUID();
-            par.push(
-                <div key={id}>
-                    {array.options.map((el: any) => {
-                        return <label><input type="radio" id="dewey" name={id} />
-                        {el.value}</label>
-                    })}
-                </div>
-            )
-        } else if (i == "type" && obj == "select") {
-            par.push(<select id={window.crypto.randomUUID()} key={window.crypto.randomUUID()}>
-                {array.options.map((el: any) => {
-                    return <option key={window.crypto.randomUUID()}>{el.value}</option>
-                })}
-            </select>);
-        } else if (i == "type" && obj == "textarea") {
-            par.push(<textarea key={window.crypto.randomUUID()}></textarea>)
-        } else if (i == "type" && obj == "table") {
-            par.push(<table key={window.crypto.randomUUID()}>
-                <thead>
-                        <tr>
-                {array.columnsHeader.map((col: any) => {
-                    return <th>{col}</th>
-                })}
-                </tr>
-                </thead>
-                <tbody>
-                    {createRows(array.rows, array.columns, array.columnsType)}
-                </tbody>
-            </table>)
+const parse = (data: any): JSX.Element[] => {
+    const elements: JSX.Element[] = [];
+
+    for (const key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+            var value = data[key];
+
+            switch (key) {
+                case 'title':
+                    elements.push(<h1 key="title">{value}</h1>);
+                    break;
+                case 'description':
+                    elements.push(<p key="mainDesc">{value}</p>);
+                    break;
+                case 'section':
+                    elements.push(
+                        <section key={window.crypto.randomUUID()}>
+                            {value.map((el: any) => (
+                                <div key={window.crypto.randomUUID()}>
+                                    {parse(el)}
+                                </div>
+                            ))}
+                        </section>
+                    );
+                    break;
+                case 'version':
+                    elements.push(<input key={window.crypto.randomUUID()} type="text" value={value} readOnly />);
+                    break;
+                case 'fields':
+                    elements.push(value.map((el: any) => (
+                        <div key={window.crypto.randomUUID()}>
+                            {parse(el)}
+                        </div>
+                    )));
+                    break;
+                case 'type':
+                    if (value === 'checkbox') {
+                        elements.push(
+                            <div key={window.crypto.randomUUID()}>
+                                {data.options.map((el: any) => (
+                                    <label key={window.crypto.randomUUID()}>
+                                        <input type="checkbox" key={window.crypto.randomUUID()} value={el.value} defaultChecked={el.checked} onChange={(ev) => {
+                                            el.checked = ev.currentTarget.checked
+                                            }} />
+                                        {el.value}
+                                    </label>
+                                ))}
+                            </div>
+                        );
+                    } else if (['text', 'number'].includes(value)) {
+                        elements.push(<input type={value} key={window.crypto.randomUUID()} defaultValue={data.value} onChange={(ev) => {
+                            data.value = ev.currentTarget.value;
+                        }} />);
+                    } else if (value == 'textarea') {
+                        elements.push(<textarea key={window.crypto.randomUUID()} defaultValue={data.value} onChange={(ev) => {
+                            data[value] = ev.currentTarget.value;
+                        }}></textarea>)
+                    } else if (value === 'radio') {
+                        const radioId = window.crypto.randomUUID();
+                        elements.push(
+                            <div key={radioId}>
+                                {data.options.map((el: any) => {
+                                    let id = window.crypto.randomUUID();
+                                    return (
+                                    <label key={window.crypto.randomUUID()}>
+                                        <input type="radio" key={id} id={id} name={radioId} checked={el.checked} onChange={(ev) => {
+                                            // TODO
+                                        }} />
+                                        {el.value}
+                                    </label>
+                                )})
+                            }
+                            </div>
+                        );
+                    } else if (value === 'select') {
+                        elements.push(
+                            <select key={window.crypto.randomUUID()} value={data[key].value} onChange={(ev) => {
+                                    data.options.find((x: any) => x.value == ev.target.value).selected = true;
+                                    var elems = data.options.filter((x: any) => x.value != ev.target.value);
+                                    elems.forEach((element: any) => {
+                                        element.selected = false;
+                                    });
+                                    }}>
+                                {data.options.map((el: any) => (
+                                    <option key={window.crypto.randomUUID()}>{el.value}</option>
+                                ))}
+                            </select>
+                        );
+                    } else if (value === 'table') {
+                        elements.push(
+                            <table key={window.crypto.randomUUID()}>
+                                <thead>
+                                    <tr>
+                                        {data.columnsHeader.map((col: any) => (
+                                            <th key={window.crypto.randomUUID()}>{col}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {/* Assuming createRows function is defined elsewhere */}
+                                    {createRows(data.rows, data.columns, data.columnsType)}
+                                </tbody>
+                            </table>
+                        );
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    return par;
-  }
+
+    return elements;
+};
+
 
 const createRows = (num: number, cols: number, columnsType: any) => {
     let par = [];
     for (var i = 0; i < num; i++) {
-        par.push(<tr>{createCols(cols, columnsType)}</tr>)
+        par.push(<tr key={window.crypto.randomUUID()}>{createCols(cols, columnsType)}</tr>)
     }
     return par;
 }
@@ -357,7 +408,7 @@ const createRows = (num: number, cols: number, columnsType: any) => {
 const createCols = (cols: number, types: any) => {
     let par = [];
     for (var i = 0; i < cols; i++) {
-        par.push(<td>
+        par.push(<td key={window.crypto.randomUUID()}>
             {parse(types[i])}
         </td>)
     }
@@ -365,11 +416,14 @@ const createCols = (cols: number, types: any) => {
 }
 
   return (
-    <div>
-        <h1>Empresas</h1>
-        <div className='companies'>
-            {parse(data)}
+    <div className='main'>
+        <h1>Formularios</h1>
+        <div className='forms'>
+            {parse(myData)}
         </div>
+        <button onClick={() => {
+            console.log(myData);
+        }}>Click me!</button>
     </div>
   )
 }
