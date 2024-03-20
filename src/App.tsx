@@ -9,6 +9,7 @@ import RecoverPassword from './RecoverPassword/RecoverPassword'
 import ChangePassword from './ChangePassword/ChangePassword'
 import Companies from './Companies/Companies'
 import Users from './Users/Users'
+import FormsDashboard from './FormsDashboard/FormsDashboard'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -26,6 +27,7 @@ function App() {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/forms" element={<FormsDashboard />} />
         </Route>
         </Routes>
       </BrowserRouter>

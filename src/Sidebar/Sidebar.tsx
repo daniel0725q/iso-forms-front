@@ -53,7 +53,7 @@ const Sidebar = () => {
             <Link className={isHomeActive ? "active" : ''} to="/home" onClick={onHomeLinkClick}>Inicio</Link>
             <Link className={isAboutActive ? "active" : ''} to="/companies" onClick={onCompaniesLinkClick}>Empresas</Link>
             <Link className={isNewsActive ? "active" : ''} to="/users" onClick={onUsersLinkClick}>Usuarios</Link>
-            <Link className={isContactActive ? "active" : ''} to="/contact" onClick={onFormsLinkClick}>Formularios</Link>
+            <Link className={isContactActive ? "active" : ''} to="/forms" onClick={onFormsLinkClick}>Formularios</Link>
             <Link className={'changePassword'} to="/change-password">Cambiar contraseña</Link>
             <Link className={'signout'} to="/login" onClick={onButtonClick}>Cerrar sesión</Link>
         </div>
