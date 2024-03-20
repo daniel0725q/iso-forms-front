@@ -143,19 +143,19 @@ const FormsDashboard = () => {
                 {
                     "id": "genero",
                     "description": "Género con que se identifica el usuario",
-                    "type": "checkbox",
+                    "type": "radio",
                     "options": [
                         {
                             "value": "Masculino",
-                            "type": "checkbox-option"
+                            "type": "radio-item"
                         },
                         {
-                            "value": "Latte",
-                            "type": "checkbox-option"
+                            "value": "Femenino",
+                            "type": "radio-item"
                         },
                         {
-                            "value": "Flat white",
-                            "type": "checkbox-option"
+                            "value": "No binario",
+                            "type": "radio-item"
                         }
                     ]
                 },
@@ -190,9 +190,18 @@ const FormsDashboard = () => {
                         {
                             "type": "select",
                             "options": [
-                                "Opción 1",
-                                "Opción 2",
-                                "Opción 3"
+                                {
+                                    "value": "Andorra",
+                                    "type": "option"
+                                },
+                                {
+                                    "value": "España",
+                                    "type": "option"
+                                },
+                                {
+                                    "value": "Colombia",
+                                    "type": "option"
+                                }
                             ]
                         }
                     ]
@@ -202,9 +211,18 @@ const FormsDashboard = () => {
                     "description": "País en el que nació el usuario",
                     "type": "select",
                     "options": [
-                        "Andorra",
-                        "España",
-                        "Colombia"
+                        {
+                            "value": "Andorra",
+                            "type": "option"
+                        },
+                        {
+                            "value": "España",
+                            "type": "option"
+                        },
+                        {
+                            "value": "Colombia",
+                            "type": "option"
+                        }
                     ]
                 },
                 {
@@ -212,9 +230,18 @@ const FormsDashboard = () => {
                     "description": "Tipo de café que toma el usuario",
                     "type": "checkbox",
                     "options": [
-                        "Espresso",
-                        "Latte",
-                        "Flat white"
+                        {
+                            "value": "Espresso",
+                            "type": "checkbox-option"
+                        },
+                        {
+                            "value": "Latte",
+                            "type": "checkbox-option"
+                        },
+                        {
+                            "value": "Flat white",
+                            "type": "checkbox-option"
+                        }
                     ]
                 },
                 {
@@ -222,9 +249,18 @@ const FormsDashboard = () => {
                     "description": "Género con que se identifica el usuario",
                     "type": "radio",
                     "options": [
-                        "Hombre",
-                        "Mujer",
-                        "No binario"
+                        {
+                            "value": "Masculino",
+                            "type": "radio-item"
+                        },
+                        {
+                            "value": "Femenino",
+                            "type": "radio-item"
+                        },
+                        {
+                            "value": "No binario",
+                            "type": "radio-item"
+                        }
                     ]
                 },
                 {
@@ -264,26 +300,72 @@ var c = 0;
         } else if (i == "fields") {
             par.push(obj.map((el: any) => {
                 return parse(el)}));
-        } else if (i == "checkbox") {
-            par.push(<div key={window.crypto.randomUUID()}>
-                {par.push(parse(obj.options))}
-            </div>)
+        } else if (i == "type" && obj == "checkbox") {
+            par.push(
+                <div key={window.crypto.randomUUID()}>
+                    {array.options.map((el: any) => {
+                        return <label key={window.crypto.randomUUID()}><input type='checkbox' value={el.value}/>{ el.value }</label>
+                    })}
+                </div>
+            )
         } else if (i == "type" && obj == "textfield") {
             par.push(<input type="textfield" key={window.crypto.randomUUID()}></input>);
+        } else if (i == "type" && obj == "number") {
+            par.push(<input type="number" key={window.crypto.randomUUID()}></input>);
+        } else if (i == "type" && obj == "radio") {
+            const id = window.crypto.randomUUID();
+            par.push(
+                <div key={id}>
+                    {array.options.map((el: any) => {
+                        return <label><input type="radio" id="dewey" name={id} />
+                        {el.value}</label>
+                    })}
+                </div>
+            )
         } else if (i == "type" && obj == "select") {
             par.push(<select id={window.crypto.randomUUID()} key={window.crypto.randomUUID()}>
                 {array.options.map((el: any) => {
                     return <option key={window.crypto.randomUUID()}>{el.value}</option>
                 })}
             </select>);
-        } else if (i  == "checkbox-option") {
-            par.push(<input type="checkbox" key={window.crypto.randomUUID()}>{obj}</input>);
-        } else if (i == "textarea") {
+        } else if (i == "type" && obj == "textarea") {
             par.push(<textarea key={window.crypto.randomUUID()}></textarea>)
+        } else if (i == "type" && obj == "table") {
+            par.push(<table key={window.crypto.randomUUID()}>
+                <thead>
+                        <tr>
+                {array.columnsHeader.map((col: any) => {
+                    return <th>{col}</th>
+                })}
+                </tr>
+                </thead>
+                <tbody>
+                    {createRows(array.rows, array.columns, array.columnsType)}
+                </tbody>
+            </table>)
         }
     }
     return par;
   }
+
+const createRows = (num: number, cols: number, columnsType: any) => {
+    let par = [];
+    for (var i = 0; i < num; i++) {
+        par.push(<tr>{createCols(cols, columnsType)}</tr>)
+    }
+    console.log(par);
+    return par;
+}
+
+const createCols = (cols: number, types: any) => {
+    let par = [];
+    for (var i = 0; i < cols; i++) {
+        par.push(<td>
+            {parse(types[i])}
+        </td>)
+    }
+    return par;
+}
 
   return (
     <div>
