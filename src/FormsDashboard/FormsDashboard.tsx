@@ -242,14 +242,12 @@ var c = 0;
   const parse = (array: any): Array<any> => {
     let par = [];
     for (var i in array) {
-        // console.log(i);
         let obj = array[i];
         if(i == "title") {
             par.push(<h1 key="title">{obj}</h1>);
         } else if (i == "description") {
             par.push(<p key="mainDesc">{obj}</p>)
         } else if (i == "section") {
-            console.log(obj);
             par.push(
                 <section key={window.crypto.randomUUID()}>
                     {
@@ -265,21 +263,19 @@ var c = 0;
             par.push(<input key={window.crypto.randomUUID()} type="text" value={obj} readOnly></input>)
         } else if (i == "fields") {
             par.push(obj.map((el: any) => {
-                console.log(el);
                 return parse(el)}));
         } else if (i == "checkbox") {
             par.push(<div key={window.crypto.randomUUID()}>
                 {par.push(parse(obj.options))}
             </div>)
-        } else if (i == "select") {
-            par.push(<select key={window.crypto.randomUUID()}>
-                {par.push(parse(obj.options))}
-            </select>)
-        } else if (i == "textfield") {
-            console.log("ENTERED TEXTFIELD")
+        } else if (i == "type" && obj == "textfield") {
             par.push(<input type="textfield" key={window.crypto.randomUUID()}></input>);
-        } else if (i == "option") {
-            par.push(<option key={window.crypto.randomUUID()}>{obj}</option>);
+        } else if (i == "type" && obj == "select") {
+            par.push(<select id={window.crypto.randomUUID()} key={window.crypto.randomUUID()}>
+                {array.options.map((el: any) => {
+                    return <option key={window.crypto.randomUUID()}>{el.value}</option>
+                })}
+            </select>);
         } else if (i  == "checkbox-option") {
             par.push(<input type="checkbox" key={window.crypto.randomUUID()}>{obj}</input>);
         } else if (i == "textarea") {
