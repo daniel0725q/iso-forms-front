@@ -100,7 +100,8 @@ const FormsDashboard = () => {
                 {
                     "id": "nombre",
                     "description": "Descripción del campo",
-                    "type": "textfield"
+                    "type": "textfield",
+                    "value": "Valor por defecto"
                 },
                 {
                     "id": "pais",
@@ -285,16 +286,13 @@ var c = 0;
             par.push(<p key="mainDesc">{obj}</p>)
         } else if (i == "section") {
             par.push(
-                <section key={window.crypto.randomUUID()}>
-                    {
-                        par.push(
-                            obj.map((el: any) => {
-                            return parse(el)
-                            })
-                        )
-                    }
+                obj.map((el: any) => {
+                    const id = window.crypto.randomUUID();
+                return <section id={id} key={id}>
+                    {parse(el)}
                 </section>
-            );
+                }
+            ));
         } else if (i == "version") {
             par.push(<input key={window.crypto.randomUUID()} type="text" value={obj} readOnly></input>)
         } else if (i == "fields") {
@@ -309,9 +307,9 @@ var c = 0;
                 </div>
             )
         } else if (i == "type" && obj == "textfield") {
-            par.push(<input type="textfield" key={window.crypto.randomUUID()}></input>);
+            par.push(<input type="textfield" key={window.crypto.randomUUID()} value={array.value}/>);
         } else if (i == "type" && obj == "number") {
-            par.push(<input type="number" key={window.crypto.randomUUID()}></input>);
+            par.push(<input type="number" key={window.crypto.randomUUID()} value={array.value}/>);
         } else if (i == "type" && obj == "radio") {
             const id = window.crypto.randomUUID();
             par.push(
@@ -353,7 +351,6 @@ const createRows = (num: number, cols: number, columnsType: any) => {
     for (var i = 0; i < num; i++) {
         par.push(<tr>{createCols(cols, columnsType)}</tr>)
     }
-    console.log(par);
     return par;
 }
 
