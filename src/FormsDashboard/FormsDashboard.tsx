@@ -90,7 +90,7 @@ const FormsDashboard = () => {
   const data: any = {
     "title": "Mi primer formulario",
     "description": "Breve descripcion del formulario",
-    "version": 1.0,
+    "version": "1.0",
     "type": "form",
     "section": [
         {
@@ -244,33 +244,46 @@ var c = 0;
     for (var i in array) {
         // console.log(i);
         let obj = array[i];
-        if (Array.isArray(obj)) {
-            // console.log(obj.fields)
-            if (i == "fields") {
-                <section>
-                    {obj.map((el) => {
-                        return parse(el);
-                    })}
+        if(i == "title") {
+            par.push(<h1 key="title">{obj}</h1>);
+        } else if (i == "description") {
+            par.push(<p key="mainDesc">{obj}</p>)
+        } else if (i == "section") {
+            console.log(obj);
+            par.push(
+                <section key={window.crypto.randomUUID()}>
+                    {
+                        par.push(
+                            obj.map((el: any) => {
+                            return parse(el)
+                            })
+                        )
+                    }
                 </section>
-            } else if (i  == "section") {
-                <section>
-                    {obj.map((el) => {
-                        return parse(el);
-                    })}
-                </section>
-            }
-            console.log(i);
-            c++;
-        } else {
-            if (obj.type == "textfield") {
-                par.push(<input type="textfield" key={window.crypto.randomUUID()}></input>);
-            } else if (obj.type == "option") {
-                par.push(<option key={window.crypto.randomUUID()}>{obj}</option>);
-            } else if (obj.type  == "checkbox-option") {
-                par.push(<input type="checkbox" key={window.crypto.randomUUID()}>{obj}</input>);
-            } else if (obj.type  == "textarea") {
-                par.push(<textarea key={window.crypto.randomUUID()}></textarea>)
-            }
+            );
+        } else if (i == "version") {
+            par.push(<input key={window.crypto.randomUUID()} type="text" value={obj} readOnly></input>)
+        } else if (i == "fields") {
+            par.push(obj.map((el: any) => {
+                console.log(el);
+                return parse(el)}));
+        } else if (i == "checkbox") {
+            par.push(<div key={window.crypto.randomUUID()}>
+                {par.push(parse(obj.options))}
+            </div>)
+        } else if (i == "select") {
+            par.push(<select key={window.crypto.randomUUID()}>
+                {par.push(parse(obj.options))}
+            </select>)
+        } else if (i == "textfield") {
+            console.log("ENTERED TEXTFIELD")
+            par.push(<input type="textfield" key={window.crypto.randomUUID()}></input>);
+        } else if (i == "option") {
+            par.push(<option key={window.crypto.randomUUID()}>{obj}</option>);
+        } else if (i  == "checkbox-option") {
+            par.push(<input type="checkbox" key={window.crypto.randomUUID()}>{obj}</input>);
+        } else if (i == "textarea") {
+            par.push(<textarea key={window.crypto.randomUUID()}></textarea>)
         }
     }
     return par;
