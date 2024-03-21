@@ -1,6 +1,7 @@
 import React from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './Home.css'
+import Sidebar from './Sidebar/Sidebar';
 
 interface HomeProps { 
     loggedIn: boolean;
@@ -10,9 +11,6 @@ interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const navigate = useNavigate()
-
-  const location = useLocation()
-  console.log(location.pathname)
 
   const onButtonClick = () => {
     if (props.loggedIn) {
@@ -25,20 +23,20 @@ const Home = (props: HomeProps) => {
 
   return (
     <div>
-      <h1>GSIntegral</h1>
       <div className="mainContainer">
         <div className={'titleContainer'}>
-          <div>Welcome!</div>
+          <h1>GSIntegral</h1>
+          <h2>¡Bienvenido!</h2>
         </div>
-        <div>This is the home page.</div>
+        <div>Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral.</div>
         <div className={'buttonContainer'}>
+          {props.loggedIn ? <div>Tu email es {props.email}</div> : <div />}
           <input
             className={'inputButton'}
             type="button"
             onClick={onButtonClick}
-            value={props.loggedIn ? 'Log out' : 'Log in'}
+            value={props.loggedIn ? 'Cerrar sesión' : 'Iniciar sesión'}
           />
-          {props.loggedIn ? <div>Your email address is {props.email}</div> : <div />}
         </div>
       </div>
     </div>

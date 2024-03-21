@@ -15,33 +15,28 @@ const Companies = () => {
   const [companySocialName, setCompanySocialName] = useState('');
   const [companyLogo, setCompanyLogo] = useState('');
   const [show, setShow] =  useState(false);
-  const [reload, setReload] = useState(true);
   const [isCreate, setIsCreate] = useState(true);
 
-  useEffect(() => loadCompanies);
+  useEffect(() => loadCompanies(), []);
 
   const loadCompanies = () => {
-    if (reload) {
-        fetch(`http://localhost:8080/api/v1/companies`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorageUser.token}`
-        },
-        })
-        .then((r) => r.json())
-        .then((r) => {
-            const r2 = r.sort((e1: any, e2: any) => {
-                if (e1.id > e2.id) return 1;
-                else if (e1.id == e2.id) return 0;
-                else return -1;
-            });
-            console.log(r2);
-            setData(r2);
-            console.log(data);
-            setReload(false);
+    fetch(`http://localhost:8080/api/v1/companies?hasLogo=true`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorageUser.token}`
+    },
+    })
+    .then((r) => r.json())
+    .then((r) => {
+        console.log(r);
+        const r2 = r.sort((e1: any, e2: any) => {
+            if (e1.id > e2.id) return 1;
+            else if (e1.id == e2.id) return 0;
+            else return -1;
         });
-    }
+        setData(r2);
+    });
   }
 
   const columns = [
@@ -132,7 +127,7 @@ const Companies = () => {
     <div>
         <h1>Empresas</h1>
         <div className='companies'>
-            <table>
+            <table className='customTable'>
                 <thead>
                     <tr>
                         { userElements }

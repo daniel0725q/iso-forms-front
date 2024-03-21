@@ -179,8 +179,8 @@ const FormsDashboard = () => {
                     "columns": 3,
                     "columnsHeader": [
                         "Nombre",
-                        "Apellidos",
-                        "Edad"
+                        "Edad",
+                        "País favorito"
                     ],
                     "columnsType": [
                         {
@@ -371,7 +371,7 @@ const parse = (data: any): JSX.Element[] => {
                         );
                     } else if (value === 'table') {
                         elements.push(
-                            <table key={window.crypto.randomUUID()}>
+                            <table className='customTable' key={window.crypto.randomUUID()}>
                                 <thead>
                                     <tr>
                                         {data.columnsHeader.map((col: any) => (

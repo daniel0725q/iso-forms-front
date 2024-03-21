@@ -25,17 +25,17 @@ const Home = (props: HomeProps) => {
     <div>
       <div className="mainContainer">
         <div className={'titleContainer'}>
-          <div>Welcome!</div>
+          <div>¡Bienvenido!</div>
         </div>
-        <div>This is the home page.</div>
+        <div>Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral.</div>
         <div className={'buttonContainer'}>
           <input
             className={'inputButton'}
             type="button"
             onClick={onButtonClick}
-            value={props.loggedIn ? 'Log out' : 'Log in'}
+            value={props.loggedIn ? 'Cerrar sesión' : 'Iniciar sesión'}
           />
-          {props.loggedIn ? <div>Your email address is {props.email}</div> : <div />}
+          {props.loggedIn ? <div>Tu email es {props.email}</div> : <div />}
         </div>
       </div>
     </div>

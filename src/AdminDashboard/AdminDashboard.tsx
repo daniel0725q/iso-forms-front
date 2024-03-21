@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { faUser, faPenToSquare, faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { faUser, faPenToSquare, faBuilding, faHelmetSafety, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import './AdminDashboard.css'
 
 const AdminDashboard = () => {
@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const onButtonClick = () => {
   }
 
-  useEffect(() => loadUser);
+  useEffect(() => loadUser, []);
 
   const loadUser = () => {
     fetch(`http://localhost:8080/api/v1/auth/is-admin`, {
@@ -46,6 +46,14 @@ const AdminDashboard = () => {
                       <div className='category'>
                         <FontAwesomeIcon icon={faBuilding} size="10x" />
                         <h3>Empresas</h3>
+                      </div>
+                      <div className='category'>
+                        <FontAwesomeIcon icon={faGlobe} size="10x" />
+                          <h3>ISO</h3>
+                      </div>
+                      <div className='category'>
+                        <FontAwesomeIcon icon={faHelmetSafety} size="10x" />
+                        <h3>SST</h3>
                       </div>
                     </div>
                 </div>

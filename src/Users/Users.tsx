@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import CreateUser from '../CreateUser/CreateUser'
+import './Users.css'
 
 const Users = () => {
   const navigate = useNavigate()
@@ -38,17 +39,17 @@ const Users = () => {
   }
 
   const columns = [
-    {
-        Header: 'ID',  
-        accessor: 'id'  
-    },
     {  
         Header: 'Email',  
         accessor: 'email'  
     },
     {
         Header: 'Compañía',
-        accessor: 'companyId'  
+        accessor: 'company'
+    },
+    {
+        Header: 'Rol',
+        accessor: 'role'
     }
   ];
 
@@ -80,6 +81,15 @@ const Users = () => {
     return <tr>
         {
             columns.map(function(column) {
+                if (column.accessor == 'company') {
+                    return <td>
+                        {row[column.accessor]['name']}
+                    </td>
+                } else if (column.accessor == 'role') {
+                    return <td>
+                        {row[column.accessor]['name']}
+                    </td>
+                }
                 return <td>{
                     row[column.accessor]
                     }</td>;
@@ -99,7 +109,7 @@ const Users = () => {
     <div>
         <h1>Usuarios</h1>
         <div className='companies'>
-            <table>
+            <table className='customTable'>
                 <thead>
                     <tr>
                         { userElements }

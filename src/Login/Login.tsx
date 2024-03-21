@@ -66,7 +66,7 @@ const Login = (props: LoginProps) => {
           localStorage.setItem('user', JSON.stringify({ email, token: r.token }))
           props.setLoggedIn(true)
           props.setEmail(email)
-          navigate('/')
+          navigate('/home')
         } else {
           window.alert('Wrong email or password')
         }
