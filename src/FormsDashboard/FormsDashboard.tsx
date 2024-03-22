@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +8,10 @@ import './FormsDashboard.css'
 
 const FormsDashboard = () => {
   const navigate = useNavigate()
+
+  const [images, setImages] = useState<any[string]>([])
+
+  const imageRef: any = useRef([]);
 
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
   /*
@@ -91,7 +95,7 @@ const FormsDashboard = () => {
   var myData: any = {
     "title": "Mi primer formulario",
     "description": "Breve descripcion del formulario",
-    "version": "1.0",
+    "version": "1",
     "type": "form",
     "section": [
         {
@@ -101,8 +105,7 @@ const FormsDashboard = () => {
                 {
                     "id": "nombre",
                     "description": "Descripción del campo",
-                    "type": "text",
-                    "value": "Valor por defecto"
+                    "type": "img"
                 },
                 {
                     "id": "pais",
@@ -157,7 +160,7 @@ const FormsDashboard = () => {
                         },
                         {
                             "value": "No binario",
-                            "type": "radio-item"
+                            "type": "radio-item",
                         }
                     ]
                 },
@@ -184,7 +187,7 @@ const FormsDashboard = () => {
                     ],
                     "columnsType": [
                         {
-                            "type":"text"
+                            "type":"img"
                         },
                         {
                             "type": "number"
@@ -198,8 +201,7 @@ const FormsDashboard = () => {
                                 },
                                 {
                                     "value": "España",
-                                    "type": "option",
-                                    "selected": true
+                                    "type": "option"
                                 },
                                 {
                                     "value": "Colombia",
@@ -236,7 +238,6 @@ const FormsDashboard = () => {
                         {
                             "value": "Espresso",
                             "type": "checkbox-option",
-                            "isChecked": true
                         },
                         {
                             "value": "Latte",
@@ -256,7 +257,6 @@ const FormsDashboard = () => {
                         {
                             "value": "Masculino",
                             "type": "radio-item",
-                            "checked": true
                         },
                         {
                             "value": "Femenino",
@@ -272,7 +272,6 @@ const FormsDashboard = () => {
                     "id": "historia",
                     "description": "Historia de vida del usuario",
                     "type": "textarea",
-                    "value": "Default value"
                 }
             ]
         }
@@ -280,6 +279,32 @@ const FormsDashboard = () => {
 };
 
 var c = 0;
+
+const fileToBase64 = (file: File, callback: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      const base64String = reader.result;;
+      callback(base64String);
+    };
+    reader.onerror = function (error) {
+      console.error('Error converting file to base64:', error);
+    };
+  }
+
+const handleFileChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
+    if (e.target.files) {
+        fileToBase64(e.target.files[0], (base64String: any) => {
+        changeImageSrc(base64String, id);
+        });
+      }
+  };
+
+  const changeImageSrc = (st: string, id: string) => {
+    if (imageRef.current[id]) {
+      imageRef.current[id].src = st;
+    }
+  };
 
 const parse = (data: any): JSX.Element[] => {
     const elements: JSX.Element[] = [];
@@ -338,6 +363,15 @@ const parse = (data: any): JSX.Element[] => {
                         elements.push(<textarea key={window.crypto.randomUUID()} defaultValue={data.value} onChange={(ev) => {
                             data[value] = ev.currentTarget.value;
                         }}></textarea>)
+                    } else if (value == 'img') {
+                        const imgId = window.crypto.randomUUID();
+                        const inputId = window.crypto.randomUUID();
+                        elements.push(<img className="form-image" src={images[imgId]} ref={(element) => imageRef.current[imgId] = element} id={imgId} key={imgId}></img>)
+                        elements.push(<div>
+                            <input type='file' accept="image/png, image/jpeg" onChange={(e) => {
+                                handleFileChange(e, imgId)
+                                }} />
+                            </div>)
                     } else if (value === 'radio') {
                         const radioId = window.crypto.randomUUID();
                         elements.push(
@@ -346,8 +380,17 @@ const parse = (data: any): JSX.Element[] => {
                                     let id = window.crypto.randomUUID();
                                     return (
                                     <label key={window.crypto.randomUUID()}>
-                                        <input type="radio" key={id} id={id} name={radioId} checked={el.checked} onChange={(ev) => {
+                                        <input type="radio" key={id} id={id} name={radioId} onChange={(ev) => {
                                             // TODO
+                                            const radios = document.getElementsByName(radioId);
+                                            radios.forEach((radio: any) => {
+                                                radio.checked = false;
+                                                el.checked = false;
+                                            });
+                                            const radio: any = document.getElementById(id);
+                                            radio.checked = true;
+                                            const curr = data.options.find((e: any) => el.id==ev.currentTarget.id);
+                                            console.log(ev.currentTarget);
                                         }} />
                                         {el.value}
                                     </label>

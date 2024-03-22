@@ -5,3 +5,8 @@
 .customTable {
     margin: 0 auto; /* or margin: 0 auto 0 auto */
 }
+
+.form-image {
+    max-height: 40%;
+    max-width: 40%;
+}

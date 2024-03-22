@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import './modal.css';
+import axios from 'axios'
 
 interface EditCompanyProps {
     id: number;
@@ -22,8 +23,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   const [companyLogo, setCompanyLogo] = useState(props.companyLogo);
 
   const updateCompany = () => {
-    fetch(`http://localhost:8080/api/v1/companies/${props.id}`, {
-    method: 'PATCH',
+    axios.patch(`http://localhost:8080/api/v1/companies/${props.id}`, {
     body: JSON.stringify({
         id: props.id,
         name: companyName,
@@ -35,7 +35,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
         'Authorization': `Bearer ${sessionStorageUser.token}`
     }
     })
-    .then((r) => r.json())
+    .then((r) => r.data)
     .then((r) => {
         props.reload();
         props.setShow(false);
@@ -43,8 +43,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   }
 
   const createCompany = () => {
-    fetch(`http://localhost:8080/api/v1/companies`, {
-    method: 'POST',
+    axios.post(`http://localhost:8080/api/v1/companies`, {
     body: JSON.stringify({
         id: companyId,
         name: companyName,
@@ -56,7 +55,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
         'Authorization': `Bearer ${sessionStorageUser.token}`
     }
     })
-    .then((r) => r.json())
+    .then((r) => r.data)
     .then((r) => {
         props.reload();
         props.setShow(false);
