@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Home.css'
-import Sidebar from '../Sidebar/Sidebar';
 
 interface HomeProps { 
     loggedIn: boolean;

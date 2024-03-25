@@ -6,6 +6,10 @@
     "@beam-australia/react-env": "^3.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@react-pdf/renderer": "^3.4.0",
+    "@rjsf/core": "^5.18.1",
+    "@rjsf/utils": "^5.18.1",
+    "@rjsf/validator-ajv8": "^5.18.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,9 +18,19 @@
     "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.22",
     "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
+    "html2pdf.js": "^0.10.1",
+    "install": "^0.13.0",
+    "jodit": "^4.0.18",
+    "jodit-react": "^4.0.15",
+    "jspdf": "^2.5.1",
+    "npm": "^10.5.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
+    "react-jsonschema-form": "^1.8.1",
+    "react-pdf-html": "^1.2.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
@@ -47,6 +61,8 @@
     ]
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/react-jsonschema-form": "^1.7.13",
     "@types/react-table": "^7.7.19"
   }
 }

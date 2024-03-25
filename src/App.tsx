@@ -1,4 +1,4 @@
-import { BrowserRouter, Form, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './Home'
 import Login from './Login/Login'
 import './App.css'
@@ -9,7 +9,10 @@ import RecoverPassword from './RecoverPassword/RecoverPassword'
 import ChangePassword from './ChangePassword/ChangePassword'
 import Companies from './Companies/Companies'
 import Users from './Users/Users'
+import FormGenerator from './FormGenerator/FormGenerator'
+import MyForm from './Form/Form'
 import FormsDashboard from './FormsDashboard/FormsDashboard'
+import FormPreview from './PDF/FormPreview'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -28,6 +31,10 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/forms" element={<FormsDashboard />} />
+          <Route path="/forms/:id" element={<MyForm isEdit={false} />} />
+          <Route path="/forms/edit/:id" element={<MyForm isEdit={true} />} />
+          <Route path="/form-generator" element={<FormGenerator />} />
+          <Route path="/forms/preview/:id" element={<FormPreview />} />
         </Route>
         </Routes>
       </BrowserRouter>

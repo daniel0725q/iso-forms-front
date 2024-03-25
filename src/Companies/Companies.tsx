@@ -29,7 +29,6 @@ const Companies = () => {
     })
     .then((r) => r.json())
     .then((r) => {
-        console.log(r);
         const r2 = r.sort((e1: any, e2: any) => {
             if (e1.id > e2.id) return 1;
             else if (e1.id == e2.id) return 0;
@@ -93,17 +92,17 @@ const Companies = () => {
   }
 
   let userElements = columns.map(function(column) {
-    return <th>{column.Header}</th>;
+    return <th key={window.crypto.randomUUID()}>{column.Header}</th>;
   });
 
   let tableElements = data.map(function(row) {
-    return <tr>
+    return <tr key={window.crypto.randomUUID()}>
         {
             columns.map(function(column) {
-                return <td>{
+                return <td key={window.crypto.randomUUID()}>{
                     column.accessor != "logo" ?
                     row[column.accessor]
-                    : <img className='logo' src={row["logo"]}></img>
+                    : <img key={window.crypto.randomUUID()} className='logo' src={row["logo"]}></img>
                     }</td>;
               })
         }
@@ -129,9 +128,9 @@ const Companies = () => {
         <div className='companies'>
             <table className='customTable'>
                 <thead>
-                    <tr>
+                    <tr key={window.crypto.randomUUID()}>
                         { userElements }
-                        <th>Opciones</th>
+                        <th key={window.crypto.randomUUID()}>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>

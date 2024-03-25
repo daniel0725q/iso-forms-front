@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from 'react';
 import './modal.css';
-import axios from 'axios'
 
 interface EditCompanyProps {
     id: number;
@@ -14,8 +13,6 @@ interface EditCompanyProps {
 }
 
 const CreateOrEditCompany = (props: EditCompanyProps) => {
-    console.log(props);
-
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
   const [companyId, setCompanyId] = useState('');
   const [companyName, setCompanyName] = useState(props.companyName);
@@ -23,7 +20,8 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   const [companyLogo, setCompanyLogo] = useState(props.companyLogo);
 
   const updateCompany = () => {
-    axios.patch(`http://localhost:8080/api/v1/companies/${props.id}`, {
+    fetch(`http://localhost:8080/api/v1/companies/${props.id}`, {
+    method: 'PATCH',
     body: JSON.stringify({
         id: props.id,
         name: companyName,
@@ -35,7 +33,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
         'Authorization': `Bearer ${sessionStorageUser.token}`
     }
     })
-    .then((r) => r.data)
+    .then((r) => r.json())
     .then((r) => {
         props.reload();
         props.setShow(false);
@@ -43,7 +41,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   }
 
   const createCompany = () => {
-    axios.post(`http://localhost:8080/api/v1/companies`, {
+    fetch(`http://localhost:8080/api/v1/companies`, {
     body: JSON.stringify({
         id: companyId,
         name: companyName,
@@ -55,7 +53,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
         'Authorization': `Bearer ${sessionStorageUser.token}`
     }
     })
-    .then((r) => r.data)
+    .then((r) => r.json())
     .then((r) => {
         props.reload();
         props.setShow(false);
