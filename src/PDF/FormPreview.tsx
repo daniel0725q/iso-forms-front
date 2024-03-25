@@ -41,11 +41,11 @@ const FormPreview = () => {
       };
 
       const generatePDF = () => {
-        var element = document.querySelector('.page');
+        var element = document.querySelector('#all');
         html2pdf(element);
     }
 
-    function getOverflowingElements(parentDiv: any) {
+    function getOverflowingElements2(parentDiv: any) {
         const overflowingElements = [];
         const childNodes = parentDiv.childNodes; // Get all child nodes
       
@@ -60,29 +60,53 @@ const FormPreview = () => {
         return overflowingElements;
       }
 
-    function handleOverflow(parentDiv: any, elements: any[]) {
-        if (parentDiv.scrollHeight > parentDiv.clientHeight) {
-          const newDiv = document.createElement('div');
-          newDiv.classList.add('pages'); // Optional: Add a class for styling
-          parentDiv.parentNode.insertBefore(newDiv, parentDiv.nextSibling);
-            elements.forEach((el: any) => {
-                console.log(el);
-                newDiv.appendChild(el);
-                var oel = getOverflowingElements(newDiv)
-                if (oel) {
-                    handleOverflow(newDiv, oel);
-                }
-            });
+      function getOverflowingElements(parentDiv: any) {
+        const overflowingElements = [];
+        const childNodes = parentDiv.childNodes; // Get all child nodes
+      
+        for (let i = 0; i < childNodes.length; i++) {
+          const childNode = childNodes[i];
+          if (childNode.nodeType === Node.ELEMENT_NODE) {
+            const childRect = childNode.getBoundingClientRect();
+            const parentRect = parentDiv.getBoundingClientRect();
+      
+            // Check if element bottom overflows parent bottom and element top is within parent
+            if (childRect.bottom > parentRect.bottom && childRect.top >= parentRect.top) {
+              overflowingElements.push(childNode);
+              childNode.remove();
+            }
+          }
         }
+      
+        return overflowingElements;
+      }
+
+    function handleOverflow(parentDiv: any) {
+        if (parentDiv.scrollHeight > parentDiv.clientHeight) {
+          var of = getOverflowingElements(parentDiv);
+          console.log(of);
+          const newDiv = document.createElement('div');
+          newDiv.classList.add('pages');
+          of.forEach((el: any) => {
+            newDiv.innerHTML = newDiv.innerHTML + el.innerHTML;
+          });
+          parentDiv.parentNode.appendChild(newDiv);
+          var oel = getOverflowingElements(parentDiv.parentNode.lastChild);
+          console.log(oel);
+          if (oel) {
+            handleOverflow(parentDiv.parentNode.lastChild);
+          }
+        }
+        generatePDF();
       }
    
       return (
         <div>
             <button onClick={() => {
-                var of = getOverflowingElements(document.getElementById("pages"));
-                handleOverflow(document.getElementById("pages"), of);
+                handleOverflow(document.getElementById("pages"));
 
         }}>Generate PDF</button>
+        <div id='all'>
             <div className='pages' id='pages'>
                 {parse(data.form)}
                 {parse(data.form)}
@@ -96,6 +120,19 @@ const FormPreview = () => {
                 {parse(data.form)}
                 {parse(data.form)}
                 {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+                {parse(data.form)}
+            </div>
             </div>
         </div>
       );

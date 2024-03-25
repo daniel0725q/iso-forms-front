@@ -3,6 +3,11 @@
     text-align: left;
 }
 
+.header-img {
+    height: 100px;
+    width: 100px;
+}
+
 .pages {
     width: 21cm;
     height: 29.7cm;
