@@ -1,5 +1,5 @@
 .section {
-    margin-left: 20%;
+    margin-left: 5%;
     text-align: left;
 }
 
@@ -8,19 +8,30 @@
     width: 100px;
 }
 
+.hd {
+    width: 21cm;
+    min-height: 100px;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
 .pages {
     width: 21cm;
-    height: 29.7cm;
+    min-height: 29.7cm;
     padding: 0cm;
     margin: 1cm auto;
     border: 1px #D3D3D3 solid;
     border-radius: 5px;
     background: white;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    padding: 5%;
 }
 
 ul, ol {
-    margin: 0;
-    padding: 0;
-    list-style-position: inside;
+    margin-left: 0; /* Remove default margin */
+    padding-left: 0; /* Remove default padding */
+    list-style-position: inside; /* Align list markers inside the list item */
 }
