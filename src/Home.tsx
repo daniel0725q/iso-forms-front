@@ -24,10 +24,14 @@ const Home = (props: HomeProps) => {
     <div>
       <div className="mainContainer">
         <div className={'titleContainer'}>
-          <h1>GSIntegral</h1>
-          <h2>¡Bienvenido!</h2>
+          <img src='logogs.png' height={80}></img>
         </div>
-        <div>Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral o inicia sesión.</div>
+        <div>
+          <b>Bienvenido</b>
+          <p>
+          Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral o inicia sesión.
+          </p>
+        </div>
         <div className={'buttonContainer'}>
           {props.loggedIn ? <div>Tu email es {props.email}</div> : <div />}
           <input

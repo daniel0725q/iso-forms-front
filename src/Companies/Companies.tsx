@@ -4,6 +4,7 @@ import './Companies.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
+import { Table } from 'antd'
 
 const Companies = () => {
   const navigate = useNavigate()
@@ -40,21 +41,42 @@ const Companies = () => {
 
   const columns = [
     {
-        Header: 'NIT',  
-        accessor: 'id'  
-    },
-    {  
-        Header: 'Nombre',  
-        accessor: 'name'  
+        title: 'NIT',
+        dataIndex: 'id',
+        key: 'id'
     },
     {
-        Header: 'Razón social',
-        accessor: 'socialName'  
+        title: 'Nombre',
+        dataIndex: 'name',
+        key: 'name'
     },
-    {  
-        Header: 'Logo',  
-        accessor: 'logo'  
-    }
+    {
+        title: 'Razón social',
+        dataIndex: 'socialName',
+        key: 'socialBane'
+    },
+    {
+        title: 'Logo',
+        dataIndex: 'logo',
+        key: 'logo',
+        render: (_: any, record: any) => (
+            <img height={30} width={30} src={record.logo}></img>
+        )
+    },
+    {
+        title: 'Acciones',
+        key: 'action',
+        render: (_: any, record: any) => (
+            <div>
+                <Link to={`#`}><FontAwesomeIcon icon={faPen} onClick={() => {
+                onEditClick(record.id, record.name, record.socialName, record.logo
+                )}}></FontAwesomeIcon></Link>
+            <Link to={`#`}><FontAwesomeIcon icon={faTrash} onClick={() => {
+                onDeleteClick(record.id);
+            }} /></Link>
+            </div>
+        ),
+      },
   ];
 
   const onCreateClick = () => {
@@ -91,52 +113,16 @@ const Companies = () => {
     }
   }
 
-  let userElements = columns.map(function(column) {
-    return <th key={window.crypto.randomUUID()}>{column.Header}</th>;
-  });
-
-  let tableElements = data.map(function(row) {
-    return <tr key={window.crypto.randomUUID()}>
-        {
-            columns.map(function(column) {
-                return <td key={window.crypto.randomUUID()}>{
-                    column.accessor != "logo" ?
-                    row[column.accessor]
-                    : <img key={window.crypto.randomUUID()} className='logo' src={row["logo"]}></img>
-                    }</td>;
-              })
-        }
-            <td>
-                <FontAwesomeIcon icon={faPen} onClick={() => {
-                    onEditClick(row['id'], row['name'], row['socialName'], row['logo']
-                    );
-                }
-                }/>
-                &nbsp;
-                <FontAwesomeIcon icon={faTrash}onClick={() => {
-                    onDeleteClick(row['id']);
-                }
-            }/>
-            </td>
-        </tr>
-  }
-  )
-
   return (
     <div>
         <h1>Empresas</h1>
         <div className='companies'>
-            <table className='customTable'>
-                <thead>
-                    <tr key={window.crypto.randomUUID()}>
-                        { userElements }
-                        <th key={window.crypto.randomUUID()}>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { tableElements }
-                </tbody>
-            </table>
+            <Table
+                columns={columns}
+                dataSource={data}
+                pagination={false} // Disable pagination if not needed
+                className="customTable" // Add custom class for additional styling
+                />
         </div>
         <Link to={'#'} className='link' onClick={onCreateClick}>
             <FontAwesomeIcon icon={faPlus} size='2x' />

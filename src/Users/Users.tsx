@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import CreateUser from '../CreateUser/CreateUser'
 import './Users.css'
+import { Table } from 'antd'
 
 const Users = () => {
   const navigate = useNavigate()
@@ -13,43 +14,59 @@ const Users = () => {
   const [show, setShow] =  useState(false);
   const [reload, setReload] = useState(true);
 
-  useEffect(() => loadUsers);
+  useEffect(() => loadUsers, []);
 
   const loadUsers = () => {
-    if (reload) {
-        fetch(`http://localhost:8080/api/v1/users`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorageUser.token}`
-        },
-        })
-        .then((r) => r.json())
-        .then((r) => {
-            const r2 = r.sort((e1: any, e2: any) => {
-                if (e1.id > e2.id) return 1;
-                else if (e1.id == e2.id) return 0;
-                else return -1;
-            });
-            setData(r2);
-            setReload(false);
+    fetch(`http://localhost:8080/api/v1/users`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorageUser.token}`
+    },
+    })
+    .then((r) => r.json())
+    .then((r) => {
+        const r2 = r.sort((e1: any, e2: any) => {
+            if (e1.id > e2.id) return 1;
+            else if (e1.id == e2.id) return 0;
+            else return -1;
         });
-    }
+        setData(r2);
+        setReload(false);
+    });
   }
 
   const columns = [
-    {  
-        Header: 'Email',  
-        accessor: 'email'  
+    {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email'
     },
     {
-        Header: 'Compañía',
-        accessor: 'company'
+        title: 'Compañía',
+        dataIndex: 'company',
+        key: 'company',
+        render: (_: any, record: any) => (
+            <p>{record.company.name}</p>
+          ),
     },
     {
-        Header: 'Rol',
-        accessor: 'role'
-    }
+        title: 'Rol',
+        dataIndex: 'role',
+        key: 'role',
+        render: (_: any, record: any) => (
+            <p>{record.role.name}</p>
+          ),
+    },
+    {
+        title: 'Acciones',
+        key: 'action',
+        render: (_: any, record: any) => (
+            <Link to={`#`}><FontAwesomeIcon icon={faTrash} onClick={() => {
+                onDeleteClick(record.id);
+            }} /></Link>
+        ),
+      },
   ];
 
   const onCreateClick = () => {
@@ -72,62 +89,26 @@ const Users = () => {
     }
   }
 
-  let userElements = columns.map(function(column) {
-    return <th>{column.Header}</th>;
-  });
-
-  let tableElements = data.map(function(row) {
-    return <tr>
-        {
-            columns.map(function(column) {
-                if (column.accessor == 'company') {
-                    return <td>
-                        {row[column.accessor]['name']}
-                    </td>
-                } else if (column.accessor == 'role') {
-                    return <td>
-                        {row[column.accessor]['name']}
-                    </td>
-                }
-                return <td>{
-                    row[column.accessor]
-                    }</td>;
-              })
-        }
-            <td>
-                <FontAwesomeIcon icon={faTrash}onClick={() => {
-                    onDeleteClick(row['id']);
-                }
-            }/>
-            </td>
-        </tr>
-  }
-  )
-
   return (
     <div>
         <h1>Usuarios</h1>
-        <div className='companies'>
-            <table className='customTable'>
-                <thead>
-                    <tr>
-                        { userElements }
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { tableElements }
-                </tbody>
-            </table>
-        </div>
-        <Link to={'#'} className='link' onClick={onCreateClick}>
-            <FontAwesomeIcon icon={faPlus} size='2x' />
-            <b className='linkDesc'>Nuevo usuario</b>
-        </Link>
+        <div className='companies' style={{width: '60%', marginLeft: '20%'}}>
+        <Table
+      dataSource={data}
+      columns={columns}
+      bordered
+      className="customTable"
+      pagination={{ pageSize: 10 }}
+    />
+    <Link to={'#'} className='link' onClick={onCreateClick}>
+        <FontAwesomeIcon icon={faPlus} size='2x' />
+        <b className='linkDesc'>Nuevo usuario</b>
+    </Link>
         {show ?
-        <CreateUser setShow={setShow} show={show}  />
+        <CreateUser setShow={setShow} show={show} reloadUsers={loadUsers} />
     : <div></div>
     }
+    </div>
     </div>
   )
 }

@@ -1,5 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import './modal.css';
+import { Button, Input, Modal, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 interface EditCompanyProps {
     id: number;
@@ -42,6 +44,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
 
   const createCompany = () => {
     fetch(`http://localhost:8080/api/v1/companies`, {
+    method: 'POST',
     body: JSON.stringify({
         id: companyId,
         name: companyName,
@@ -60,13 +63,11 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
     })
   }
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-        fileToBase64(e.target.files[0], function (base64String: any) {
+  const handleFileChange = (f: any) => {
+        fileToBase64(f, function (base64String: any) {
         setCompanyLogo(base64String);
         // You can use the base64String as needed, for example, send it to the server.
         });
-      }
   };
 
   const fileToBase64 = (file: File, callback: any) => {
@@ -84,62 +85,77 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   const showHideClassName = props.show ? "modal display-block" : "modal display-none";
 
   return (
-    <div className={showHideClassName}>
+    <Modal
+        title="Crear/Editar empresa"
+        open={props.show}
+        onCancel={() => props.setShow(false)}
+        footer={[
+          <div>
+            <Button type="default" onClick={() => props.setShow(false)}>
+            Cancelar
+          </Button>
+          <Button
+            type="primary"
+            className="save"
+            onClick={props.isCreate ? createCompany : updateCompany}
+          >
+            Guardar
+          </Button>
+          </div>
+        ]}
+        bodyStyle={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }} // Custom body style for scrolling
+      >
       <section className="modal-main">
-      {props.isCreate ?
-      <div className={'inputContainer'}>
-      <h3>NIT de la companía</h3> 
-       <input
-           value={companyId}
-           onChange={(ev) => setCompanyId(ev.target.value)}
-           className={'inputBox'}
-           type={'number'}
-           />
-       </div>
-       : <></>
-      }
-      <div className={'inputContainer'}>
-       <h3>Nombre de la companía</h3> 
-        <input
+        {props.isCreate && (
+          <div className="inputContainer">
+            <h3>NIT de la compañía</h3>
+            NIT de la compañía<Input
+              value={companyId}
+              onChange={(ev) => setCompanyId(ev.target.value)}
+              className="inputBox"
+              type="number"
+              required
+            />
+          </div>
+        )}
+        <div className="inputContainer">
+          <h3>Nombre de la compañía</h3>
+          <Input
             value={companyName}
             onChange={(ev) => setCompanyName(ev.target.value)}
-            className={'inputBox'}
-            type={'text'}
-            />
+            className="inputBox"
+            type="text"
+            required
+          />
         </div>
-        <div className={'inputContainer'}>
-        <h3>Nombre social de la companía</h3>
-        <input
+        <div className="inputContainer">
+          <h3>Nombre social de la compañía</h3>
+          <Input
             value={companySocialName}
             onChange={(ev) => setCompanySocialName(ev.target.value)}
-            className={'inputBox'}
-            type={'text'}
-            />
+            className="inputBox"
+            type="text"
+            required
+          />
         </div>
-        <div className={'inputContainer'}>
-        <h3>Logo</h3>
-        <img className='logo'
-            src={companyLogo}
-            />
-            <br></br>
-            <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
+        <div className="inputContainer">
+          <h3>Logo</h3>
+          <Upload
+            className="logoUpload"
+            beforeUpload={() => false} // Disable automatic upload
+            onChange={(ev) => handleFileChange(ev.file)}
+            accept="image/*"
+          >
+            <Button icon={<UploadOutlined />}>Seleccionar archivo</Button>
+          </Upload>
+          {companyLogo && (
+            <img height={200} width={200} className="logoPreview" src={companyLogo} alt="Company Logo" />
+          )}
         </div>
-        <br></br>
-        <button type="button" onClick={() => props.setShow(false)}>
-          Cancelar
-        </button>
-        <button type="button" className='save' onClick={() => {
-          if (props.isCreate) {
-            createCompany()
-          } else {
-            updateCompany()
-          }
-            }}>
-          Guardar
-        </button>
-        <br />
+        <div>
+        </div>
       </section>
-    </div>
+    </Modal>
   );
 };
 

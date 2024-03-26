@@ -1,3 +1,4 @@
+import { Button, Form, Input } from 'antd'
 import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 // import './Login.css'
@@ -64,86 +65,63 @@ const ChangePassword = () => {
     })
       .then((r) => r.json())
       .then((r) => {
-        navigate("/")
+        navigate("/home")
       })
   }
 
   return (
-    <div className='parentContainer'>
-        <div className={'centered'}>
-            <div className={'mainContainer'}>
-                <div className={'titleContainer'}>
-                    <h1>GSIntegral</h1>
-                    <h3>Sistemas integrados de gestión</h3>
-                </div>
-                <div className={'inputContainer'}>
-                    <input
-                    value={password}
-                    placeholder="Contraseña actual"
-                    onChange={(ev) => setPassword(ev.target.value)}
-                    className={'inputBox'}
-                    type={'password'}
-                    />
-                    <br />
-                    {
-                        passwordError ? (
-                            <div className='error'>
-                                <label className="errorLabel">{passwordError}</label>
-                                <br />
-                            </div>
-                        ) : (
-                            ''
-                        )
-                    }
-                </div>
-                <div className={'inputContainer'}>
-                    <input
-                    value={newPassword}
-                    placeholder="Nueva contraseña"
-                    onChange={(ev) => setNewPassword(ev.target.value)}
-                    className={'inputBox'}
-                    type={'password'}
-                    />
-                    <br />
-                    {
-                        newPasswordError ? (
-                            <div className='error'>
-                                <label className="errorLabel">{newPasswordError}</label>
-                                <br />
-                            </div>
-                        ) : (
-                            ''
-                        )
-                    }
-                </div>
-                <div className={'inputContainer'}>
-                    <input
-                    value={confirmPassword}
-                    placeholder="Confirmar contraseña"
-                    onChange={(ev) => setConfirmPassword(ev.target.value)}
-                    className={'inputBox'}
-                    type={'password'}
-                    />
-                    <br />
-                    {
-                        confirmPasswordError ? (
-                            <div className='error'>
-                                <label className="errorLabel">{confirmPasswordError}</label>
-                                <br />
-                            </div>
-                        ) : (
-                            ''
-                        )
-                    }
-                </div>
-                <div className={'inputContainer'}>
-                    <input className={'inputButton'} type="button" onClick={onButtonClick} value={'Cambiar contraseña'} />
-                </div>
-            </div>
+    <div className="parentContainer">
+      <div className="centered">
+        <div className="mainContainer">
+          <div className="titleContainer">
+            <h1>GSIntegral</h1>
+            <h3>Sistemas integrados de gestión</h3>
+          </div>
+          <Form onFinish={changePassword}>
+            <Form.Item
+              validateStatus={passwordError ? 'error' : ''}
+              help={passwordError || ''}
+            >
+              <Input.Password
+                value={password}
+                placeholder="Contraseña actual"
+                onChange={(ev) => setPassword(ev.target.value)}
+                className="inputBox"
+              />
+            </Form.Item>
+            <Form.Item
+              validateStatus={newPasswordError ? 'error' : ''}
+              help={newPasswordError || ''}
+            >
+              <Input.Password
+                value={newPassword}
+                placeholder="Nueva contraseña"
+                onChange={(ev) => setNewPassword(ev.target.value)}
+                className="inputBox"
+              />
+            </Form.Item>
+            <Form.Item
+              validateStatus={confirmPasswordError ? 'error' : ''}
+              help={confirmPasswordError || ''}
+            >
+              <Input.Password
+                value={confirmPassword}
+                placeholder="Confirmar contraseña"
+                onChange={(ev) => setConfirmPassword(ev.target.value)}
+                className="inputBox"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" className="inputButton">
+                Cambiar contraseña
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
-        <div className='secondaryContainer'></div>
+      </div>
+      <div className="secondaryContainer"></div>
     </div>
-  )
+  );
 }
 
 export default ChangePassword

@@ -6,6 +6,7 @@ import { Option } from 'antd/es/mentions';
 interface CreateUserProps {
     setShow: any;
     show: boolean;
+    reloadUsers: any;
 }
 
 const CreateUser = (props:CreateUserProps) => {
@@ -36,6 +37,7 @@ const CreateUser = (props:CreateUserProps) => {
     .then((r) => r.json())
     .then((r) => {
         props.setShow(false);
+        props.reloadUsers();
     })
   }
 
@@ -61,26 +63,31 @@ const CreateUser = (props:CreateUserProps) => {
     }
   }
 
-  const showHideClassName = props.show ? "modal display-block" : "modal display-none";
-
   return (
     <Modal
-      visible={props.show}
-      onCancel={props.setShow(false)}
-      footer={null}
-    >
-      <div className="modal-main">
-        <div className="inputContainer">
-          <h3>Email</h3>
+        title="Crear/Editar usuario"
+        open={props.show}
+        onCancel={() => props.setShow(false)}
+        footer={[
+          <Button key="cancel" onClick={() => props.setShow(false)}>
+            Cancelar
+          </Button>,
+          <Button key="submit" type="primary" onClick={createUser}>
+            Crear
+          </Button>,
+        ]}
+        bodyStyle={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }} // Custom body style for scrolling
+      >
+      <div style={{ marginBottom: '50px' }}>
+          <b>Email:</b>
           <Input
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
             className="inputBox"
             type="text"
+            required
           />
-        </div>
-        <div className="inputContainer">
-          <h3>Compañía</h3>
+          <b>Compañía:</b>
           <Select
             value={userCompany}
             onChange={(value) => setCompanyId(value)}
@@ -92,9 +99,7 @@ const CreateUser = (props:CreateUserProps) => {
               </Option>
             ))}
           </Select>
-        </div>
-        <div className="inputContainer">
-          <h3>Rol</h3>
+          <b>Rol:</b>
           <Select
             value={roleId}
             onChange={(value) => setRoleId(value)}
@@ -104,15 +109,6 @@ const CreateUser = (props:CreateUserProps) => {
             <Option value={'2'}>Supervisor</Option>
             <Option value={'3'}>Usuario</Option>
           </Select>
-        </div>
-        <div>
-          <Button type="default" onClick={props.setShow(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" className="save" onClick={createUser}>
-            Guardar
-          </Button>
-        </div>
       </div>
     </Modal>
   );
