@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Menu } from 'antd';
 import './Sidebar.css'
+import Sider from 'antd/es/layout/Sider';
 
 const Sidebar = () => {
   const navigate = useNavigate()
@@ -69,18 +71,50 @@ const Sidebar = () => {
 
   return (
     <div>
-        {
-            !!sessionStorageUser ?
-        <div className="sidebar">
-            <Link className={isHomeActive ? "active" : ''} to="/home" onClick={onHomeLinkClick}>Inicio</Link>
-            {isAdmin ? <Link className={isAboutActive ? "active" : ''} to="/companies" onClick={onCompaniesLinkClick}>Empresas</Link> : <></>}
-            {isAdmin? <Link className={isNewsActive ? "active" : ''} to="/users" onClick={onUsersLinkClick}>Usuarios</Link> : <></>}
-            <Link className={isContactActive ? "active" : ''} to="/forms" onClick={onFormsLinkClick}>Formularios</Link>
-            <Link className={'changePassword'} to="/change-password">Cambiar contraseña</Link>
-            <Link className={'signout'} to="/login" onClick={onButtonClick}>Cerrar sesión</Link>
-        </div>
-        : <div></div>
-        }
+      {sessionStorageUser ? (
+        <Sider width={200} style={{ background: '#fff' }}>
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={['home']}
+          style={{ height: '100%', borderRight: 0 }}
+        >
+          <Menu.Item key="home" className={isHomeActive ? 'active' : ''}>
+            <Link to="/home" onClick={onHomeLinkClick}>
+              Inicio
+            </Link>
+          </Menu.Item>
+          {isAdmin && (
+            <Menu.Item key="companies" className={isAboutActive ? 'active' : ''}>
+              <Link to="/companies" onClick={onCompaniesLinkClick}>
+                Empresas
+              </Link>
+            </Menu.Item>
+          )}
+          {isAdmin && (
+            <Menu.Item key="users" className={isNewsActive ? 'active' : ''}>
+              <Link to="/users" onClick={onUsersLinkClick}>
+                Usuarios
+              </Link>
+            </Menu.Item>
+          )}
+          <Menu.Item key="forms" className={isContactActive ? 'active' : ''}>
+            <Link to="/forms" onClick={onFormsLinkClick}>
+              Formularios
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="changePassword" className="changePassword">
+            <Link to="/change-password">Cambiar contraseña</Link>
+          </Menu.Item>
+          <Menu.Item key="signout" className="signout">
+            <Link to="/login" onClick={onButtonClick}>
+              Cerrar sesión
+            </Link>
+          </Menu.Item>
+        </Menu>
+        </Sider>
+      ) : (
+        <div></div>
+      )}
     </div>
   )
 }

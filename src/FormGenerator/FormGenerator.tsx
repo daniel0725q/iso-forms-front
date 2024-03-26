@@ -1,4 +1,7 @@
+import { Button, Input, Select, Space } from 'antd'
 import React, { useState } from 'react';
+import { Option } from 'antd/es/mentions';
+import { useNavigate } from 'react-router-dom';
 
 function FormGenerator() {
 
@@ -8,6 +11,7 @@ function FormGenerator() {
   const [type, setType] = useState<number>(1);
 
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<any>({
     title: title,
@@ -55,83 +59,78 @@ function FormGenerator() {
     })
       .then((r) => r.json())
       .then((r) => {
-        console.log(r);
+        navigate('/forms')
       })
   }
 
   return (
-    <div>
-      <h1>Editor de Formularios</h1>
-      <label>Título:</label>
-      <input
-        type="text"
-        name="title"
-        value={title}
-        onChange={(ev) => setTitle(ev.target.value)}
-      />
-      <br />
-      <label>Versión:</label>
-      <input
-        type="text"
-        name="version"
-        value={version}
-        onChange={(ev) => setVersion(ev.target.value)}
-      />
-      <br />
-      <label>Código:</label>
-      <input
-        type="text"
-        name="code"
-        value={code}
-        onChange={(ev) => setCode(ev.target.value)}
-      />
-      <br />
-      <label>Tipo:</label>
-      <select
-        name="type"
-        value={type}
-        onChange={(ev) => setType(parseInt(ev.target.value))}
-      >
-        <option value={1}>ISO</option>
-        <option value={2}>SST</option>
-      </select>
-      <br />
-      <h2>Secciones</h2>
-      {formData.sections.map((section: any, index: number) => {
-        return (
-            <div>
+        <div style={{textAlign: 'center'}}>
+          <h1>Editor de Formularios</h1>
+          <div style={{width: '20%', marginLeft: '40%'}}>
+            <label>Título:</label>
+            <Input
+                type="text"
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            <br />
+            <label>Versión:</label>
+            <Input
+                type="text"
+                name="version"
+                value={version}
+                onChange={(e) => setVersion(e.target.value)}
+            />
+            <br />
+            <label>Código:</label>
+            <Input
+                type="text"
+                name="code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+            />
+            <br />
+            <label>Tipo:</label>
+            <Select
+                value={type}
+                onChange={(value) => setType(value)}
+            >
+                <Option value="1">ISO</Option>
+                <Option value="2">SST</Option>
+            </Select>
+            <br />
+            <h2>Secciones</h2>
+            {formData.sections.map((section: any, index: any) => (
+                <div key={index}>
                 <h3>Sección {index + 1}</h3>
-            <label>Id:</label>
-      <input
-        type="text"
-        name="id"
-        value={section.id}
-        onChange={(ev) => section.id = ev.currentTarget.value}
-      />
-      <br />
-      <label>Nombre:</label>
-      <input
-        type="text"
-        name="name"
-        value={section.name}
-        onChange={(ev) => section.name = ev.currentTarget.value}
-      />
-      <br />
-      <label>Botones:</label>
-      <input
-        type="text"
-        name="buttons"
-        value={section.buttons}
-        onChange={(ev) => section.buttons = ev.currentTarget.value.split(',')}
-      />
+                <label>Id:</label>
+                <Input
+                    type="text"
+                    value={section.id}
+                    onChange={(e: any) => section.id = e.target.value}
+                />
+                <br />
+                <label>Nombre:</label>
+                <Input
+                    type="text"
+                    value={section.name}
+                    onChange={(e) => section.name = e.target.value}
+                />
+                <br />
+                <label>Botones:</label>
+                <Input
+                    type="text"
+                    value={section.buttons}
+                    onChange={(e) => section.buttons = e.currentTarget.value.split(',')}
+                />
+                </div>
+            ))}
+            <Button onClick={addSection} type="default">Añadir sección</Button>
+            <Button onClick={generateJSON} type="primary" style={{marginTop: '10px'}}>Guardar formulario</Button>
             </div>
-        );
-        })}
-        <button onClick={addSection}>Añadir sección</button>
-        <br></br>
-        <button onClick={generateJSON}>Guardar formulario</button>
-      </div>
-      )
+        </div>
+      );
     }
 
 

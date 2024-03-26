@@ -5,6 +5,7 @@ import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-i
 import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
 import { randomUUID } from 'crypto'
 import './FormsDashboard.css'
+import { Space, Table } from 'antd'
 
 const FormsDashboard = () => {
     const navigate = useNavigate();
@@ -55,63 +56,96 @@ const FormsDashboard = () => {
             setReloadMyForms(reloadMyForms + 1);
         })
     }
+
+    const columns = [
+        {
+            title: 'Título',
+            dataIndex: 'title',
+            key: 'title',
+        },
+        {
+            title: 'Código',
+            dataIndex: 'code',
+            key: 'code',
+        },
+        {
+            title: 'Tipo',
+            dataIndex: 'type',
+            key: 'type',
+            filters: [
+                {
+                  text: 'ISO',
+                  value: '1',
+                },
+                {
+                    text: 'SST',
+                    value: '2',
+                  },
+            ],
+            onFilter: (value: any, record: any) => record && record.type && record.type == value
+        },
+        {
+            title: 'Versión',
+            dataIndex: 'version',
+            key: 'version',
+        },
+        {
+            title: 'Acciones',
+            key: 'action',
+            render: (_: any, record: any) => (
+              <Space size="middle">
+                <Link to={`/forms/${record.id}`}><FontAwesomeIcon icon={faPlus} /></Link>
+              </Space>
+            ),
+          },
+    ];
+
+    const myColumns = [
+        {
+            title: 'Código',
+            dataIndex: 'code',
+            key: 'code',
+            render: (_: any, record: any) => (
+                <p>{record.formTemplate.code}</p>
+              ),
+        },
+        {
+            title: 'Versión',
+            dataIndex: 'version',
+            key: 'version',
+            render: (_: any, record: any) => (
+                <p>{record.formTemplate.version}</p>
+              ),
+        },
+        {
+            title: 'Acciones',
+            key: 'action',
+            render: (_: any, record: any) => (
+              <Space size="middle">
+                <Link to={`/forms/edit/${record.id}`}><FontAwesomeIcon icon={faPen} /></Link>
+                <Link to={`#`}><FontAwesomeIcon icon={faTrash} onClick={() => {
+                    if (window.confirm("¿Seguro que deseas eliminar el formulario?")) {
+                        deleteForm(record.id);
+                    }
+                }} /></Link>
+                <Link to={`/forms/preview/${record.id}`} onClick={() => {
+                }}><FontAwesomeIcon icon={faFilePdf} onClick={() => {
+                }} /></Link>
+              </Space>
+            ),
+          },
+    ];
     
     return (
         <div>
             <h1>Formularios</h1>
+            <div style={{width: '60%', marginLeft: '20%'}}>
             <i>Todos los formularios disponibles</i>
-            <table className='customTable'>
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Código</th>
-                        <th>Tipo</th>
-                        <th>Versión</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { formTemplates.map((row: any) => <tr>
-                        <td>{row.title}</td>
-                        <td>{row.code}</td>
-                        <td>{row.type}</td>
-                        <td>{row.version}</td>
-                        <td>
-                            <Link to={`/forms/${row.id}`}><FontAwesomeIcon icon={faPlus} /></Link>
-                        </td>
-                    </tr>) }
-                </tbody>
-            </table>
+            <Table dataSource={formTemplates} columns={columns} className="custom-table" />
 
             <i>Mis formularios</i>
-            <table className='customTable'>
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Versión</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { myForms.map((form: any) => <tr>
-                        <td>{form.formTemplate.code}</td>
-                        <td>{form.formTemplate.version}</td>
-                        <td>
-                            <Link to={`/forms/edit/${form.id}`}><FontAwesomeIcon icon={faPen} /></Link>
-                            &nbsp;
-                            <Link to={`#`}><FontAwesomeIcon icon={faTrash} onClick={() => {
-                                if (window.confirm("¿Seguro que deseas eliminar el formulario?")) {
-                                    deleteForm(form.id);
-                                }
-                            }} /></Link>
-                            &nbsp;
-                            <Link to={`/forms/preview/${form.id}`} onClick={() => {
-                            }}><FontAwesomeIcon icon={faFilePdf} onClick={() => {
-                            }} /></Link>
-                        </td>
-                    </tr>) }
-                </tbody>
-            </table>
+            <Table dataSource={myForms} columns={myColumns} className="custom-table" />
+        </div>
         </div>
     )
 }

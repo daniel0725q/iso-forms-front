@@ -1,5 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import './modal.css';
+import { Button, Input, Modal, Select } from 'antd';
+import { Option } from 'antd/es/mentions';
 
 interface CreateUserProps {
     setShow: any;
@@ -62,45 +64,57 @@ const CreateUser = (props:CreateUserProps) => {
   const showHideClassName = props.show ? "modal display-block" : "modal display-none";
 
   return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-      <div className={'inputContainer'}>
-      <h3>Email</h3> 
-       <input
-           value={userEmail}
-           onChange={(ev) => setUserEmail(ev.target.value)}
-           className={'inputBox'}
-           type={'text'}
-           />
-       </div>
-      <div className={'inputContainer'}>
-       <h3>Compañía</h3> 
-       <select value={userCompany} onChange={e => setCompanyId(e.target.value)}>
-        {companies.map((el: any) => (
-              <option key={el.value} value={el.id}>{el.name}</option>
-          ))}
-       </select>
+    <Modal
+      visible={props.show}
+      onCancel={props.setShow(false)}
+      footer={null}
+    >
+      <div className="modal-main">
+        <div className="inputContainer">
+          <h3>Email</h3>
+          <Input
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            className="inputBox"
+            type="text"
+          />
         </div>
-        <div className={'inputContainer'}>
-        <h3>Rol</h3>
-        <select value={roleId} onChange={e => setRoleId(e.target.value)}>
-          <option value={1}>Administrador</option>
-          <option value={2}>Supervisor</option>
-          <option value={3}>Usuario</option>
-        </select>
+        <div className="inputContainer">
+          <h3>Compañía</h3>
+          <Select
+            value={userCompany}
+            onChange={(value) => setCompanyId(value)}
+            style={{ width: '100%' }}
+          >
+            {companies.map((company: any) => (
+              <Option key={company.id} value={company.id}>
+                {company.name}
+              </Option>
+            ))}
+          </Select>
         </div>
-        <br></br>
-        <button type="button" onClick={() => props.setShow(false)}>
-          Cancelar
-        </button>
-        <button type="button" className='save' onClick={() => {
-            createUser()
-        }}>
+        <div className="inputContainer">
+          <h3>Rol</h3>
+          <Select
+            value={roleId}
+            onChange={(value) => setRoleId(value)}
+            style={{ width: '100%' }}
+          >
+            <Option value={'1'}>Administrador</Option>
+            <Option value={'2'}>Supervisor</Option>
+            <Option value={'3'}>Usuario</Option>
+          </Select>
+        </div>
+        <div>
+          <Button type="default" onClick={props.setShow(false)}>
+            Cancelar
+          </Button>
+          <Button type="primary" className="save" onClick={createUser}>
             Guardar
-        </button>
-        <br />
-      </section>
-    </div>
+          </Button>
+        </div>
+      </div>
+    </Modal>
   );
 };
 

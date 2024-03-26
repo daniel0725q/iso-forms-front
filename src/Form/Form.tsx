@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Form from '@rjsf/core';
 import validator from '@rjsf/validator-ajv8';
 import { RJSFSchema } from '@rjsf/utils';
 import './Form.css';
 import MyEditor from '../Editor/Editor';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Form, Input } from 'antd';
 
 interface FormProps {
     isEdit: boolean
@@ -43,6 +43,24 @@ function MyForm(props: FormProps) {
           console.log(editorRef.current.getContent());
         }
     }
+const onFinish = (values: any, id: any) => {
+    const url = !props.isEdit ? 'http://localhost:8080/api/v1/forms' : `http://localhost:8080/api/v1/forms/${id}`;
+    fetch(url, {
+        method: props.isEdit ? 'PATCH' : 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorageUser.token}`
+        },
+        body: JSON.stringify({
+        data: values,
+        formId: parseInt(id)
+        })
+    })
+    .then((response) => response.json())
+    .then(() => {
+        navigate('/forms');
+    });
+}
 
     const parse = (data: any) => {
         const elements: JSX.Element[] = [];
@@ -57,40 +75,47 @@ function MyForm(props: FormProps) {
         return elements;
     }
       
-  return (
-    <div className='main'>
-        <h1>{allData.title}</h1>
-        <label>
-          Versión:
-          <input type='text' defaultValue={allData.version} onChange={(ev: any) => {
-            allData.version = ev.currentTarget.value;
-          }}></input>
-        </label>
-        <label>
-          Código:
-          <input type='text' defaultValue={allData.code} readOnly></input>
-        </label>
-        {parse(allData.form ? allData.form.sections : [])}
-        <button onClick={() => {
-            const url = !props.isEdit? `http://localhost:8080/api/v1/forms`: `http://localhost:8080/api/v1/forms/${id}`;
-            fetch(`${url}`, {
-                method: props.isEdit ? 'PATCH' : 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionStorageUser.token}`
-                },
-                body: JSON.stringify({
-                    data: allData,
-                    formId: parseInt(id!),
-                })
-            })
-            .then((r) => r.json())
-            .then((r) => {
-                navigate('/forms');
-            })
-        }}>Guardar formulario</button>
-    </div>
-  );
+    return (
+        <div className='main'>
+          <h1>{allData.title}</h1>
+          <Form
+            layout="vertical"
+            initialValues={{ version: allData.version, code: allData.code }}
+            onFinish={(values: any) => onFinish(values, id)}
+            >
+            <Form.Item label="Versión">
+                <Input name={'version'} value={allData.version} />
+            </Form.Item>
+            <Form.Item label="Código">
+                <Input readOnly name={'code'} value={allData.code} />
+            </Form.Item>
+            {parse(allData.form ? allData.form.sections : [])}
+            <Button type="primary" onClick={
+                () => {
+                    const url = !props.isEdit? `http://localhost:8080/api/v1/forms`: `http://localhost:8080/api/v1/forms/${id}`;
+                    fetch(`${url}`, {
+                        method: props.isEdit ? 'PATCH' : 'POST',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${sessionStorageUser.token}`
+                        },
+                        body: JSON.stringify({
+                            data: allData,
+                            formId: parseInt(id!),
+                        })
+                    })
+                    .then((r) => r.json())
+                    .then((r) => {
+                        navigate('/forms');
+                    })
+                }
+            }>
+                Guardar formulario
+            </Button>
+            </Form>
+
+        </div>
+      );
 }
 
 export default MyForm;

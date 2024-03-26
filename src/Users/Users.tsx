@@ -12,7 +12,6 @@ const Users = () => {
   const [data, setData] = useState([]);
   const [show, setShow] =  useState(false);
   const [reload, setReload] = useState(true);
-  const [isCreate, setIsCreate] = useState(true);
 
   useEffect(() => loadUsers);
 

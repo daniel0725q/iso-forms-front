@@ -27,7 +27,7 @@ const Home = (props: HomeProps) => {
           <h1>GSIntegral</h1>
           <h2>¡Bienvenido!</h2>
         </div>
-        <div>Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral.</div>
+        <div>Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral o inicia sesión.</div>
         <div className={'buttonContainer'}>
           {props.loggedIn ? <div>Tu email es {props.email}</div> : <div />}
           <input
