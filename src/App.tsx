@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './Home'
 import Login from './Login/Login'
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AdminDashboard from './AdminDashboard/AdminDashboard'
 import PageLayout from './PageLayout'
 import RecoverPassword from './RecoverPassword/RecoverPassword'
@@ -16,10 +16,38 @@ import FormPreview from './PDF/FormPreview'
 import HomeNumberTwo from './HomeNumberTwo/HomeNumberTwo'
 import MyFormsDashboard from './MyFormsDashboard/MyFormsDashboard'
 import MiscFormsDashboard from './MiscDashboard/MiscDashboard'
+import axios from 'axios'
+
+function AuthErrorPage() {
+  return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
+}
+
+function ServerErrorPage() {
+  return <h1>Error de servidor! Intenta nuevamente o contacta al administrador</h1>;
+}
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState('')
+
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response && error.response.status === 401) {
+          // Redirect to error page if 401 status is received
+          window.location.href = '/auth-error';
+        } else if (error.response && error.response.status === 500) {
+          
+        }
+        return Promise.reject(error);
+      }
+    )
+    return () => {
+      // Remove the interceptor when component unmounts
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, []);
 
   return (
     <div className="App">
@@ -41,6 +69,8 @@ function App() {
           <Route path="/forms/edit/:id" element={<MyForm isEdit={true} />} />
           <Route path="/form-generator" element={<FormGenerator />} />
           <Route path="/forms/preview/:id" element={<FormPreview />} />
+          <Route path="/auth-error" element={<AuthErrorPage />} />
+          <Route path="/internal-error" element={<ServerErrorPage />} />
         </Route>
         </Routes>
       </BrowserRouter>

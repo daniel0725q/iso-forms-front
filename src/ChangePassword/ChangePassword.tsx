@@ -63,9 +63,9 @@ const ChangePassword = () => {
       },
       body: JSON.stringify({ password, newPassword }),
     })
-      .then((r) => r.json())
       .then((r) => {
-        navigate("/home")
+        if (r.ok) navigate("/home")
+        else navigate("/auth-error")
       })
   }
 
