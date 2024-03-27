@@ -98,6 +98,13 @@ function FormGenerator() {
             >
                 <Option value="1">ISO</Option>
                 <Option value="2">SST</Option>
+                <Option value="3">Documentación</Option>
+                <Option value="4">Mapa de Procesos</Option>
+                <Option value="5">Políticas</Option>
+                <Option value="6">Normas/Leyes</Option>
+                <Option value="7">Matriz de Riesgos</Option>
+                <Option value="8">Auditoría</Option>
+                <Option value="9">Evaluación de Desempeño</Option>
             </Select>
             <br />
             <h2>Secciones</h2>
