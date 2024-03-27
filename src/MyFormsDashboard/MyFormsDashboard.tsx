@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
 import { randomUUID } from 'crypto'
-import './FormsDashboard.css'
+import './MyFormsDashboard.css'
 import { Space, Table } from 'antd'
 
-const FormsDashboard = () => {
+const MyFormsDashboard = () => {
     const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -82,7 +82,7 @@ const FormsDashboard = () => {
                 {
                     text: 'SST',
                     value: '2',
-                  }
+                  },
             ],
             defaultFilteredValue: [searchParams.get('formId') || ''],
             onFilter: (value: any, record: any) => record && record.type && record.type == value,
@@ -141,16 +141,12 @@ const FormsDashboard = () => {
     
     return (
         <div>
-            <h1>Formularios</h1>
+            <h1>Mis Documentos</h1>
             <div style={{width: '60%', marginLeft: '20%'}}>
-            <i>Todos los formularios disponibles</i>
-            <Table dataSource={formTemplates}
-            columns={columns}
-            className="custom-table"
-            pagination={{ pageSize: 10 }} />
-            </div>
+            <Table dataSource={myForms} columns={myColumns} className="custom-table" pagination={{ pageSize: 10 }} />
+        </div>
         </div>
     )
 }
 
-export default FormsDashboard;
+export default MyFormsDashboard;

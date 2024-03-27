@@ -66,8 +66,8 @@ const RecoverPassword = () => {
         <div className={'centered'}>
             <div className={'mainContainer'}>
                 <div className={'titleContainer'}>
-                    <h1>GSIntegral</h1>
-                    <h3>Sistemas integrados de gestión</h3>
+                  <img src='logogs.png' height={80}></img>
+                  <h3>Sistemas integrados de gestión</h3>
                 </div>
                 <div className={'inputContainer'}>
                     <input

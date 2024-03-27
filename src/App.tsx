@@ -13,6 +13,9 @@ import FormGenerator from './FormGenerator/FormGenerator'
 import MyForm from './Form/Form'
 import FormsDashboard from './FormsDashboard/FormsDashboard'
 import FormPreview from './PDF/FormPreview'
+import HomeNumberTwo from './HomeNumberTwo/HomeNumberTwo'
+import MyFormsDashboard from './MyFormsDashboard/MyFormsDashboard'
+import MiscFormsDashboard from './MiscDashboard/MiscDashboard'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -30,7 +33,10 @@ function App() {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/options" element={<HomeNumberTwo />} />
           <Route path="/forms" element={<FormsDashboard />} />
+          <Route path="/company-forms" element={<MiscFormsDashboard />} />
+          <Route path="/my-forms" element={<MyFormsDashboard />} />
           <Route path="/forms/:id" element={<MyForm isEdit={false} />} />
           <Route path="/forms/edit/:id" element={<MyForm isEdit={true} />} />
           <Route path="/form-generator" element={<FormGenerator />} />

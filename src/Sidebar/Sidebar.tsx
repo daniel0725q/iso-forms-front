@@ -8,12 +8,7 @@ const Sidebar = () => {
   const navigate = useNavigate()
   var sessionStorageUser = localStorage.getItem('user');
 
-  const [isHomeActive, setIsHomeActive] = useState(false);
-  const [isNewsActive, setIsNewsActive] = useState(false);
-  const [isContactActive, setIsContactActive] = useState(false);
-  const [isAboutActive, setIsAboutActive] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [reload, setReload] = useState(0);
 
   useEffect(() => {
     if (sessionStorageUser) {
@@ -34,34 +29,6 @@ const Sidebar = () => {
     }
   }, [sessionStorageUser])
 
-  const onHomeLinkClick = () => {
-    setIsHomeActive(true);
-    setIsNewsActive(false);
-    setIsContactActive(false);
-    setIsAboutActive(false);
-  }
-
-  const onUsersLinkClick = () => {
-    setIsHomeActive(false);
-    setIsNewsActive(true);
-    setIsContactActive(false);
-    setIsAboutActive(false);
-  }
-
-  const onFormsLinkClick = () => {
-    setIsHomeActive(false);
-    setIsNewsActive(false);
-    setIsContactActive(true);
-    setIsAboutActive(false);
-  }
-
-  const onCompaniesLinkClick = () => {
-    setIsHomeActive(false);
-    setIsNewsActive(false);
-    setIsContactActive(false);
-    setIsAboutActive(true);
-  }
-
   const onButtonClick = () => {
     localStorage.removeItem('user')
     navigate("/login")
@@ -72,34 +39,49 @@ const Sidebar = () => {
   return (
     <div>
       {sessionStorageUser ? (
-        <Sider width={200} style={{ background: '#fff' }}>
+        <Sider width={200}>
         <Menu
           mode="inline"
           defaultSelectedKeys={['home']}
           style={{ height: '100%', borderRight: 0 }}
         >
-          <Menu.Item key="home" className={isHomeActive ? 'active' : ''}>
-            <Link to="/home" onClick={onHomeLinkClick}>
+          <Menu.Item key="home">
+            <Link to="/home">
               Inicio
             </Link>
           </Menu.Item>
           {isAdmin && (
-            <Menu.Item key="companies" className={isAboutActive ? 'active' : ''}>
-              <Link to="/companies" onClick={onCompaniesLinkClick}>
+            <Menu.Item key="companies">
+              <Link to="/companies">
                 Empresas
               </Link>
             </Menu.Item>
           )}
           {isAdmin && (
-            <Menu.Item key="users" className={isNewsActive ? 'active' : ''}>
-              <Link to="/users" onClick={onUsersLinkClick}>
+            <Menu.Item key="users">
+              <Link to="/users">
                 Usuarios
               </Link>
             </Menu.Item>
           )}
-          <Menu.Item key="forms" className={isContactActive ? 'active' : ''}>
-            <Link to="/forms" onClick={onFormsLinkClick}>
+          <Menu.Item key="options">
+            <Link to="/options">
+              Opciones
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="corps">
+            <Link to="/company-forms">
+              Corporativos
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="forms">
+            <Link to="/forms">
               Formularios
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="my-forms">
+            <Link to="/my-forms">
+              Mis Documentos
             </Link>
           </Menu.Item>
           <Menu.Item key="changePassword" className="changePassword">

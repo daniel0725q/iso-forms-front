@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Home.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHelmetSafety } from '@fortawesome/free-solid-svg-icons';
 
 interface HomeProps { 
     loggedIn: boolean;
@@ -32,14 +34,21 @@ const Home = (props: HomeProps) => {
           Esta es la página de inicio. Para continuar, elige una de las opciones de nuestro menú lateral o inicia sesión.
           </p>
         </div>
-        <div className={'buttonContainer'}>
-          {props.loggedIn ? <div>Tu email es {props.email}</div> : <div />}
-          <input
-            className={'inputButton'}
-            type="button"
-            onClick={onButtonClick}
-            value={props.loggedIn ? 'Cerrar sesión' : 'Iniciar sesión'}
-          />
+        <div>
+          <img src='logoiso.gif' height={200} width={200} onClick={() => {
+            navigate('/forms?formId=1')
+          }}></img>
+          <img src='ods.png' height={200} width={300} onClick={() => {
+            alert("Disponible próximamente")
+          }}></img>
+        </div>
+        <div>
+          <img src='basc.png' height={250} width={250} onClick={() => {
+            alert("Disponible próximamente")
+          }}></img>
+          <img src='logosst.png' height={250} width={250} onClick={() => {
+            navigate('/forms?formId=2')
+          }}></img>  
         </div>
       </div>
     </div>
