@@ -76,13 +76,41 @@ const FormsDashboard = () => {
             key: 'type',
             filters: [
                 {
-                  text: 'ISO',
-                  value: '1',
-                },
-                {
-                    text: 'SST',
-                    value: '2',
-                  }
+                    text: 'ISO',
+                    value: '1',
+                  },
+                  {
+                      text: 'SST',
+                      value: '2',
+                    },
+                    {
+                        text: 'Documentación',
+                        value: '3',
+                      },
+                      {
+                          text: 'Mapa de procesos',
+                          value: '4',
+                        },
+                        {
+                            text: 'Políticas',
+                            value: '5',
+                          },
+                          {
+                              text: 'Normas/Leyes',
+                              value: '6',
+                            },
+                            {
+                                text: 'Matriz de riesgos',
+                                value: '7',
+                              },
+                              {
+                                  text: 'Auditoría',
+                                  value: '8',
+                                },
+                                {
+                                    text: 'Evaluación de desempeño',
+                                    value: '9',
+                                  }
             ],
             defaultFilteredValue: [searchParams.get('formId') || ''],
             onFilter: (value: any, record: any) => record && record.type && record.type == value,
