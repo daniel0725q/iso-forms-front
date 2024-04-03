@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 interface LoginProps {
     setLoggedIn: any;
@@ -53,7 +54,7 @@ const Login = (props: LoginProps) => {
   }
 
   const logIn = () => {
-    fetch(`http://localhost:8080/api/v1/auth/login`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,13 +69,13 @@ const Login = (props: LoginProps) => {
           props.setEmail(email)
           navigate('/home')
         } else {
-          window.alert('Wrong email or password')
+          window.alert('Email o contraseña incorrecta')
         }
       })
   }
 
   const recoverPassword = () => {
-    fetch(`http://localhost:8080/api/v1/auth/recovery`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/auth/recovery`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

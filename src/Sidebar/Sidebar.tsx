@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Menu } from 'antd';
 import './Sidebar.css'
 import Sider from 'antd/es/layout/Sider';
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const Sidebar = () => {
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ const Sidebar = () => {
     if (sessionStorageUser) {
       const user = JSON.parse(sessionStorageUser);
       if (user.token) {
-        fetch(`http://localhost:8080/api/v1/auth/is-admin`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/auth/is-admin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

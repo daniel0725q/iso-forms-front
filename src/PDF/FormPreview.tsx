@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import './FormPreview.css';
-const html2pdf = require('html2pdf.js');
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const FormPreview = () => {
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
@@ -18,7 +18,7 @@ const FormPreview = () => {
     const [logo, setLogo] = useState<string>('');
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/v1/pdf/logo`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/pdf/logo`, {
             method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const FormPreview = () => {
     }, [])
 
     const getForm = (id: string) => {
-        fetch(`http://localhost:8080/api/v1/forms/${id}`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/forms/${id}`, {
             method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const FormPreview = () => {
       return (
         <div>
             <button onClick={() => {
-                fetch(`http://localhost:8080/api/v1/pdf/generate`, {
+                fetch(`${REACT_APP_API_ENDPOINT}/pdf/generate`, {
                     method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

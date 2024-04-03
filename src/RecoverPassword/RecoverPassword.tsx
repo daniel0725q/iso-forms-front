@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+const { REACT_APP_API_ENDPOINT } = process.env;
 // import './Login.css'
 
 const RecoverPassword = () => {
@@ -48,7 +49,7 @@ const RecoverPassword = () => {
 
   const changePassword = () => {
     const token = searchParams.get("token")
-    fetch(`http://localhost:8080/api/v1/auth/recover-password`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/auth/recover-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

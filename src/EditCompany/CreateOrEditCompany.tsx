@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import './modal.css';
 import { Button, Input, Modal, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 interface EditCompanyProps {
     id: number;
@@ -22,7 +23,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   const [companyLogo, setCompanyLogo] = useState(props.companyLogo);
 
   const updateCompany = () => {
-    fetch(`http://localhost:8080/api/v1/companies/${props.id}`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/companies/${props.id}`, {
     method: 'PATCH',
     body: JSON.stringify({
         id: props.id,
@@ -43,7 +44,7 @@ const CreateOrEditCompany = (props: EditCompanyProps) => {
   }
 
   const createCompany = () => {
-    fetch(`http://localhost:8080/api/v1/companies`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/companies`, {
     method: 'POST',
     body: JSON.stringify({
         id: companyId,

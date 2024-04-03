@@ -2,6 +2,7 @@ import { Button, Input, Select, Space } from 'antd'
 import React, { useState } from 'react';
 import { Option } from 'antd/es/mentions';
 import { useNavigate } from 'react-router-dom';
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 function FormGenerator() {
 
@@ -41,7 +42,19 @@ function FormGenerator() {
   }
 
   const createFormTemplate = () => {
-    fetch(`http://localhost:8080/api/v1/form-templates`, {
+    if (formData.title == '') {
+      alert('Ingrese un título')
+      return
+    }
+    if (formData.version == '') {
+      alert('Ingrese una versión')
+      return
+    }
+    if (formData.code == '') {
+      alert('Ingrese un código')
+      return
+    }
+    fetch(`${REACT_APP_API_ENDPOINT}/form-templates`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +74,7 @@ function FormGenerator() {
       .then((r) => {
         navigate('/forms')
       })
-  }
+    }
 
   return (
         <div style={{textAlign: 'center'}}>

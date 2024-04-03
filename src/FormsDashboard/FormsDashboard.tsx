@@ -2,10 +2,9 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons'
-import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
-import { randomUUID } from 'crypto'
 import './FormsDashboard.css'
 import { Space, Table } from 'antd'
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const FormsDashboard = () => {
     const navigate = useNavigate();
@@ -18,7 +17,7 @@ const FormsDashboard = () => {
 
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/form-templates", {
+        fetch(`${REACT_APP_API_ENDPOINT}/form-templates`, {
             method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -32,7 +31,7 @@ const FormsDashboard = () => {
     }, [])
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/forms/mine/all", {
+        fetch(`${REACT_APP_API_ENDPOINT}/forms/mine/all`, {
             method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -46,7 +45,7 @@ const FormsDashboard = () => {
     }, [reloadMyForms])
 
     const deleteForm = (id: number) => {
-        fetch(`http://localhost:8080/api/v1/forms/${id}`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/forms/${id}`, {
             method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

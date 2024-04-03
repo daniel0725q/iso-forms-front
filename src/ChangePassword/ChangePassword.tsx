@@ -1,6 +1,7 @@
 import { Button, Form, Input } from 'antd'
 import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+const { REACT_APP_API_ENDPOINT } = process.env;
 // import './Login.css'
 
 const ChangePassword = () => {
@@ -55,7 +56,7 @@ const ChangePassword = () => {
   }
 
   const changePassword = () => {
-    fetch(`http://localhost:8080/api/v1/auth/change-password`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/auth/change-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

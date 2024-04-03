@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { faUser, faPenToSquare, faBuilding, faHelmetSafety, faGlobe } from '@fortawesome/free-solid-svg-icons'
 import './AdminDashboard.css'
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const AdminDashboard = () => {
   const navigate = useNavigate()
@@ -15,7 +16,7 @@ const AdminDashboard = () => {
   useEffect(() => loadUser, []);
 
   const loadUser = () => {
-    fetch(`http://localhost:8080/api/v1/auth/is-admin`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/auth/is-admin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

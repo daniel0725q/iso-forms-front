@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
 import { Table } from 'antd'
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const Companies = () => {
   const navigate = useNavigate()
@@ -21,7 +22,7 @@ const Companies = () => {
   useEffect(() => loadCompanies(), []);
 
   const loadCompanies = () => {
-    fetch(`http://localhost:8080/api/v1/companies?hasLogo=true`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/companies?hasLogo=true`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ const Companies = () => {
 
   const onDeleteClick = (id: number) => {
     if (window.confirm('¿Estás seguro que deseas eliminar la empresa?')) {
-        fetch(`http://localhost:8080/api/v1/companies/${id}`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/companies/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

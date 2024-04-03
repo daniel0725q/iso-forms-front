@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import validator from '@rjsf/validator-ajv8';
-import { RJSFSchema } from '@rjsf/utils';
 import './Form.css';
 import MyEditor from '../Editor/Editor';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 interface FormProps {
     isEdit: boolean
@@ -20,7 +19,7 @@ function MyForm(props: FormProps) {
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
 
     useEffect(() => {
-        const url = props.isEdit ? 'http://localhost:8080/api/v1/forms/' : 'http://localhost:8080/api/v1/form-templates/';
+        const url = props.isEdit ? `${REACT_APP_API_ENDPOINT}/forms/` : `http://localhost:8080/api/v1/form-templates/`;
         fetch(`${url}${id}`, {
             method: 'GET',
         headers: {
@@ -44,7 +43,7 @@ function MyForm(props: FormProps) {
         }
     }
 const onFinish = (values: any, id: any) => {
-    const url = !props.isEdit ? 'http://localhost:8080/api/v1/forms' : `http://localhost:8080/api/v1/forms/${id}`;
+    const url = !props.isEdit ? `${REACT_APP_API_ENDPOINT}}/forms` : `${REACT_APP_API_ENDPOINT}/forms/${id}`;
     fetch(url, {
         method: props.isEdit ? 'PATCH' : 'POST',
         headers: {
@@ -92,7 +91,7 @@ const onFinish = (values: any, id: any) => {
             {parse(allData.form ? allData.form.sections : [])}
             <Button type="primary" onClick={
                 () => {
-                    const url = !props.isEdit? `http://localhost:8080/api/v1/forms`: `http://localhost:8080/api/v1/forms/${id}`;
+                    const url = !props.isEdit? `${REACT_APP_API_ENDPOINT}/forms`: `${REACT_APP_API_ENDPOINT}/forms/${id}`;
                     fetch(`${url}`, {
                         method: props.isEdit ? 'PATCH' : 'POST',
                         headers: {

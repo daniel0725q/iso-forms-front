@@ -5,6 +5,7 @@ import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
 import CreateUser from '../CreateUser/CreateUser'
 import './Users.css'
 import { Table } from 'antd'
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const Users = () => {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ const Users = () => {
   useEffect(() => loadUsers, []);
 
   const loadUsers = () => {
-    fetch(`http://localhost:8080/api/v1/users`, {
+    fetch(`${REACT_APP_API_ENDPOINT}/users`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ const Users = () => {
 
   const onDeleteClick = (id: number) => {
     if (window.confirm('¿Estás seguro que deseas eliminar el usuario?')) {
-        fetch(`http://localhost:8080/api/v1/users/${id}`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/users/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

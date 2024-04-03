@@ -2,24 +2,21 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons'
-import CreateOrEditCompany from '../EditCompany/CreateOrEditCompany'
-import { randomUUID } from 'crypto'
 import './MiscDashboard.css'
 import { Space, Table } from 'antd'
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 const MiscFormsDashboard = () => {
     const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
-
-    const [formTemplates, setFormTemplates] = useState([]);
     const [myForms, setMyForms] = useState([]);
     const [reloadMyForms, setReloadMyForms] = useState(0);
 
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/forms/company/all", {
+        fetch(`${REACT_APP_API_ENDPOINT}/forms/company/all`, {
             method: 'GET',
         headers: {
             'Content-Type': 'application/json',
