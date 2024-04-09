@@ -19,7 +19,7 @@ function MyForm(props: FormProps) {
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
 
     useEffect(() => {
-        const url = props.isEdit ? `${REACT_APP_API_ENDPOINT}/forms/` : `http://localhost:8080/api/v1/form-templates/`;
+        const url = props.isEdit ? `${REACT_APP_API_ENDPOINT}/forms/` : `${REACT_APP_API_ENDPOINT}/form-templates/`;
         fetch(`${url}${id}`, {
             method: 'GET',
         headers: {
