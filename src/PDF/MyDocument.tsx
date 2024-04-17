@@ -31,7 +31,6 @@ class PDFGenerator extends React.Component<PDFGeneratorProps> {
           if (v.value.includes("<ul>")) {
             const firstIndex = v.value.indexOf("<ul>")
             const lastIndex = v.value.indexOf("</ul>")
-            console.log(v.value.substring(firstIndex + 4, lastIndex));
           }
 
           if (v.value.includes("<img")) {

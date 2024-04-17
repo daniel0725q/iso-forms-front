@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import './FormPreview.css';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 const FormPreview = () => {
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
+    const pdfRef = useRef<any>(null);
     
     let { id } = useParams();
 
@@ -95,6 +96,7 @@ const FormPreview = () => {
       return (
         <div>
             <button onClick={() => {
+                var styles = window.getComputedStyle(pdfRef.current);
                 fetch(`${REACT_APP_API_ENDPOINT}/pdf/generate`, {
                     method: 'POST',
                 headers: {
@@ -103,7 +105,8 @@ const FormPreview = () => {
                 },
                 body: JSON.stringify(
                     {
-                        html: document.getElementById('all')?.outerHTML,
+                        html: pdfRef.current.outerHTML,
+                        styles: styles,
                         options: {
                             logo: '',
                             title: data.title,
@@ -123,42 +126,46 @@ const FormPreview = () => {
                     link.click();
                 })
             }}>Descargar</button>
-        <div id='all' style={{ fontFamily: 'Arial Narrow', fontSize: '12px', marginLeft: '30px', marginRight: '30px', marginBottom: '30px' }}>
-        <div id='pageHeader' className='hd'>
-        <table style={{width: '90%', borderCollapse: 'collapse', border: '1px solid', margin: '5%', textAlign: 'center'}}>
-              <tr style={{textAlign: 'center'}}>
-                  <td style={{width: '15%'}}><img style={{height: '50px', width: '50px'}} src={compressBase64Image(logo, 300, 300, 0.2)}/></td>
-                  <td style={{textAlign: 'center', border: '1px solid black', width: '70%'}}><b>{String(data.title).toUpperCase()}</b></td>
-                  <td style={{width: '15%'}}>
-                    <table style={{fontSize: '12px', width: '100%', margin: 0}}>
-                      <tr style={{border: '1px solid black'}}>
-                        <td style={{border: '1px solid black'}}>
-                         Código
-                        </td>
-                        <td style={{border: '1px solid black'}}>
-                         {data.code}
-                        </td>
-                      </tr>
-                      <tr style={{border: '1px solid black'}}>
-                         <td style={{border: '1px solid black'}}>
-                          Versión
-                        </td>
-                        <td style={{border: '1px solid black'}}>
-                          {data.version}
-                        </td>
-                      </tr>
-                      <tr>
-                      <td style={{border: '1px solid black'}}>
-                          Fecha
-                        </td>
-                        <td style={{border: '1px solid black'}}>
-                          { new Date().toLocaleDateString() }
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-              </tr>
-          </table>
+        <div className='container' ref={pdfRef}>
+        <div className='pageHeader hd' id='pageHeader'>
+            <table>
+                <tr>
+                    <td>
+                        <img style={{height: '50px', width: '50px'}} src={compressBase64Image(logo, 300, 300, 0.2)}/>
+                    </td>
+                    <td>
+                        <b>{String(data.title).toUpperCase()}</b>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    Código
+                                </td>
+                                <td>
+                                    {data.code}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Versión
+                                </td>
+                                <td>
+                                    {data.version}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Fecha
+                                </td>
+                                <td>
+                                    { new Date().toLocaleDateString() }
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
             <div className='pages' id='pages'>
                 {parse(data.form)}

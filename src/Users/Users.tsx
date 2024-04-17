@@ -94,6 +94,7 @@ const Users = () => {
     <div>
         <h1>Usuarios</h1>
         <div className='companies' style={{width: '60%', marginLeft: '20%'}}>
+        <button onClick={() => {loadUsers()}}>Cargar usuarios</button>
         <Table
       dataSource={data}
       columns={columns}

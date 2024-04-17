@@ -37,11 +37,6 @@ function MyForm(props: FormProps) {
         })
     }, [])
 
-    const log = () => {
-        if (editorRef.current) {
-          console.log(editorRef.current.getContent());
-        }
-    }
 const onFinish = (values: any, id: any) => {
     const url = !props.isEdit ? `${REACT_APP_API_ENDPOINT}}/forms` : `${REACT_APP_API_ENDPOINT}/forms/${id}`;
     fetch(url, {
@@ -65,7 +60,6 @@ const onFinish = (values: any, id: any) => {
         const elements: JSX.Element[] = [];
         for (const key in data) {
             var el = data[key];
-            console.log(el.value);
             elements.push(<section key={el.id}>
                 <h2>{el.name}</h2>
                 <MyEditor content={el.value} buttons={el.buttons} element={el}></MyEditor>

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faTrash, faPlus, faFilePdf, faCopy, faEdit } from '@fortawesome/free-solid-svg-icons'
 import './FormsDashboard.css'
 import { Space, Table } from 'antd'
 const { REACT_APP_API_ENDPOINT } = process.env;
@@ -14,6 +14,8 @@ const FormsDashboard = () => {
     const [formTemplates, setFormTemplates] = useState([]);
     const [myForms, setMyForms] = useState([]);
     const [reloadMyForms, setReloadMyForms] = useState(0);
+    const [reloadFormTemplates, setReloadFormTemplates] = useState(0);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
     useEffect(() => {
@@ -28,7 +30,7 @@ const FormsDashboard = () => {
         .then((r) => {
             setFormTemplates(r);
         })
-    }, [])
+    }, [reloadFormTemplates])
 
     useEffect(() => {
         fetch(`${REACT_APP_API_ENDPOINT}/forms/mine/all`, {
@@ -58,16 +60,48 @@ const FormsDashboard = () => {
         })
     }
 
+    const deleteFormTemplate = (id: number) => {
+        fetch(`${REACT_APP_API_ENDPOINT}/form-templates/${id}`, {
+            method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorageUser.token}`
+        },
+        })
+        .then((r) => r.json())
+        .then((r) => {
+            setReloadFormTemplates(reloadFormTemplates + 1);
+        })
+    }
+
+    useEffect(() => loadUser, [])
+
+    const loadUser = () => {
+        fetch(`${REACT_APP_API_ENDPOINT}/auth/is-admin`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token: sessionStorageUser.token }),
+        })
+          .then((r) => r.json())
+          .then((r) => {
+            setIsAdmin(r.isAdmin);
+          })
+      }
+
     const columns = [
         {
             title: 'Título',
             dataIndex: 'title',
             key: 'title',
+            sorter: (a: any, b: any) => a.title.localeCompare(b.title)
         },
         {
             title: 'Código',
             dataIndex: 'code',
             key: 'code',
+            sorter: (a: any, b: any) => a.code.localeCompare(b.code)
         },
         {
             title: 'Tipo',
@@ -77,41 +111,41 @@ const FormsDashboard = () => {
                 {
                     text: 'ISO',
                     value: '1',
-                  },
-                  {
-                      text: 'SST',
-                      value: '2',
-                    },
-                    {
-                        text: 'Documentación',
-                        value: '3',
-                      },
-                      {
-                          text: 'Mapa de procesos',
-                          value: '4',
-                        },
-                        {
-                            text: 'Políticas',
-                            value: '5',
-                          },
-                          {
-                              text: 'Normas/Leyes',
-                              value: '6',
-                            },
-                            {
-                                text: 'Matriz de riesgos',
-                                value: '7',
-                              },
-                              {
-                                  text: 'Auditoría',
-                                  value: '8',
-                                },
-                                {
-                                    text: 'Evaluación de desempeño',
-                                    value: '9',
-                                  }
+                },
+                {
+                    text: 'SST',
+                    value: '2',
+                },
+                {
+                    text: 'Documentación',
+                    value: '3',
+                },
+                {
+                    text: 'Mapa de procesos',
+                    value: '4',
+                },
+                {
+                    text: 'Políticas',
+                    value: '5',
+                },
+                {
+                    text: 'Normas/Leyes',
+                    value: '6',
+                },
+                {
+                    text: 'Matriz de riesgos',
+                    value: '7',
+                },
+                {
+                    text: 'Auditoría',
+                    value: '8',
+                },
+                {
+                    text: 'Evaluación de desempeño',
+                    value: '9',
+                }
             ],
-            defaultFilteredValue: [searchParams.get('formId') || ''],
+            defaultFilteredValue: [searchParams.get('formId') || '1'],
             onFilter: (value: any, record: any) => record && record.type && record.type == value,
         },
         {
@@ -125,42 +159,19 @@ const FormsDashboard = () => {
             render: (_: any, record: any) => (
               <Space size="middle">
                 <Link to={`/forms/${record.id}`}><FontAwesomeIcon icon={faPlus} /></Link>
-              </Space>
-            ),
-          },
-    ];
-
-    const myColumns = [
-        {
-            title: 'Código',
-            dataIndex: 'code',
-            key: 'code',
-            render: (_: any, record: any) => (
-                <p>{record.formTemplate.code}</p>
-              ),
-        },
-        {
-            title: 'Versión',
-            dataIndex: 'version',
-            key: 'version',
-            render: (_: any, record: any) => (
-                <p>{record.formTemplate.version}</p>
-              ),
-        },
-        {
-            title: 'Acciones',
-            key: 'action',
-            render: (_: any, record: any) => (
-              <Space size="middle">
-                <Link to={`/forms/edit/${record.id}`}><FontAwesomeIcon icon={faPen} /></Link>
-                <Link to={`#`}><FontAwesomeIcon icon={faTrash} onClick={() => {
+                { isAdmin && (
+                <Link to={`/forms/${record.id}/edit`}><FontAwesomeIcon icon={faEdit} /></Link>
+                )}
+                { isAdmin && (
+                <Link to={`/forms/${record.id}/copy`}><FontAwesomeIcon icon={faCopy} /></Link>
+                )}
+                { isAdmin && (
+                <Link to={`#`} onClick={() => {
                     if (window.confirm("¿Seguro que deseas eliminar el formulario?")) {
-                        deleteForm(record.id);
+                        deleteFormTemplate(record.id);
                     }
-                }} /></Link>
-                <Link to={`/forms/preview/${record.id}`} onClick={() => {
-                }}><FontAwesomeIcon icon={faFilePdf} onClick={() => {
-                }} /></Link>
+                }}><FontAwesomeIcon icon={faTrash} /></Link>
+                )}
               </Space>
             ),
           },

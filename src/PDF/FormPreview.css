@@ -35,3 +35,13 @@ ul, ol {
     padding-left: 0; /* Remove default padding */
     list-style-position: inside; /* Align list markers inside the list item */
 }
+
+.pageHeader table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.pageHeader table * td {
+    border: 1px solid black;
+    text-align: center
+}

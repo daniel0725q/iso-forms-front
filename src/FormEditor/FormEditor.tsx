@@ -1,10 +1,10 @@
 import { Button, Input, Select, Space } from 'antd'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Option } from 'antd/es/mentions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
-function FormGenerator() {
+function FormEditor() {
 
   const [title, setTitle] = useState<string>('');
   const [version, setVersion] = useState<string>('');
@@ -14,6 +14,8 @@ function FormGenerator() {
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
   const navigate = useNavigate();
 
+  let { id } = useParams();
+
   const [formData, setFormData] = useState<any>({
     title: title,
     version: version,
@@ -21,6 +23,24 @@ function FormGenerator() {
     type: type,
     sections: []
   });
+
+  useEffect(() => {
+    fetch(`${REACT_APP_API_ENDPOINT}/form-templates/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorageUser.token}`
+      }
+    })
+    .then(r => r.json())
+    .then(r => {
+      setTitle(r.title);
+      setVersion(r.version);
+      setCode(r.code);
+      setType(r.type);
+      formData.sections = r.form.sections;
+    });
+  }, [])
 
   const addSection = () => {
     setFormData({
@@ -65,8 +85,8 @@ function FormGenerator() {
       alert('Ingrese un código')
       return
     }
-    fetch(`${REACT_APP_API_ENDPOINT}/form-templates`, {
-      method: 'POST',
+    fetch(`${REACT_APP_API_ENDPOINT}/form-templates/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${sessionStorageUser.token}`
@@ -139,21 +159,51 @@ function FormGenerator() {
                 <Input
                     type="text"
                     value={section.id}
-                    onChange={(e: any) => section.id = e.target.value}
+                    onChange={(e: any) => {
+                      const sections = formData.sections;
+                      sections[index].id = e.currentTarget.value;
+                      setFormData({
+                        title: formData.title,
+                        version: formData.version,
+                        code: formData.code,
+                        type: formData.type,
+                        sections: sections
+                      })
+                    }}
                 />
                 <br />
                 <label>Nombre:</label>
                 <Input
                     type="text"
                     value={section.name}
-                    onChange={(e) => section.name = e.target.value}
+                    onChange={(e) => {
+                      const sections = formData.sections;
+                      sections[index].name = e.currentTarget.value;
+                      setFormData({
+                        title: formData.title,
+                        version: formData.version,
+                        code: formData.code,
+                        type: formData.type,
+                        sections: sections
+                      })
+                    }}
                 />
                 <br />
                 <label>Botones:</label>
                 <Input
                     type="text"
                     value={section.buttons}
-                    onChange={(e) => section.buttons = e.currentTarget.value.split(',')}
+                    onChange={(e) => {
+                      const sections = formData.sections;
+                      sections[index].buttons = e.currentTarget.value.split(',');
+                      setFormData({
+                        title: formData.title,
+                        version: formData.version,
+                        code: formData.code,
+                        type: formData.type,
+                        sections: sections
+                      })
+                    }}
                 />
                 <button onClick={() => {
                   removeSection(index);
@@ -168,4 +218,4 @@ function FormGenerator() {
     }
 
 
-export default FormGenerator;
+export default FormEditor;

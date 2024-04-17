@@ -17,6 +17,8 @@ import HomeNumberTwo from './HomeNumberTwo/HomeNumberTwo'
 import MyFormsDashboard from './MyFormsDashboard/MyFormsDashboard'
 import MiscFormsDashboard from './MiscDashboard/MiscDashboard'
 import axios from 'axios'
+import FormCopy from './FormCopy/FormCopy'
+import FormEditor from './FormEditor/FormEditor'
 
 function AuthErrorPage() {
   return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
@@ -54,6 +56,7 @@ function App() {
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<PageLayout />} >
+          <Route index element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/home" element={<Home loggedIn={loggedIn} email={email} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/companies" element={<Companies />} />
@@ -66,6 +69,8 @@ function App() {
           <Route path="/company-forms" element={<MiscFormsDashboard />} />
           <Route path="/my-forms" element={<MyFormsDashboard />} />
           <Route path="/forms/:id" element={<MyForm isEdit={false} />} />
+          <Route path="/forms/:id/copy" element={<FormCopy />} />
+          <Route path="/forms/:id/edit" element={<FormEditor />} />
           <Route path="/forms/edit/:id" element={<MyForm isEdit={true} />} />
           <Route path="/form-generator" element={<FormGenerator />} />
           <Route path="/forms/preview/:id" element={<FormPreview />} />
