@@ -74,7 +74,9 @@ const FormsDashboard = () => {
         })
     }
 
-    useEffect(() => loadUser, [])
+    useEffect(() => {
+        loadUser()
+    }, [])
 
     const loadUser = () => {
         fetch(`${REACT_APP_API_ENDPOINT}/auth/is-admin`, {

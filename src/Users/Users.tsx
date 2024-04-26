@@ -15,7 +15,9 @@ const Users = () => {
   const [show, setShow] =  useState(false);
   const [reload, setReload] = useState(true);
 
-  useEffect(() => loadUsers, []);
+  useEffect(() => {
+    loadUsers()
+  }, []);
 
   const loadUsers = () => {
     fetch(`${REACT_APP_API_ENDPOINT}/users`, {

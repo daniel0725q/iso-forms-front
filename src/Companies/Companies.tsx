@@ -19,7 +19,9 @@ const Companies = () => {
   const [show, setShow] =  useState(false);
   const [isCreate, setIsCreate] = useState(true);
 
-  useEffect(() => loadCompanies(), []);
+  useEffect(() => {
+    loadCompanies()
+  }, []);
 
   const loadCompanies = () => {
     fetch(`${REACT_APP_API_ENDPOINT}/companies?hasLogo=true`, {
