@@ -91,6 +91,7 @@ const Login = (props: LoginProps) => {
 
   return (
     <div className='parentContainer'>
+      <img src='banner.jpg' className='banner'></img>
         <div className={'centered'}>
             <div className={'mainContainer'}>
                 <div className={'titleContainer'}>

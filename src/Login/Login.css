@@ -2,19 +2,30 @@ h3 {
     color: gray;
 }
 
+.banner {
+    width: 100vw;  /* Ocupa el 100% del ancho de la ventana */
+  height: 100vh; /* Ocupa el 100% del alto de la ventana */
+  object-fit: fill;
+}
+
 
 .parentContainer {
-    width: 80%;
-    height: 100vh;
     display: flex;
-    margin-left: 20%;
 }
 
 .centered {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    width: 80%;
+    width: 100%;
+    height: 100%;
+    /* background-image: url('../../public/banner.jpg'); */
+  background-size: cover; /* Para que cubra toda la pantalla */
+  background-position: center; /* Para centrar la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height: 100vh; /* Para asegurarse de que cubra toda la altura de la pantalla */
+  margin: 0; /* Elimina cualquier margen por defecto */
+  justify-content: center; /* Centra horizontalmente */
+    display: flex;
+    align-items: center;     /* Centra verticalmente */
+    height: 100vh;           /* Asegura que ocupe toda la altura de la pantalla */
 }
 
 .titleContainer {
@@ -23,7 +34,7 @@ h3 {
 }
 
 .mainContainer {
-    flex: 50%;
+    flex: 1;
     
     align-items: center;
     display: block;
