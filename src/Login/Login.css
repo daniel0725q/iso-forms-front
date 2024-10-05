@@ -11,11 +11,13 @@ h3 {
 
 .parentContainer {
     display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 
 .centered {
     width: 100%;
-    height: 100%;
     /* background-image: url('../../public/banner.jpg'); */
   background-size: cover; /* Para que cubra toda la pantalla */
   background-position: center; /* Para centrar la imagen */
@@ -24,8 +26,8 @@ h3 {
   margin: 0; /* Elimina cualquier margen por defecto */
   justify-content: center; /* Centra horizontalmente */
     display: flex;
-    align-items: center;     /* Centra verticalmente */
-    height: 100vh;           /* Asegura que ocupe toda la altura de la pantalla */
+         /* Centra verticalmente */
+    height: 50%;           /* Asegura que ocupe toda la altura de la pantalla */
 }
 
 .titleContainer {
@@ -35,7 +37,7 @@ h3 {
 
 .mainContainer {
     flex: 1;
-    
+
     align-items: center;
     display: block;
 }

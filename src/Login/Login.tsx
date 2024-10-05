@@ -95,7 +95,7 @@ const Login = (props: LoginProps) => {
         <div className={'centered'}>
             <div className={'mainContainer'}>
                 <div className={'titleContainer'}>
-                  <img src='logogs.png' height={80}></img>
+                  <img src='logogs.png' height={160}></img>
                   <h3>Sistemas integrados de gestión</h3>
                 </div>
                 <div className={'inputContainer'}>
