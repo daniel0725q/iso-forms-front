@@ -66,7 +66,7 @@ function FormCopy() {
     formData.version = version;
     formData.code = code;
     formData.type = type;
-    formData.sections = [formData.sections];
+    formData.sections = [...formData.sections];
     createFormTemplate();
   }
 
