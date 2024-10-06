@@ -1,4 +1,61 @@
+/* HomeNumberTwo.css */
+
 .mainContainer {
-    border: 1px 1px 1px 1px;
-    border-color: black;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .tableContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tableRow {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .tableCell {
+    text-align: center;
+    flex: 1;
+  }
+  
+  .tableCell p {
+    margin: 10px;
+  }
+  
+  /* Opcional: hacer que los íconos se adapten mejor al ancho de la pantalla */
+  .icon {
+    font-size: 6rem; /* Ajusta el tamaño según sea necesario */
+    padding: 20px;
+  }
+  
+  /* Colores pastel para los íconos, uno distinto para cada uno */
+  .icon1 {
+    color: #87afaf;
+  }
+  .icon2 {
+    color: #efa94a;
+  }
+  .icon3 {
+    color: #87afaf;
+  }
+  .icon4 {
+    color: #a18262;
+  }
+  .icon5 {
+    color: #ff7514;
+  }
+  .icon6 {
+    color: #ff6961;
+  }
+  .icon7 {
+    color: #90ee90;
+  }

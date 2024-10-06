@@ -11,68 +11,82 @@ const HomeNumberTwo = () => {
     <div>
       <div className="mainContainer">
         <div className={'titleContainer'}>
-          <img src='logogs.png' height={80}></img>
+          <img src='logogs.png' height={80} alt="Logo"></img>
         </div>
         <div>
           <b>Opciones</b>
-          <p>
-          Explora toda nuestra documentación
-          </p>
+          <p>Explora toda nuestra documentación</p>
         </div>
-        <div>
-          <table>
-            <tr>
-              <td><p><FontAwesomeIcon icon={faFile} style={{padding: '3%'}} size='10x' onClick={() => {
-            navigate('/company-forms?formId=3')
-          }} />
-          <br></br>
-          Documentación</p></td>
-              <td><p>
-          <FontAwesomeIcon icon={faMap} style={{padding: '3%'}} size='10x' onClick={() => {
-            navigate('/company-forms?formId=4')
-          }} />
-          <br></br>
-          Mapa de procesos</p></td>
-              <td><p><FontAwesomeIcon icon={faFileExport} style={{padding: '3%'}} size='10x' onClick={() => {
-            navigate('/company-forms?formId=5')
-          }} />
-          <br></br>
-          Políticas</p></td>
-            </tr>
-            <tr>
-              <td><p>
-          <FontAwesomeIcon icon={faSuitcase} style={{padding: '3%'}} size='10x' onClick={() => {
-            navigate('/company-forms?formId=6')
-          }} />
-          <br></br>
-          Normas/Leyes
-          </p></td>
-              <td><p> <FontAwesomeIcon icon={faTable} style={{padding: '3%'}} size='10x' onClick={() => {
-            navigate('/company-forms?formId=7')
-          }} />
-          <br></br>
-          Matriz de riesgos
-          </p></td>
-              <td><p>
-          <FontAwesomeIcon icon={faMagnifyingGlass} size='10x' style={{padding: '3%'}} onClick={() => {
-            navigate('/company-forms?formId=8')
-          }} />
-          <br></br>
-          Auditoría
-          </p></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><p>
-          <FontAwesomeIcon icon={faCheck} style={{padding: '3%'}} size='10x' onClick={() => {
-            navigate('/company-forms?formId=9')
-          }} />
-          <br></br>
-          Evaluación de desempeño
-          </p></td>
-          <td></td>
-            </tr>
-          </table>
+        <div className="tableContainer">
+          <div className="tableRow">
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faFile} className="icon icon1" onClick={() => {
+                  navigate('/company-forms?formId=3')
+                }} />
+                <br />
+                Documentación
+              </p>
+            </div>
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faMap} className="icon icon2" onClick={() => {
+                  navigate('/company-forms?formId=4')
+                }} />
+                <br />
+                Mapa de procesos
+              </p>
+            </div>
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faFileExport} className="icon icon3" onClick={() => {
+                  navigate('/company-forms?formId=5')
+                }} />
+                <br />
+                Políticas
+              </p>
+            </div>
+          </div>
+          <div className="tableRow">
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faSuitcase} className="icon icon4" onClick={() => {
+                  navigate('/company-forms?formId=6')
+                }} />
+                <br />
+                Normas/Leyes
+              </p>
+            </div>
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faTable} className="icon icon5" onClick={() => {
+                  navigate('/company-forms?formId=7')
+                }} />
+                <br />
+                Matriz de riesgos
+              </p>
+            </div>
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="icon icon6" onClick={() => {
+                  navigate('/company-forms?formId=8')
+                }} />
+                <br />
+                Auditoría
+              </p>
+            </div>
+          </div>
+          <div className="tableRow">
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faCheck} className="icon icon7" onClick={() => {
+                  navigate('/company-forms?formId=9')
+                }} />
+                <br />
+                Evaluación de desempeño
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
