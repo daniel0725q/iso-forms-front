@@ -70,9 +70,9 @@ const Sidebar = () => {
               Opciones
             </Link>
           </Menu.Item>
-          <Menu.Item key="corps">
-            <Link to="/company-forms">
-              Corporativos
+          <Menu.Item key="miscellaneous documents">
+            <Link to="/miscellaneous-documents">
+              Documentos Varios
             </Link>
           </Menu.Item>
           <Menu.Item key="forms">

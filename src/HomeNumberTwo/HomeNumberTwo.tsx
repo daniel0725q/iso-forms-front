@@ -22,7 +22,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faFile} className="icon icon1" onClick={() => {
-                  navigate('/company-forms?formId=3')
+                  navigate('/miscellaneous-documents?formId=3')
                 }} />
                 <br />
                 Documentación
@@ -31,7 +31,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faMap} className="icon icon2" onClick={() => {
-                  navigate('/company-forms?formId=4')
+                  navigate('/miscellaneous-documents?formId=4')
                 }} />
                 <br />
                 Mapa de procesos
@@ -40,7 +40,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faFileExport} className="icon icon3" onClick={() => {
-                  navigate('/company-forms?formId=5')
+                  navigate('/miscellaneous-documents?formId=5')
                 }} />
                 <br />
                 Políticas
@@ -51,7 +51,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faSuitcase} className="icon icon4" onClick={() => {
-                  navigate('/company-forms?formId=6')
+                  navigate('/miscellaneous-documents?formId=6')
                 }} />
                 <br />
                 Normas/Leyes
@@ -60,7 +60,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faTable} className="icon icon5" onClick={() => {
-                  navigate('/company-forms?formId=7')
+                  navigate('/miscellaneous-documents?formId=7')
                 }} />
                 <br />
                 Matriz de riesgos
@@ -69,7 +69,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faMagnifyingGlass} className="icon icon6" onClick={() => {
-                  navigate('/company-forms?formId=8')
+                  navigate('/miscellaneous-documents?formId=8')
                 }} />
                 <br />
                 Auditoría
@@ -80,7 +80,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faCheck} className="icon icon7" onClick={() => {
-                  navigate('/company-forms?formId=9')
+                  navigate('/miscellaneous-documents?formId=9')
                 }} />
                 <br />
                 Evaluación de desempeño
