@@ -1,6 +1,5 @@
 import { Button, Input, Select } from 'antd'
 import React, { useEffect, useState } from 'react';
-import { Option } from 'antd/es/mentions';
 import { useNavigate, useParams } from 'react-router-dom';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
@@ -138,16 +137,19 @@ function FormCopy() {
         <Select
           value={type}
           onChange={(value) => setType(value)}
+          style={{ width: '100%' }} // Ajusta el ancho del menú
+          placeholder="Selecciona una opción" // Añade un texto por defecto
+          optionLabelProp="label" // Utiliza la propiedad label para mostrar el nombre en lugar del valor numérico
         >
-          <Option value="1">ISO</Option>
-          <Option value="2">SST</Option>
-          <Option value="3">Documentación</Option>
-          <Option value="4">Mapa de Procesos</Option>
-          <Option value="5">Políticas</Option>
-          <Option value="6">Normas/Leyes</Option>
-          <Option value="7">Matriz de Riesgos</Option>
-          <Option value="8">Auditoría</Option>
-          <Option value="9">Evaluación de Desempeño</Option>
+          <Select.Option value={1} label="ISO">ISO</Select.Option>
+          <Select.Option value={2} label="SST">SST</Select.Option>
+          <Select.Option value={3} label="Documentación">Documentación</Select.Option>
+          <Select.Option value={4} label="Mapa de Procesos">Mapa de Procesos</Select.Option>
+          <Select.Option value={5} label="Políticas">Políticas</Select.Option>
+          <Select.Option value={6} label="Normas/Leyes">Normas/Leyes</Select.Option>
+          <Select.Option value={7} label="Matriz de Riesgos">Matriz de Riesgos</Select.Option>
+          <Select.Option value={8} label="Auditoría">Auditoría</Select.Option>
+          <Select.Option value={9} label="Evaluación de Desempeño">Evaluación de Desempeño</Select.Option>
         </Select>
         <br />
         <h2>Secciones</h2>
