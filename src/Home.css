@@ -1,4 +1,42 @@
 .mainContainer {
-    border: 1px 1px 1px 1px;
-    border-color: black;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .titleContainer {
+    margin-bottom: 20px;
+  }
+  
+  .welcomeContainer {
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+  
+  .imageGrid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    max-width: 1200px;
+  }
+  
+  .imageItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s;
+  }
+  
+  .imageItem:hover {
+    transform: scale(1.05);
+  }
+  
