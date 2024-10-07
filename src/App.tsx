@@ -66,7 +66,7 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/options" element={<HomeNumberTwo />} />
           <Route path="/forms" element={<FormsDashboard />} />
-          <Route path="/company-forms" element={<MiscFormsDashboard />} />
+          <Route path="/miscellaneous-documents" element={<MiscFormsDashboard />} />
           <Route path="/my-forms" element={<MyFormsDashboard />} />
           <Route path="/forms/:id" element={<MyForm isEdit={false} />} />
           <Route path="/forms/:id/copy" element={<FormCopy />} />
