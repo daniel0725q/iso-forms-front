@@ -147,7 +147,7 @@ const FormsDashboard = () => {
                     value: '9',
                 }
             ],
-            defaultFilteredValue: [searchParams.get('formId') || '1'],
+            defaultFilteredValue: [], // Eliminé el valor predeterminado para que el filtro esté vacío por defecto
             onFilter: (value: any, record: any) => record && record.type && record.type == value,
         },
         {

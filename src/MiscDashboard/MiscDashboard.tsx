@@ -41,51 +41,50 @@ const MiscFormsDashboard = () => {
             key: 'code',
         },
         {
-            title: 'Tipo',
-            dataIndex: 'type',
-            key: 'type',
-            filters: [
-                {
+          title: 'Tipo',
+          dataIndex: 'type',
+          key: 'type',
+          filters: [
+              {
                   text: 'ISO',
                   value: '1',
-                },
-                {
-                    text: 'SST',
-                    value: '2',
-                  },
-                  ,
-                {
-                    text: 'Documentación',
-                    value: '3',
-                  },
-                {
-                    text: 'Mapa de Procesos',
-                    value: '4',
-                  },
-                {
-                    text: 'Políticas',
-                    value: '5',
-                  },
-                {
-                    text: 'Normas/Leyes',
-                    value: '6',
-                  },
-                {
-                    text: 'Matriz de Riesgos',
-                    value: '7',
-                  },
-                {
-                    text: 'Auditoría',
-                    value: '8',
-                  },
-                  {
-                      text: 'Evaluación de Desempeño',
-                      value: '9',
-                    },
-            ],
-            defaultFilteredValue: [searchParams.get('formId') || ''],
-            onFilter: (value: any, record: any) => record && record.data && record.data.type == value,
-        },
+              },
+              {
+                  text: 'SST',
+                  value: '2',
+              },
+              {
+                  text: 'Documentación',
+                  value: '3',
+              },
+              {
+                  text: 'Mapa de procesos',
+                  value: '4',
+              },
+              {
+                  text: 'Políticas',
+                  value: '5',
+              },
+              {
+                  text: 'Normas/Leyes',
+                  value: '6',
+              },
+              {
+                  text: 'Matriz de riesgos',
+                  value: '7',
+              },
+              {
+                  text: 'Auditoría',
+                  value: '8',
+              },
+              {
+                  text: 'Evaluación de desempeño',
+                  value: '9',
+              }
+          ],
+          defaultFilteredValue: [], // Eliminé el valor predeterminado para que el filtro esté vacío por defecto
+          onFilter: (value: any, record: any) => record && record.type && record.type == value,
+      },
         {
             title: 'Versión',
             dataIndex: 'version',
@@ -112,53 +111,50 @@ const MiscFormsDashboard = () => {
               ),
         },
         {
-            title: 'Tipo',
-            dataIndex: 'type',
-            key: 'type',
-            filters: [
-                {
+          title: 'Tipo',
+          dataIndex: 'type',
+          key: 'type',
+          filters: [
+              {
                   text: 'ISO',
                   value: '1',
-                },
-                {
-                    text: 'SST',
-                    value: '2',
-                  },
-                  {
-                      text: 'Documentación',
-                      value: '3',
-                    },
-                    {
-                        text: 'Mapa de procesos',
-                        value: '4',
-                      },
-                      {
-                          text: 'Políticas',
-                          value: '5',
-                        },
-                        {
-                            text: 'Normas/Leyes',
-                            value: '6',
-                          },
-                          {
-                              text: 'Matriz de riesgos',
-                              value: '7',
-                            },
-                            {
-                                text: 'Auditoría',
-                                value: '8',
-                              },
-                              {
-                                  text: 'Evaluación de desempeño',
-                                  value: '9',
-                                }
-            ],
-            onFilter: (value: any, record: any) => record && record.data && record.data.type == value,
-            defaultFilteredValue: [searchParams.get('formId') || ''],
-            render: (_: any, record: any) => (
-                <p>{record.data.type}</p>
-              ),
-        },
+              },
+              {
+                  text: 'SST',
+                  value: '2',
+              },
+              {
+                  text: 'Documentación',
+                  value: '3',
+              },
+              {
+                  text: 'Mapa de procesos',
+                  value: '4',
+              },
+              {
+                  text: 'Políticas',
+                  value: '5',
+              },
+              {
+                  text: 'Normas/Leyes',
+                  value: '6',
+              },
+              {
+                  text: 'Matriz de riesgos',
+                  value: '7',
+              },
+              {
+                  text: 'Auditoría',
+                  value: '8',
+              },
+              {
+                  text: 'Evaluación de desempeño',
+                  value: '9',
+              }
+          ],
+          defaultFilteredValue: [], // Eliminé el valor predeterminado para que el filtro esté vacío por defecto
+          onFilter: (value: any, record: any) => record && record.type && record.type == value,
+      },
         {
             title: 'Versión',
             dataIndex: 'version',
