@@ -189,6 +189,11 @@ const FormsDashboard = () => {
             className="custom-table"
             pagination={{ pageSize: 10 }} />
             </div>
+            {/* Botón flotante */}
+            <Link to="/form-generator" className="floating-button">
+                <FontAwesomeIcon icon={faPlus} />
+                <span className="floating-button-text">Añadir nuevo formulario</span>
+            </Link>
         </div>
     )
 }
