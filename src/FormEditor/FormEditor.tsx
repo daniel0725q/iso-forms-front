@@ -123,14 +123,6 @@ function FormEditor() {
           onChange={(e) => setVersion(e.target.value)}
         />
         <br />
-        <label>Código:</label>
-        <Input
-          type="text"
-          name="code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <br />
         <label>Tipo:</label>
         <Select
           value={type}
@@ -154,17 +146,6 @@ function FormEditor() {
         {formData.sections.map((section: any, index: any) => (
           <div key={index}>
             <h3>Sección {index + 1}</h3>
-            <label>Id:</label>
-            <Input
-              type="text"
-              value={section.id || ''}
-              onChange={(e: any) => {
-                const updatedSections = [...formData.sections];
-                updatedSections[index] = { ...updatedSections[index], id: e.target.value };
-                setFormData({ ...formData, sections: updatedSections });
-              }}
-            />
-            <br />
             <label>Nombre:</label>
             <Input
               type="text"
