@@ -1,6 +1,7 @@
 import { Button, Input, Select, Space } from 'antd'
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 function FormGenerator() {
@@ -24,7 +25,7 @@ function FormGenerator() {
   const addSection = () => {
     setFormData({
       ...formData,
-      sections: [...formData.sections, {}]
+      sections: [...formData.sections, { id: uuidv4(), name: '', buttons: [] }]
     });
   }
 
@@ -132,17 +133,6 @@ function FormGenerator() {
         {formData.sections.map((section: any, index: any) => (
           <div key={index}>
             <h3>Sección {index + 1}</h3>
-            <label>Id:</label>
-            <Input
-              type="text"
-              value={section.id || ''}
-              onChange={(e: any) => {
-                const updatedSections = [...formData.sections];
-                updatedSections[index] = { ...updatedSections[index], id: e.target.value };
-                setFormData({ ...formData, sections: updatedSections });
-              }}
-            />
-            <br />
             <label>Nombre:</label>
             <Input
               type="text"
