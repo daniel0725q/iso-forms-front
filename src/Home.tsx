@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHelmetSafety } from '@fortawesome/free-solid-svg-icons';
+import PaypalButton from  './Paypal/PaypalButton';
 
 interface HomeProps {
   loggedIn: boolean;
@@ -78,6 +79,9 @@ const Home = (props: HomeProps) => {
             }}
           />
         </div>
+        <div className="paypal">
+          <PaypalButton totalValue="10" invoice="Pago de prueba"/>
+          </div>
       </div>
     </div>
   );

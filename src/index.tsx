@@ -4,13 +4,20 @@ import './index.css';
 import 'antd/dist/reset.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <PayPalScriptProvider
+      options={{
+        clientId: "AaxBxbhZpqQNZfTOg_delU6O9y5gyFWXXfTdiNrVrNZ1mlnfP2NUYmtqbzleJcctbne89zIKTk6qxclS",
+      }}
+      >
     <App />
+    </PayPalScriptProvider>
   </React.StrictMode>
 );
 

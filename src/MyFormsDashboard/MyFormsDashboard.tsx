@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 import './MyFormsDashboard.css'
 import { Space, Table } from 'antd'
+import PaypalButton from '../Paypal/PaypalButton'
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 const MyFormsDashboard = () => {
@@ -144,8 +145,10 @@ const MyFormsDashboard = () => {
             <div style={{width: '60%', marginLeft: '20%'}}>
             <Table dataSource={myForms} columns={myColumns} className="custom-table" pagination={{ pageSize: 10 }} />
         </div>
+        <PaypalButton totalValue="10" invoice="Test" />
         </div>
     )
+
 }
 
 export default MyFormsDashboard;
