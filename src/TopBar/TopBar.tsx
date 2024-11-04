@@ -13,7 +13,7 @@ const NavigationButtons: React.FC = () => {
 
   return (
     <div className="navigation-container">
-      <button onClick={() => navigate('/')} className="nav-button">Home</button>
+      <button onClick={() => navigate('/home')} className="nav-button">Home</button>
       <button onClick={handleLoginLogout} className="nav-button">
         {isLoggedIn ? 'Cerrar sesión' : 'Login'}
       </button>

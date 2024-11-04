@@ -19,6 +19,7 @@ import MiscFormsDashboard from './MiscDashboard/MiscDashboard'
 import axios from 'axios'
 import FormCopy from './FormCopy/FormCopy'
 import FormEditor from './FormEditor/FormEditor'
+import DiagramEditor from './ProcessMap/Editor'
 
 function AuthErrorPage() {
   return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
@@ -76,6 +77,7 @@ function App() {
           <Route path="/forms/preview/:id" element={<FormPreview />} />
           <Route path="/auth-error" element={<AuthErrorPage />} />
           <Route path="/internal-error" element={<ServerErrorPage />} />
+          <Route path="/process-editor" element={<DiagramEditor />} />
         </Route>
         </Routes>
       </BrowserRouter>
