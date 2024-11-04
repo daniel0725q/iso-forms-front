@@ -19,7 +19,6 @@ function FormCopy() {
     version: version,
     code: code,
     type: type,
-    id: id,
     sections: []
   });
 
@@ -89,7 +88,6 @@ function FormCopy() {
         'Authorization': `Bearer ${sessionStorageUser.token}`
       },
       body: JSON.stringify({
-        id: id,
         title: formData.title,
         version: formData.version,
         code: formData.code,
@@ -125,14 +123,6 @@ function FormCopy() {
           onChange={(e) => setVersion(e.target.value)}
         />
         <br />
-        <label>Código:</label>
-        <Input
-          type="text"
-          name="code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <br />
         <label>Tipo:</label>
         <Select
           value={type}
@@ -156,17 +146,6 @@ function FormCopy() {
         {formData.sections.map((section: any, index: any) => (
           <div key={index}>
             <h3>Sección {index + 1}</h3>
-            <label>Id:</label>
-            <Input
-              type="text"
-              value={section.id || ''}
-              onChange={(e: any) => {
-                const updatedSections = [...formData.sections];
-                updatedSections[index] = { ...updatedSections[index], id: e.target.value };
-                setFormData({ ...formData, sections: updatedSections });
-              }}
-            />
-            <br />
             <label>Nombre:</label>
             <Input
               type="text"
