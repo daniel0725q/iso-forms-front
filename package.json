@@ -7,8 +7,8 @@
     "@beam-australia/react-env": "^3.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@paypal/react-paypal-js": "^8.7.0",
     "@ironsoftware/ironpdf": "^2024.9.1",
+    "@paypal/react-paypal-js": "^8.7.0",
     "@pdfme/common": "^5.1.5",
     "@pdfme/generator": "^5.1.5",
     "@pdfme/ui": "^5.1.5",
@@ -21,7 +21,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.89",
-    "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.22",
     "antd": "^5.15.4",
     "axios": "^1.6.8",
@@ -40,6 +39,7 @@
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-jsonschema-form": "^1.8.1",
+    "react-modal": "^3.16.1",
     "react-pdf-html": "^1.2.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/react": "^18.3.12",
     "@types/react-jsonschema-form": "^1.7.13",
     "@types/react-table": "^7.7.19",
     "@types/uuid": "^10.0.0"

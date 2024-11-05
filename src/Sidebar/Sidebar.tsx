@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, Button } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined, HomeOutlined, BankOutlined, UserOutlined, SettingOutlined, FileOutlined, FormOutlined, FileTextOutlined, KeyOutlined, LogoutOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined, HomeOutlined, BankOutlined, UserOutlined, SettingOutlined, FileOutlined, FormOutlined, FileTextOutlined, KeyOutlined, LogoutOutlined, FileSearchOutlined, DatabaseOutlined } from '@ant-design/icons';
 import './Sidebar.css';
 import Sider from 'antd/es/layout/Sider';
 
@@ -45,7 +45,7 @@ const Sidebar = () => {
   return (
     <div>
       {sessionStorageUser ? (
-        <Sider width={200} collapsible collapsed={collapsed} collapsedWidth={collapsed ? 80 : 200}>
+        <Sider width={300} collapsible collapsed={collapsed} collapsedWidth={80}>
           <Button type="primary" onClick={toggleCollapse} className="collapse-button" style={{ margin: '16px' }}>
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </Button>
@@ -78,6 +78,10 @@ const Sidebar = () => {
             </Menu.Item>
             <Menu.Item key="my-forms" icon={<FileTextOutlined />}>
               <Link to="/my-forms">Mis Documentos</Link>
+            </Menu.Item>
+            <Menu.Item key="master-documents-list" icon={<FileSearchOutlined />}><Link to="/master-documents-list" style={{ whiteSpace: 'normal', overflowWrap: 'break-word', display: 'block' }}>Listado Maestro de Documentos</Link></Menu.Item>
+            <Menu.Item key="records" icon={<DatabaseOutlined />}>
+              <Link to="/records">Registros</Link>
             </Menu.Item>
             <Menu.Item key="changePassword" icon={<KeyOutlined />} className="changePassword">
               <Link to="/change-password">Cambiar contraseña</Link>
