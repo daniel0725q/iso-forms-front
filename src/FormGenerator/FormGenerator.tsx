@@ -84,7 +84,7 @@ function FormGenerator() {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>Editor de Formularios</h1>
+      <h1>Editor de Formatos</h1>
       <div style={{ width: '20%', marginLeft: '40%' }}>
         <label>Título:</label>
         <Input

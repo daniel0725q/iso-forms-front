@@ -117,7 +117,8 @@ const CreateUser = (props:CreateUserProps) => {
           >
             <Option value={'1'}>Administrador</Option>
             <Option value={'2'}>Supervisor</Option>
-            <Option value={'3'}>Usuario</Option>
+            <Option value={'3'}>Diligenciador</Option>
+            <Option value={'4'}>Espectador</Option>
           </Select>
         </Form.Item>
       </Form>

@@ -5,6 +5,7 @@ import { faPen, faTrash, faPlus, faFilePdf } from '@fortawesome/free-solid-svg-i
 import './MyFormsDashboard.css'
 import { Space, Table } from 'antd'
 import PaypalButton from '../Paypal/PaypalButton'
+import moment from 'moment'
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 const MyFormsDashboard = () => {
@@ -41,6 +42,7 @@ const MyFormsDashboard = () => {
         })
         .then((r) => r.json())
         .then((r) => {
+            console.log(r);
             setMyForms(r);
         })
     }, [reloadMyForms])
@@ -69,6 +71,11 @@ const MyFormsDashboard = () => {
             title: 'Código',
             dataIndex: 'code',
             key: 'code',
+        },
+        {
+            title: 'Fecha de Creación',
+            dataIndex: 'createdDate',
+            key: 'createdDate',
         },
         {
             title: 'Tipo',
@@ -103,11 +110,21 @@ const MyFormsDashboard = () => {
           },
     ];
 
+    const getTypeFilters = () => {
+        const types = Array.from(new Set(formTemplates.map((item: any) => item.code)));
+        return types.map((type) => ({ text: type, value: type }));
+      };
+
     const myColumns = [
         {
             title: 'Código',
             dataIndex: 'code',
             key: 'code',
+            filters: getTypeFilters(),
+            // onFilter: (value: string, record: any) => record.type.includes(value),
+            defaultFilteredValue: [], // Eliminé el valor predeterminado para que el filtro esté vacío por defecto
+            onFilter: (value: any, record: any) => record && record.code && record.code == value,
+            
             render: (_: any, record: any) => (
                 <p>{record.formTemplate.code}</p>
               ),
@@ -117,7 +134,31 @@ const MyFormsDashboard = () => {
             dataIndex: 'version',
             key: 'version',
             render: (_: any, record: any) => (
-                <p>{record.formTemplate.version}</p>
+                <p>{record.version}</p>
+              ),
+        },
+        {
+            title: 'Fecha de Creación',
+            dataIndex: 'createdDate',
+            key: 'createdDate',
+            render: (_: any, record: any) => (
+                <p>{moment(record.createdDate).format("d/MM/yyyy hh:mm")}</p>
+              ),
+        },
+        {
+            title: 'Tipo',
+            dataIndex: 'type',
+            key: 'type',
+            render: (_: any, record: any) => (
+                <p>{record.formTemplate.type}</p>
+              ),
+        },
+        {
+            title: 'Título',
+            dataIndex: 'title',
+            key: 'title',
+            render: (_: any, record: any) => (
+                <p>{record.formTemplate.title}</p>
               ),
         },
         {
@@ -125,7 +166,7 @@ const MyFormsDashboard = () => {
             key: 'action',
             render: (_: any, record: any) => (
               <Space size="middle">
-                <Link to={`/forms/edit/${record.id}`}><FontAwesomeIcon icon={faPen} /></Link>
+                <Link to={`/forms/edit/${record.id}/${record.formId}`}><FontAwesomeIcon icon={faPen} /></Link>
                 <Link to={`#`}><FontAwesomeIcon icon={faTrash} onClick={() => {
                     if (window.confirm("¿Seguro que deseas eliminar el formulario?")) {
                         deleteForm(record.id);
@@ -141,7 +182,7 @@ const MyFormsDashboard = () => {
     
     return (
         <div>
-            <h1>Mis Documentos</h1>
+            <h1>Documentos Históricos</h1>
             <div style={{width: '60%', marginLeft: '20%'}}>
             <Table dataSource={myForms} columns={myColumns} className="custom-table" pagination={{ pageSize: 10 }} />
         </div>

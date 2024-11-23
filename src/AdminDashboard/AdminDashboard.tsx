@@ -44,7 +44,7 @@ const AdminDashboard = () => {
                       </div>
                       <div className='category'>
                         <FontAwesomeIcon icon={faPenToSquare} size="10x" />
-                        <h3>Formularios</h3>
+                        <h3>Formatos</h3>
                       </div>
                       <div className='category'>
                         <FontAwesomeIcon icon={faBuilding} size="10x" />

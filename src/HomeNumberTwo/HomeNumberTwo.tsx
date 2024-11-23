@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import './HomeNumberTwo.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faFile, faFileExport, faMagnifyingGlass, faMap, faSuitcase, faTable } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faFile, faFileExport, faMagnifyingGlass, faMap, faSuitcase, faTable, faFolderTree, faChartSimple } from '@fortawesome/free-solid-svg-icons';
 
 const HomeNumberTwo = () => {
   const navigate = useNavigate()
@@ -84,6 +84,24 @@ const HomeNumberTwo = () => {
                 }} />
                 <br />
                 Evaluación de desempeño
+              </p>
+            </div>
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faFolderTree} className="icon icon8" onClick={() => {
+                  navigate('/miscellaneous-documents?formId=9')
+                }} />
+                <br />
+                Listado Maestro de Documentos
+              </p>
+            </div>
+            <div className="tableCell">
+              <p>
+                <FontAwesomeIcon icon={faChartSimple} className="icon icon9" onClick={() => {
+                  navigate('/miscellaneous-documents?formId=9')
+                }} />
+                <br />
+                Registros
               </p>
             </div>
           </div>

@@ -363,7 +363,7 @@ const createCols = (cols: number, types: any) => {
 
   return (
     <div className='main'>
-        <h1>Formularios</h1>
+        <h1>Formatos</h1>
         <div className='forms'>
             {parse(myData)}
         </div>

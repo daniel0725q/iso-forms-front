@@ -20,6 +20,8 @@ import axios from 'axios'
 import FormCopy from './FormCopy/FormCopy'
 import FormEditor from './FormEditor/FormEditor'
 import DiagramEditor from './ProcessMap/Editor'
+import MyFormEdit from './Form/FormEdit'
+import CompareForms from './CompareForms/CompareForms'
 
 function AuthErrorPage() {
   return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
@@ -71,13 +73,16 @@ function App() {
           <Route path="/my-forms" element={<MyFormsDashboard />} />
           <Route path="/forms/:id" element={<MyForm isEdit={false} />} />
           <Route path="/forms/:id/copy" element={<FormCopy />} />
+          <Route path="/forms/:id/edit/:template" element={<FormEditor />} />
           <Route path="/forms/:id/edit" element={<FormEditor />} />
           <Route path="/forms/edit/:id" element={<MyForm isEdit={true} />} />
+          <Route path="/forms/edit/:id/:template" element={<MyFormEdit isEdit={true} />} />
           <Route path="/form-generator" element={<FormGenerator />} />
           <Route path="/forms/preview/:id" element={<FormPreview />} />
           <Route path="/auth-error" element={<AuthErrorPage />} />
           <Route path="/internal-error" element={<ServerErrorPage />} />
           <Route path="/process-editor" element={<DiagramEditor />} />
+          <Route path="/compare" element={<CompareForms />} />
         </Route>
         </Routes>
       </BrowserRouter>

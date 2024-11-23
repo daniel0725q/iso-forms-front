@@ -1,0 +1,73 @@
+.logo {
+    height: 30px;
+    width: 30px;
+}
+
+.customTable {
+    margin: 0 auto; /* or margin: 0 auto 0 auto */
+}
+
+.link {
+    margin: 0 auto;
+}
+
+.linkDesc {
+    position: absolute;
+    margin-top: 6px;
+}
+
+ins {
+    background-color: #d4edda;
+}
+
+del {
+    background-color: #f8d7da;
+}
+
+.section {
+    margin-left: 5%;
+    text-align: left;
+}
+
+.header-img {
+    height: 100px;
+    width: 100px;
+}
+
+.hd {
+    width: 21cm;
+    min-height: 100px;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.pages {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 0cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    padding: 5%;
+}
+
+ul, ol {
+    margin-left: 0; /* Remove default margin */
+    padding-left: 0; /* Remove default padding */
+    list-style-position: inside; /* Align list markers inside the list item */
+}
+
+.pageHeader table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.pageHeader table * td {
+    border: 1px solid black;
+    text-align: center
+}

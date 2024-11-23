@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faTrash, faPlus, faFilePdf, faCopy, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faPen, faTrash, faPlus, faFilePdf, faCopy, faEdit, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import './FormsDashboard.css'
 import { Space, Table } from 'antd'
 const { REACT_APP_API_ENDPOINT } = process.env;
@@ -92,6 +92,13 @@ const FormsDashboard = () => {
           })
       }
 
+    // Función para generar filtros dinámicos
+    const getTypeFilters = () => {
+        const codes = Array.from(new Set(formTemplates.map((item: any) => item.code)));
+        console.log(codes);
+        return codes.map((code) => ({ text: code, value: code }));
+    };
+
     const columns = [
         {
             title: 'Título',
@@ -109,46 +116,6 @@ const FormsDashboard = () => {
             title: 'Tipo',
             dataIndex: 'type',
             key: 'type',
-            filters: [
-                {
-                    text: 'ISO',
-                    value: '1',
-                },
-                {
-                    text: 'SST',
-                    value: '2',
-                },
-                {
-                    text: 'Documentación',
-                    value: '3',
-                },
-                {
-                    text: 'Mapa de procesos',
-                    value: '4',
-                },
-                {
-                    text: 'Políticas',
-                    value: '5',
-                },
-                {
-                    text: 'Normas/Leyes',
-                    value: '6',
-                },
-                {
-                    text: 'Matriz de riesgos',
-                    value: '7',
-                },
-                {
-                    text: 'Auditoría',
-                    value: '8',
-                },
-                {
-                    text: 'Evaluación de desempeño',
-                    value: '9',
-                }
-            ],
-            defaultFilteredValue: [], // Eliminé el valor predeterminado para que el filtro esté vacío por defecto
-            onFilter: (value: any, record: any) => record && record.type && record.type == value,
         },
         {
             title: 'Versión',
@@ -161,6 +128,7 @@ const FormsDashboard = () => {
             render: (_: any, record: any) => (
               <Space size="middle">
                 <Link to={`/forms/${record.id}`}><FontAwesomeIcon icon={faPlus} /></Link>
+                <Link to={`/forms/${record.id}`}><FontAwesomeIcon icon={faClockRotateLeft} /></Link>
                 { isAdmin && (
                 <Link to={`/forms/${record.id}/edit`}><FontAwesomeIcon icon={faEdit} /></Link>
                 )}
@@ -181,9 +149,9 @@ const FormsDashboard = () => {
     
     return (
         <div>
-            <h1>Formularios</h1>
+            <h1>Formatos</h1>
             <div style={{width: '60%', marginLeft: '20%'}}>
-            <i>Todos los formularios disponibles</i>
+            <i>Todos los formatos disponibles</i>
             <Table dataSource={formTemplates}
             columns={columns}
             className="custom-table"

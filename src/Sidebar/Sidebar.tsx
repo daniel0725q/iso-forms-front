@@ -70,18 +70,11 @@ const Sidebar = () => {
             <Menu.Item key="options" icon={<SettingOutlined />}>
               <Link to="/options">Opciones</Link>
             </Menu.Item>
-            <Menu.Item key="miscellaneous documents" icon={<FileOutlined />}>
-              <Link to="/miscellaneous-documents">Documentos Varios</Link>
-            </Menu.Item>
             <Menu.Item key="forms" icon={<FormOutlined />}>
-              <Link to="/forms">Formularios</Link>
+              <Link to="/forms">Formatos</Link>
             </Menu.Item>
             <Menu.Item key="my-forms" icon={<FileTextOutlined />}>
-              <Link to="/my-forms">Mis Documentos</Link>
-            </Menu.Item>
-            <Menu.Item key="master-documents-list" icon={<FileSearchOutlined />}><Link to="/master-documents-list" style={{ whiteSpace: 'normal', overflowWrap: 'break-word', display: 'block' }}>Listado Maestro de Documentos</Link></Menu.Item>
-            <Menu.Item key="records" icon={<DatabaseOutlined />}>
-              <Link to="/records">Registros</Link>
+              <Link to="/my-forms">Documentos Históricos</Link>
             </Menu.Item>
             <Menu.Item key="changePassword" icon={<KeyOutlined />} className="changePassword">
               <Link to="/change-password">Cambiar contraseña</Link>
