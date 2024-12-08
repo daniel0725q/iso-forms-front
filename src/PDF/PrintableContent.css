@@ -1,0 +1,35 @@
+@media print {
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+  
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+  
+    .print-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50mm; /* Adjust height as needed */
+      text-align: center;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 10mm;
+      z-index: 1000;
+    }
+  
+    .print-main {
+      margin-top: 60mm; /* Ensure the content doesn't overlap the header */
+    }
+  
+    /* Avoid breaking content awkwardly */
+    div {
+      page-break-inside: avoid;
+    }
+  }
+  

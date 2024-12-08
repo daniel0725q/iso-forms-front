@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import './FormPreview.css';
+import { useReactToPrint } from "react-to-print";
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 const FormPreview = () => {
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
     const pdfRef = useRef<any>(null);
+
+    const handlePrint = useReactToPrint({
+        contentRef: pdfRef,
+        documentTitle: "A4_Print", // Optional title for the printed document,
+      });
     
     let { id } = useParams();
 
@@ -90,80 +96,14 @@ const FormPreview = () => {
         }
         return '';
     }
-    
-    const printContent = () => {
-        const printWindow = window.open('', '_blank');
-        if (printWindow) {
-            printWindow.document.write('<html><head><title>Print Form</title>');
-            printWindow.document.write('<link rel="stylesheet" href="./FormPreview.css" type="text/css" />');
-            printWindow.document.write('<style>');
-            printWindow.document.write(`
-                body {
-                    font-family: Arial, sans-serif;
-                    font-size: 12px;
-                    padding: 20px;
-                }
-                .pageHeader {
-                    text-align: center;
-                    margin-bottom: 20px;
-                }
-                .section {
-                    padding: 10px;
-                    margin: 10px 0;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-                td {
-                    padding: 10px;
-                    border: 1px solid #000;
-                }
-            `);
-            printWindow.document.write('</style>');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(pdfRef.current.outerHTML);
-            printWindow.document.close();
-            printWindow.print();
-        }
-    }
 
     return (
         <div>
             <button onClick={() => {
-                var styles = window.getComputedStyle(pdfRef.current);
-                fetch(`${REACT_APP_API_ENDPOINT}/pdf/generate`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${sessionStorageUser.token}`
-                    },
-                    body: JSON.stringify(
-                        {
-                            html: pdfRef.current.outerHTML,
-                            styles: styles,
-                            options: {
-                                logo: '',
-                                title: data.title,
-                                code: data.code,
-                                version: data.version
-                            }
-                        }
-                    )
-                })
-                .then((r) => r.blob())
-                .then((r) => {
-                    const url = window.URL.createObjectURL(new Blob([r]));
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', 'formulario.pdf');
-                    document.body.appendChild(link);
-                    link.click();
-                })
+                handlePrint()
             }}>Descargar</button>
-            <button onClick={printContent}>Imprimir</button>
             <div className='container' ref={pdfRef}>
-                <div className='pageHeader hd' id='pageHeader'>
+                <header className='print-header pageHeader hd' id='pageHeader'>
                     <table>
                         <tr>
                             <td>
@@ -202,10 +142,10 @@ const FormPreview = () => {
                             </td>
                         </tr>
                     </table>
-                </div>
-                <div className='pages' id='pages'>
+                </header>
+                <main className='print-main'>
                     {parse(data.form)}
-                </div>
+                </main>
             </div>
         </div>
     );

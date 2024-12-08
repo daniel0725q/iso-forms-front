@@ -142,7 +142,7 @@ const MyFormsDashboard = () => {
             dataIndex: 'createdDate',
             key: 'createdDate',
             render: (_: any, record: any) => (
-                <p>{moment(record.createdDate).format("d/MM/yyyy hh:mm")}</p>
+                <p>{moment(record.createdDate).format("DD/MM/yyyy hh:mm")}</p>
               ),
         },
         {

@@ -34,15 +34,6 @@ del {
     width: 100px;
 }
 
-.hd {
-    width: 21cm;
-    min-height: 100px;
-    margin: 1cm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
 .pages {
     width: 21cm;
     min-height: 29.7cm;

@@ -8,28 +8,6 @@
     width: 100px;
 }
 
-.hd {
-    width: 21cm;
-    min-height: 100px;
-    margin: 1cm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.pages {
-    width: 21cm;
-    min-height: 29.7cm;
-    padding: 0cm;
-    margin: 1cm auto;
-    border: 1px #D3D3D3 solid;
-    border-radius: 5px;
-    background: white;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    padding: 5%;
-}
-
 ul, ol {
     margin-left: 0; /* Remove default margin */
     padding-left: 0; /* Remove default padding */
@@ -45,3 +23,42 @@ ul, ol {
     border: 1px solid black;
     text-align: center
 }
+
+@media print {
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+  
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact;
+    }
+
+      table, tr, td, div, p {
+        page-break-inside: auto; /* Allow splitting content inside elements */
+      }
+  
+    .print-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50mm; /* Adjust height as needed */
+      text-align: center;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 10mm;
+    }
+  
+    .print-main {
+      margin-top: 60mm; /* Ensure the content doesn't overlap the header */
+    }
+  
+    /* Avoid breaking content awkwardly */
+    div {
+      page-break-inside: always;
+    }
+  }
+  
