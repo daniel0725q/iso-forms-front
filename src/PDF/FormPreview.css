@@ -9,9 +9,9 @@
 }
 
 ul, ol {
-    margin-left: 0; /* Remove default margin */
-    padding-left: 0; /* Remove default padding */
-    list-style-position: inside; /* Align list markers inside the list item */
+    margin-left: 0;
+    padding-left: 0;
+    list-style-position: inside;
 }
 
 .pageHeader table {
@@ -21,44 +21,36 @@ ul, ol {
 
 .pageHeader table * td {
     border: 1px solid black;
-    text-align: center
+    text-align: center;
 }
 
+/* Estilos para imprimir sin que el encabezado se ponga encima del texto */
 @media print {
     @page {
       size: A4;
       margin: 20mm;
     }
-  
+
     body {
       margin: 0;
       padding: 0;
       -webkit-print-color-adjust: exact;
     }
 
-      table, tr, td, div, p {
-        page-break-inside: auto; /* Allow splitting content inside elements */
-      }
-  
+    /* El encabezado se muestra como parte de la "cabecera" de una tabla,
+       así se repite en cada página y no tapa el contenido */
     .print-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 50mm; /* Adjust height as needed */
-      text-align: center;
-      background: white;
+      display: table-header-group;
       border-bottom: 1px solid #ddd;
-      padding: 10mm;
     }
-  
+
+    /* El contenido principal se muestra como parte del "cuerpo" */
     .print-main {
-      margin-top: 60mm; /* Ensure the content doesn't overlap the header */
+      display: table-row-group;
     }
-  
-    /* Avoid breaking content awkwardly */
-    div {
-      page-break-inside: always;
+
+    /* Esto evita que las cosas se corten feo al cambiar de página */
+    table, tr, td, div, p {
+      page-break-inside: auto;
     }
-  }
-  
+}

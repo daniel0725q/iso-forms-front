@@ -10,19 +10,18 @@ const FormPreview = () => {
 
     const handlePrint = useReactToPrint({
         contentRef: pdfRef,
-        documentTitle: "A4_Print", // Optional title for the printed document,
-      });
+        documentTitle: "A4_Print",
+    });
     
     let { id } = useParams();
-
     const [data, setData] = useState<any>({});
+    const [logo, setLogo] = useState<string>('');
+
     useEffect(() => {
         if (id) {
             getForm(id);
         }
     }, [])
-
-    const [logo, setLogo] = useState<string>('');
 
     useEffect(() => {
         fetch(`${REACT_APP_API_ENDPOINT}/pdf/logo`, {
@@ -57,7 +56,12 @@ const FormPreview = () => {
         for (const key in el) {
             let sections: any[] = el[key];
             sections.forEach((section: any, index: number) => {
-                elements.push(<div><h2>{(index + 1) + '. ' + section.name}</h2><div className='section' dangerouslySetInnerHTML={{__html: section.value}}></div></div>)
+                elements.push(
+                    <div>
+                        <h2>{(index + 1) + '. ' + section.name}</h2>
+                        <div className='section' dangerouslySetInnerHTML={{__html: section.value}}></div>
+                    </div>
+                )
             })
         }
         return elements;
