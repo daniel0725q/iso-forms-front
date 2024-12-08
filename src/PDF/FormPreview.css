@@ -3,54 +3,64 @@
     text-align: left;
 }
 
-.header-img {
-    height: 100px;
-    width: 100px;
-}
-
 ul, ol {
     margin-left: 0;
     padding-left: 0;
     list-style-position: inside;
 }
 
-.pageHeader table {
+.print-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.my-table-header table {
     border: 1px solid black;
     width: 100%;
 }
 
-.pageHeader table * td {
+.my-table-header table * td {
     border: 1px solid black;
-    text-align: center;
+    text-align: center
 }
 
-/* Estilos para imprimir sin que el encabezado se ponga encima del texto */
+/* Estilos de impresión */
 @media print {
     @page {
-      size: A4;
-      margin: 20mm;
+        size: A4;
+        margin: 20mm;
     }
+
+    .page-head {
+        border: 1px solid black;
+        width: 100%;
+    }
+
+    .print-header {
+        display: table-header-group;
+        border-bottom: 1px solid #ddd;
+      }
 
     body {
-      margin: 0;
-      padding: 0;
-      -webkit-print-color-adjust: exact;
+        margin: 0;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
     }
 
-    /* El encabezado se muestra como parte de la "cabecera" de una tabla,
-       así se repite en cada página y no tapa el contenido */
-    .print-header {
-      display: table-header-group;
-      border-bottom: 1px solid #ddd;
+    .hhd {
+        display: table-header-group;
     }
 
-    /* El contenido principal se muestra como parte del "cuerpo" */
-    .print-main {
-      display: table-row-group;
+    .bbd {
+        display: table-row-group;
     }
 
-    /* Esto evita que las cosas se corten feo al cambiar de página */
+    table.my-table-header {
+        border: 1px solid black;
+        width: 100%;
+    }
+
     table, tr, td, div, p {
-      page-break-inside: auto;
+        page-break-inside: auto;
     }
 }
