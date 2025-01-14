@@ -24,6 +24,11 @@ ul, ol {
     text-align: center
 }
 
+.bbd * table * td {
+    border: 1px solid black;
+    width: 100%;
+}
+
 /* Estilos de impresión */
 @media print {
     @page {
@@ -53,6 +58,22 @@ ul, ol {
 
     .bbd {
         display: table-row-group;
+    }
+
+    .bbd * table * td {
+        border: 1px solid black;
+        width: 100%;
+        padding-left: 5px;
+    }
+
+    .bbd * img {
+        max-width: fit-content;
+        max-height: fit-content;
+    }
+
+    * {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
     }
 
     table.my-table-header {

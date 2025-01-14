@@ -114,7 +114,7 @@ const FormPreview = () => {
                                     <td style={{border: '1px solid black', alignContent: 'center'}}>
                                         <img style={{height: '50px', width: '50px'}} src={compressBase64Image(logo, 300, 300, 0.2)}/>
                                     </td>
-                                    <td style={{textAlign: 'center'}}>
+                                    <td style={{textAlign: 'center', width: '65%'}}>
                                         <b>{String(data.title).toUpperCase()}</b>
                                     </td>
                                     <td style={{border: '1px solid black', alignContent: 'center'}}>

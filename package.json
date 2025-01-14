@@ -25,6 +25,8 @@
     "antd": "^5.15.4",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
+    "bpmn-js": "^18.1.1",
+    "diagram-js": "^15.2.3",
     "gojs": "^3.0.13",
     "html2pdf.js": "^0.10.1",
     "install": "^0.13.0",
