@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Bpmn from "./Bpmn"
 import type InternalEvent from "bpmn-js/lib/Viewer"
+import { useParams } from "react-router-dom";
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_11uuseb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="14.0.0">
   <bpmn:process id="Process_0cybc1z" isExecutable="false">
@@ -34,6 +35,7 @@ type BpmnChild = {
 
 function Editor() {
   const childRef = useRef<BpmnChild>();
+  const { id } = useParams();
 
   const handleReset = () => {
     if (childRef.current) {
@@ -43,7 +45,7 @@ function Editor() {
 
   return (
     <>
-      <Bpmn ref={childRef} xml={xml} />
+    {!id ? <Bpmn ref={childRef} xml={xml} /> : <Bpmn ref={childRef} xml={xml} id={id} />}
     </>
   )
 }

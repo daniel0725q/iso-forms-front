@@ -186,7 +186,7 @@ const MyFormsDashboard = () => {
             <div style={{width: '60%', marginLeft: '20%'}}>
             <Table dataSource={myForms} columns={myColumns} className="custom-table" pagination={{ pageSize: 10 }} />
         </div>
-        <PaypalButton totalValue="10" invoice="Test" />
+        <PaypalButton totalValue="10" invoice="Test" customId='form2' />
         </div>
     )
 

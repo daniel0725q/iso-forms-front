@@ -11,14 +11,21 @@ const { REACT_APP_API_ENDPOINT } = process.env;
 type BpmnProps = {
   xml: string;
   onEventClick?: (e: InternalEvent) => void;
-  onSave?: (xmlSaved: string) => void;  // <-- Prop opcional para guardar el XML
+  onSave?: (xmlSaved: string) => void;  // <-- Prop opcional para guardar el XML;
+  id?: string;
 };
 
-const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
+const Bpmn = forwardRef(({ xml, onEventClick, onSave, id }: BpmnProps, ref) => {
   const bpmnRef = useRef<HTMLDivElement>(null);
   const [diagram, setDiagram] = useState("");
   const modeler = useRef<BpmnModeler | null>(null);
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (id) {
+      saveDiagram2()
+    }
+  }, []);
 
   const handleEventClick = useCallback((e: InternalEvent) => {
     if (onEventClick) {
@@ -27,6 +34,7 @@ const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
   }, [onEventClick]);
 
   const saveDiagram = (xmlDiagram: string) => {
+    if (!id) {
     fetch(`${REACT_APP_API_ENDPOINT}/diagrams`, {
       method: 'POST',
       headers: {
@@ -38,6 +46,34 @@ const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
       .then((r) => {
         if (r.ok) alert("Diagrama guardado con éxito")
         else alert("Error al guardar el diagrama")
+      })
+    } else {
+      fetch(`${REACT_APP_API_ENDPOINT}/diagrams/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
+        },
+        body: JSON.stringify({ xml: xmlDiagram}),
+      })
+        .then((r) => {
+          if (r.ok) alert("Diagrama guardado con éxito")
+          else alert("Error al guardar el diagrama")
+        })
+    }
+  }
+
+  const saveDiagram2 = () => {
+    fetch(`${REACT_APP_API_ENDPOINT}/diagrams/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
+      },
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        setDiagram(r.xml)
       })
   }
 

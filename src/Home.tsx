@@ -60,7 +60,7 @@ const Home = (props: HomeProps) => {
         </p>
       </div>
       <div className="paypalContainer">
-        <PaypalButton totalValue="10" invoice="Pago de prueba" />
+        <PaypalButton totalValue="10" invoice="Pago de prueba" customId='form1' />
       </div>
       <div className="imageGrid">
         <div className="imageItem">
