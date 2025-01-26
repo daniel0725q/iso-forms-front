@@ -23,6 +23,7 @@ import DiagramEditor from './ProcessMap/Editor'
 import MyFormEdit from './Form/FormEdit'
 import CompareForms from './CompareForms/CompareForms'
 import Editor from './ProcessMap/Editor'
+import Viewer from './ProcessMap/Viewer'
 
 function AuthErrorPage() {
   return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
@@ -83,6 +84,7 @@ function App() {
           <Route path="/auth-error" element={<AuthErrorPage />} />
           <Route path="/internal-error" element={<ServerErrorPage />} />
           <Route path="/process-editor" element={<Editor />} />
+          <Route path="/process-map/:id" element={<Viewer xml='' />} />
           <Route path="/compare" element={<CompareForms />} />
         </Route>
         </Routes>

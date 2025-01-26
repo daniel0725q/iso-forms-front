@@ -74,7 +74,7 @@ const Sidebar = () => {
               <Link to="/forms">Formatos</Link>
             </Menu.Item>
             <Menu.Item key="my-forms" icon={<FileTextOutlined />}>
-              <Link to="/my-forms">Documentos Históricos</Link>
+              <Link to="/my-forms">Registros</Link>
             </Menu.Item>
             <Menu.Item key="changePassword" icon={<KeyOutlined />} className="changePassword">
               <Link to="/change-password">Cambiar contraseña</Link>

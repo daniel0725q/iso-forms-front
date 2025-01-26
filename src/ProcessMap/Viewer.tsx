@@ -3,9 +3,10 @@ import BpmnModeler from 'bpmn-js/lib/Modeler';  // <-- Importa Modeler en lugar 
 import type EventBus from 'diagram-js/lib/core/EventBus'; 
 import type InternalEvent from 'diagram-js/lib/core/EventBus'; // Ajusta tipos si es necesario
 import { forwardRef, useCallback, useEffect, useRef, useState, useImperativeHandle } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+import BaseViewer from 'bpmn-js/lib/BaseViewer';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 type BpmnProps = {
@@ -14,11 +15,15 @@ type BpmnProps = {
   onSave?: (xmlSaved: string) => void;  // <-- Prop opcional para guardar el XML
 };
 
-const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
+const Viewer = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
   const bpmnRef = useRef<HTMLDivElement>(null);
   const [diagram, setDiagram] = useState("");
   const modeler = useRef<BpmnModeler | null>(null);
-  const navigate = useNavigate()
+  let { id } = useParams();
+
+  useEffect(() => {
+    saveDiagram();
+  }, [])
 
   const handleEventClick = useCallback((e: InternalEvent) => {
     if (onEventClick) {
@@ -26,29 +31,18 @@ const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
     }
   }, [onEventClick]);
 
-  const saveDiagram = (xmlDiagram: string) => {
-    fetch(`${REACT_APP_API_ENDPOINT}/diagrams`, {
-      method: 'POST',
+  const saveDiagram = () => {
+    fetch(`${REACT_APP_API_ENDPOINT}/diagrams/${id}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
       },
-      body: JSON.stringify({ xml: xmlDiagram}),
     })
+      .then((r) => r.json())
       .then((r) => {
-        if (r.ok) alert("Diagrama guardado con éxito")
-        else alert("Error al guardar el diagrama")
+        setDiagram(r.xml)
       })
-  }
-
-  const getDiagram = async () => {
-    const result = await modeler.current?.saveXML({ format: true });
-    if (result) {
-      const { xml: xmlSaved } = result;
-      saveDiagram(xmlSaved!);
-    } else {
-      console.error("Error: No se pudo guardar el XML.");
-    }
   }
 
   useImperativeHandle(ref, () => ({
@@ -72,7 +66,7 @@ const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
           container: bpmnRef.current,
           keyboard: {
             bindTo: bpmnRef.current
-          }
+          },
         });
 
         try {
@@ -126,12 +120,8 @@ const Bpmn = forwardRef(({ xml, onEventClick, onSave }: BpmnProps, ref) => {
           margin: "auto"
         }}
       />
-      {/* <div style={{ textAlign: "center", marginTop: "1rem" }}>
-        <button onClick={handleSaveDiagram}>Guardar diagrama</button>
-      </div> */}
-      <button onClick={getDiagram}>Obtener diagrama</button>
     </>
   );
 });
 
-export default Bpmn;
+export default Viewer;

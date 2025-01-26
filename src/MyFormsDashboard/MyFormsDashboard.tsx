@@ -182,7 +182,7 @@ const MyFormsDashboard = () => {
     
     return (
         <div>
-            <h1>Documentos Históricos</h1>
+            <h1>Registros</h1>
             <div style={{width: '60%', marginLeft: '20%'}}>
             <Table dataSource={myForms} columns={myColumns} className="custom-table" pagination={{ pageSize: 10 }} />
         </div>
