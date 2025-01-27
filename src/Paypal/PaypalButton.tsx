@@ -1,5 +1,6 @@
 import React from 'react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
+const { REACT_APP_API_ENDPOINT } = process.env;
 
 interface PaypalButtonInterface {
   invoice: string;
@@ -31,14 +32,16 @@ const PaypalButton: React.FC<PaypalButtonInterface> = (props) => {
           console.log('Order captured:', order);
 
           // Realizar la llamada a la API REST con el ID personalizado
-          fetch('https://your-api-endpoint.com/activate', {
+          fetch(`${REACT_APP_API_ENDPOINT}/payments`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
             },
             body: JSON.stringify({
-              orderId: order.id,
-              customId: props.customId, // Enviar el ID personalizado
+              paymentId: order.id,
+              formTemplateId: props.customId, // Enviar el ID personalizado
+              status: order.status,
             }),
           })
           .then(response => response.json())

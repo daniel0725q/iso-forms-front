@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faTrash, faPlus, faFilePdf, faCopy, faEdit, faClockRotateLeft, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { Tag } from "antd";
+import { faPen, faTrash, faPlus, faFilePdf, faCopy, faEdit, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons'
 import { Space, Table } from 'antd'
 const { REACT_APP_API_ENDPOINT } = process.env;
 
-const DiagramsDashboard = () => {
+const PaymentsDashboard = () => {
     const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -18,7 +19,7 @@ const DiagramsDashboard = () => {
 
     const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
     useEffect(() => {
-        fetch(`${REACT_APP_API_ENDPOINT}/diagrams`, {
+        fetch(`${REACT_APP_API_ENDPOINT}/payments`, {
             method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -27,6 +28,7 @@ const DiagramsDashboard = () => {
         })
         .then((r) => r.json())
         .then((r) => {
+            console.log(r);
             setFormTemplates(r);
         })
     }, [reloadFormTemplates])
@@ -98,64 +100,66 @@ const DiagramsDashboard = () => {
         return codes.map((code) => ({ text: code, value: code }));
     };
 
-    const deleteFormTemplate2 = (id: number) => {
-        fetch(`${REACT_APP_API_ENDPOINT}/diagrams/${id}`, {
-            method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionStorageUser.token}`
-        },
-        })
-        .then((r) => r.json())
-        .then((r) => {
-            setReloadFormTemplates(reloadFormTemplates + 1);
-        })
-    }
-
     const columns = [
         {
-            title: 'Id',
+            title: 'ID',
             dataIndex: 'id',
-            key: 'title',
+            key: 'id',
         },
         {
-            title: 'Creado en',
+            title: 'Formulario',
+            dataIndex: 'formTemplateId',
+            key: 'formTemplateId',
+        },
+        {
+            title: 'Pagos',
+            dataIndex: 'paymentId',
+            key: 'paymentId',
+        },
+        {
+            title: 'Id de la compañía',
+            dataIndex: 'companyId',
+            key: 'companyId',
+        },
+        {
+            title: 'Pago',
+            dataIndex: 'status',
+            key: 'status',
+        },
+        {
+            title: 'Fecha de creación',
             dataIndex: 'createdAt',
             key: 'createdAt',
-            sorter: (a: any, b: any) => a.code.localeCompare(b.code)
         },
         {
-            title: 'Actualizado en',
-            dataIndex: 'updatedAt',
-            key: 'type',
+            title: 'Aplicado',
+            dataIndex: 'applied',
+            key: 'applied',
+            sorter: (a: any, b: any) => a == b ? 0 : a ? 1 : -1,
+            render : (text: any) => {
+                if (text) {
+                    return <Tag color="green">Aplicado</Tag>
+                } else {
+                    return <Tag color="red">No aplicado</Tag>
+                }
+            }
         },
         {
             title: 'Acciones',
             key: 'action',
             render: (_: any, record: any) => (
               <Space size="middle">
-                <Link to={`/process-map/${record.id}`}>
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </Link>
-                <Link to={`/process-editor/${record.id}`}>
-                <FontAwesomeIcon icon={faPen} />
-                </Link>
-                 <Link to={`#`} onClick={() => {
-                    if (window.confirm("¿Seguro que deseas eliminar el diagrama?")) {
-                        deleteFormTemplate(record.id);
-                    }
-                }}><FontAwesomeIcon icon={faTrash} /></Link>
+                <Link to={`#`}><FontAwesomeIcon icon={faPlus} /></Link>
               </Space>
             ),
           },
-          
     ];
     
     return (
-        <div>
-            <h1>Formatos</h1>
-            <div style={{width: '60%', marginLeft: '20%'}}>
-            <i>Todos los formatos disponibles</i>
+        <div style={{textAlign: 'center', alignContent: 'center'}}>
+            <h1>Pagos</h1>
+            <div>
+            <i>Todos los pagos disponibles</i>
             <Table dataSource={formTemplates}
             columns={columns}
             className="custom-table"
@@ -166,4 +170,4 @@ const DiagramsDashboard = () => {
     )
 }
 
-export default DiagramsDashboard;
+export default PaymentsDashboard;

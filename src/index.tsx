@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
     <PayPalScriptProvider
       options={{
-        clientId: "AaxBxbhZpqQNZfTOg_delU6O9y5gyFWXXfTdiNrVrNZ1mlnfP2NUYmtqbzleJcctbne89zIKTk6qxclS",
+        clientId: "Ab74zan85cH7ELKyoRccF3dQGOpskL57Z6dTNKFk9JMOXGBFe5Nhn356EGil_etYyc4cXtynZrOwlGUj",
       }}
       >
     <App />

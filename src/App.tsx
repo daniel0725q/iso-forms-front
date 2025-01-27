@@ -25,6 +25,7 @@ import CompareForms from './CompareForms/CompareForms'
 import Editor from './ProcessMap/Editor'
 import Viewer from './ProcessMap/Viewer'
 import DiagramsDashboard from './DiagramsDashboard/DiagramsDashboard'
+import PaymentsDashboard from './PaymentsDashboard/PaymentsDashboard'
 
 function AuthErrorPage() {
   return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
@@ -89,6 +90,7 @@ function App() {
           <Route path="/process-map/:id" element={<Viewer xml='' />} />
           <Route path="/compare" element={<CompareForms />} />
           <Route path="/diagrams" element={<DiagramsDashboard />} />
+          <Route path="/payments" element={<PaymentsDashboard />} />
         </Route>
         </Routes>
       </BrowserRouter>

@@ -6,6 +6,7 @@ import { forwardRef, useCallback, useEffect, useRef, useState, useImperativeHand
 import { useNavigate } from 'react-router-dom';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+import { Button } from 'antd';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 type BpmnProps = {
@@ -165,7 +166,7 @@ const Bpmn = forwardRef(({ xml, onEventClick, onSave, id }: BpmnProps, ref) => {
       {/* <div style={{ textAlign: "center", marginTop: "1rem" }}>
         <button onClick={handleSaveDiagram}>Guardar diagrama</button>
       </div> */}
-      <button onClick={getDiagram}>Obtener diagrama</button>
+      <Button onClick={getDiagram}>Guardar diagrama</Button>
     </>
   );
 });

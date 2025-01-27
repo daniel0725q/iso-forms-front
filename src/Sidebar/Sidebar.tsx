@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, Button } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined, HomeOutlined, BankOutlined, UserOutlined, SettingOutlined, FileOutlined, FormOutlined, FileTextOutlined, KeyOutlined, LogoutOutlined, FileSearchOutlined, DatabaseOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined, HomeOutlined, BankOutlined, UserOutlined, SettingOutlined, FileOutlined, FormOutlined, FileTextOutlined, KeyOutlined, LogoutOutlined, FileSearchOutlined, DatabaseOutlined, MoneyCollectFilled, DollarOutlined } from '@ant-design/icons';
 import './Sidebar.css';
 import Sider from 'antd/es/layout/Sider';
 
@@ -76,6 +76,11 @@ const Sidebar = () => {
             <Menu.Item key="my-forms" icon={<FileTextOutlined />}>
               <Link to="/my-forms">Registros</Link>
             </Menu.Item>
+            {isAdmin && (
+              <Menu.Item key="payments" icon={<DollarOutlined />}>
+                <Link to="/payments">Pagos</Link>
+              </Menu.Item>
+            )}
             <Menu.Item key="changePassword" icon={<KeyOutlined />} className="changePassword">
               <Link to="/change-password">Cambiar contraseña</Link>
             </Menu.Item>

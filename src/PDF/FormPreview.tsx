@@ -57,6 +57,7 @@ const FormPreview = () => {
         for (const key in el) {
             const sections: any[] = el[key];
             sections.forEach((section: any, index: number) => {
+                elements.push(<br></br>)
                 elements.push(
                     <div key={section.name + index}>
                         <h2>{(index + 1) + '. ' + section.name}</h2>
@@ -105,8 +106,8 @@ const FormPreview = () => {
     return (
         <div>
             <button onClick={() => handlePrint()}>Descargar</button>
-            <div className='container' ref={pdfRef}>
-                <table>
+            <div className='container' ref={pdfRef} style={{width: '968px'}}>
+                <table style={{width: '100%'}}>
                     <thead className='hhd'>
                         <th style={{textAlign: 'center'}}>
                             <table className='my-table-header' style={{width: '100%', border: '1px solid black'}}>

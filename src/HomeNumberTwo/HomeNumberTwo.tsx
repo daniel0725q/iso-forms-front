@@ -31,7 +31,7 @@ const HomeNumberTwo = () => {
             <div className="tableCell">
               <p>
                 <FontAwesomeIcon icon={faMap} className="icon icon2" onClick={() => {
-                  navigate('/miscellaneous-documents?formId=4')
+                  navigate('/diagrams')
                 }} />
                 <br />
                 Mapa de procesos
