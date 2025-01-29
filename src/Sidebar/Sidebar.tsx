@@ -12,6 +12,7 @@ const Sidebar = () => {
   const sessionStorageUser = localStorage.getItem('user');
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isOperator, setIsOperator] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,25 @@ const Sidebar = () => {
           .then((r) => r.json())
           .then((r) => {
             setIsAdmin(r.isAdmin);
+          });
+      }
+    }
+  }, [sessionStorageUser]);
+
+  useEffect(() => {
+    if (sessionStorageUser) {
+      const user = JSON.parse(sessionStorageUser);
+      if (user.token) {
+        fetch(`${REACT_APP_API_ENDPOINT}/auth/is-operator`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: user.token }),
+        })
+          .then((r) => r.json())
+          .then((r) => {
+            setIsOperator(r.isOperator);
           });
       }
     }
@@ -62,7 +82,7 @@ const Sidebar = () => {
                 <Link to="/companies">Empresas</Link>
               </Menu.Item>
             )}
-            {isAdmin && (
+            {(isAdmin || isOperator) && (
               <Menu.Item key="users" icon={<UserOutlined />}>
                 <Link to="/users">Usuarios</Link>
               </Menu.Item>
