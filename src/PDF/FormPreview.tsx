@@ -22,7 +22,7 @@ const FormPreview = () => {
         if (id) {
             getForm(id);
         }
-    }, [id]);
+    }, []);
 
     useEffect(() => {
         fetch(`${REACT_APP_API_ENDPOINT}/pdf/logo`, {
@@ -36,7 +36,7 @@ const FormPreview = () => {
         .then((r) => {
             setLogo(r.logo);
         })
-    }, [sessionStorageUser.token]);
+    }, []);
 
     const getForm = (id: string) => {
         fetch(`${REACT_APP_API_ENDPOINT}/forms/${id}`, {
