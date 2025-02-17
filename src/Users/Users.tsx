@@ -7,13 +7,18 @@ import './Users.css'
 import { Table } from 'antd'
 const { REACT_APP_API_ENDPOINT } = process.env;
 
-const Users = () => {
+interface UserProps {
+  setEmail: (email: string) => void;
+}
+const Users: React.FC<UserProps>= ({setEmail}) => {
   const navigate = useNavigate()
 
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
   const [data, setData] = useState([]);
   const [show, setShow] =  useState(false);
   const [reload, setReload] = useState(true);
+  const userEmail = sessionStorageUser.email;
+  setEmail(userEmail)
 
   useEffect(() => {
     loadUsers()
@@ -91,12 +96,15 @@ const Users = () => {
         });
     }
   }
+  
 
   return (
     <div>
+      
         <h1>Usuarios</h1>
         <div className='companies' style={{width: '60%', marginLeft: '20%'}}>
         <button onClick={() => {loadUsers()}}>Cargar usuarios</button>
+        
         <Table
       dataSource={data}
       columns={columns}

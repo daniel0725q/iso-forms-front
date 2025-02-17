@@ -1,16 +1,21 @@
 import { Outlet } from 'react-router-dom';
+import { useState } from "react";
 import Sidebar from './Sidebar/Sidebar';
-import TopBar from './TopBar/TopBar';
+import './PageLayout.css'
+import Topbar from './TopBar/TobBar';
 
 
-const PageLayout = () => (
-      <div style={{ display: 'flex' }}>
-        <TopBar />
+const PageLayout = () => {
+  const [email, setEmail] = useState("");
+  return (
+      <div className='user-content'>
+       <Topbar email={email}/>
         <Sidebar />
         <div className='content' style={{ flex: 1 }}>
+        
             <Outlet />
         </div>
-      </div>
-);
+      </div>)
+};
 
 export default PageLayout;

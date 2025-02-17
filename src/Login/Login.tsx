@@ -14,7 +14,7 @@ const Login = (props: LoginProps) => {
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [isPasswordForgotten, setIsPasswordForgotten] = useState(false)
-
+console.log(email)
   const navigate = useNavigate()
 
   const onButtonClick = () => {

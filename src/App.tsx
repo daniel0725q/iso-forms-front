@@ -26,6 +26,7 @@ import Editor from './ProcessMap/Editor'
 import Viewer from './ProcessMap/Viewer'
 import DiagramsDashboard from './DiagramsDashboard/DiagramsDashboard'
 import PaymentsDashboard from './PaymentsDashboard/PaymentsDashboard'
+import Sidebar from './Sidebar/Sidebar'
 
 function AuthErrorPage() {
   return <h1>Acceso no autorizado! Verifica tu contraseña o ingresa nuevamente.</h1>;
@@ -70,7 +71,7 @@ function App() {
           <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/users" element={<Users />} />
+          <Route path="/users" element={<Users setEmail={setEmail}/>} />
           <Route path="/options" element={<HomeNumberTwo />} />
           <Route path="/forms" element={<FormsDashboard />} />
           <Route path="/miscellaneous-documents" element={<MiscFormsDashboard />} />
