@@ -23,7 +23,7 @@ import DiagramEditor from './ProcessMap/Editor'
 import MyFormEdit from './Form/FormEdit'
 import CompareForms from './CompareForms/CompareForms'
 import Editor from './ProcessMap/Editor'
-import Viewer from './ProcessMap/Viewer'
+//import Viewer from './ProcessMap/Viewer'
 import DiagramsDashboard from './DiagramsDashboard/DiagramsDashboard'
 import PaymentsDashboard from './PaymentsDashboard/PaymentsDashboard'
 import Sidebar from './Sidebar/Sidebar'
@@ -71,7 +71,7 @@ function App() {
           <Route path="/recover-password" element={<RecoverPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/users" element={<Users setEmail={setEmail}/>} />
+          <Route path="/users" element={<Users/>} />
           <Route path="/options" element={<HomeNumberTwo />} />
           <Route path="/forms" element={<FormsDashboard />} />
           <Route path="/miscellaneous-documents" element={<MiscFormsDashboard />} />
@@ -88,7 +88,7 @@ function App() {
           <Route path="/internal-error" element={<ServerErrorPage />} />
           <Route path="/process-editor" element={<Editor />} />
           <Route path="/process-editor/:id" element={<Editor />} />
-          <Route path="/process-map/:id" element={<Viewer xml='' />} />
+          
           <Route path="/compare" element={<CompareForms />} />
           <Route path="/diagrams" element={<DiagramsDashboard />} />
           <Route path="/payments" element={<PaymentsDashboard />} />

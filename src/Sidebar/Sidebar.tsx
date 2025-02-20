@@ -14,7 +14,7 @@ const Sidebar = () => {
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [isOperator, setIsOperator] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [selectedKey, setSelectedKey] = useState('');
   
   

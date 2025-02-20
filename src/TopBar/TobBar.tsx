@@ -1,5 +1,5 @@
 // NavigationButtons.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
@@ -12,8 +12,7 @@ interface TopbarProps {
 const Topbar: React.FC<TopbarProps>=({email}) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState(email);
-  
+
   const handleLoginLogout = () => {
     setIsLoggedIn(!isLoggedIn);
   };

@@ -7,18 +7,21 @@ import './Users.css'
 import { Table } from 'antd'
 const { REACT_APP_API_ENDPOINT } = process.env;
 
-interface UserProps {
-  setEmail: (email: string) => void;
-}
-const Users: React.FC<UserProps>= ({setEmail}) => {
+// interface UserProps {
+//   setEmail: any
+// }
+const Users: React.FC= () => {
   const navigate = useNavigate()
 
   const sessionStorageUser = JSON.parse(localStorage.getItem('user') || '');
   const [data, setData] = useState([]);
   const [show, setShow] =  useState(false);
   const [reload, setReload] = useState(true);
-  const userEmail = sessionStorageUser.email;
-  setEmail(userEmail)
+  
+  
+
+  
+
 
   useEffect(() => {
     loadUsers()

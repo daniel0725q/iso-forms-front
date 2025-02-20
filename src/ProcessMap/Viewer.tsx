@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import BpmnViewer from 'bpmn-js/lib/NavigatedViewer';
 import type eventBus from "bpmn-js/lib/NavigatedViewer"
 import type InternalEvent from "bpmn-js/lib/NavigatedViewer"
