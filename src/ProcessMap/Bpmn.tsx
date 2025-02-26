@@ -178,6 +178,7 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
 
   return (
     <>
+    
       <div
         ref={bpmnRef}
         style={{
@@ -187,7 +188,8 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
           margin: "auto"
         }}
       />
-      <Button onClick={getDiagram}>Guardar diagrama</Button>
+     
+      <Button style={{marginTop: "10px"}} onClick={getDiagram}>Guardar diagrama</Button>
     </>
   );
 });

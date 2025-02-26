@@ -71,7 +71,54 @@ function Editor() {
   return (
     <>
       <div style={{ marginBottom: "1rem" }}>
-        <h1>Mapa de Procesos</h1>
+      <div className='container'  style={{width: '968px'}}>
+                <table style={{width: '100%'}}>
+                    <thead className='hhd'>
+                        <th style={{textAlign: 'center'}}>
+                            <table className='my-table-header' style={{width: '100%', border: '1px solid black'}}>
+                                <tr>
+                                    <td style={{border: '1px solid black', alignContent: 'center'}}>
+                                        <img style={{height: '50px', width: '50px'}} />
+                                    </td>
+                                    <td style={{textAlign: 'center', width: '65%'}}>
+                                        <b></b>
+                                    </td>
+                                    <td style={{border: '1px solid black', alignContent: 'center'}}>
+                                        <table style={{border: '1px solid black'}}>
+                                            <tr>
+                                                <td>
+                                                    Código
+                                                </td>
+                                                <td>
+                                                    {122}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Versión
+                                                </td>
+                                                <td>
+                                                    {123}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Fecha
+                                                </td>
+                                                <td>
+                                                    { new Date().toLocaleDateString() }
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br></br>
+                        </th>
+                    </thead>
+                    
+                </table>
+            </div>
         <label>
           Selecciona un color:
           <input
