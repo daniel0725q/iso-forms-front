@@ -40,7 +40,16 @@ function Editor() {
   const childRef = useRef<BpmnChild>(null); // Tipado correcto del ref
   const { id } = useParams();
   const [selectedColor, setSelectedColor] = useState("#FFFFFF"); // Color seleccionado
+  const [title, setTitle] = useState("Nombre diagrama");
+  const [isEditing, setIsEditing] = useState(false);
 
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
   // Paleta de colores predefinidos
   const colorPalette = [
     "#4A90E2", // Azul corporativo
@@ -72,52 +81,61 @@ function Editor() {
     <>
       <div style={{ marginBottom: "1rem" }}>
       <div className='container'  style={{width: '968px'}}>
-                <table style={{width: '100%'}}>
-                    <thead className='hhd'>
-                        <th style={{textAlign: 'center'}}>
-                            <table className='my-table-header' style={{width: '100%', border: '1px solid black'}}>
-                                <tr>
-                                    <td style={{border: '1px solid black', alignContent: 'center'}}>
-                                        <img style={{height: '50px', width: '50px'}} />
-                                    </td>
-                                    <td style={{textAlign: 'center', width: '65%'}}>
-                                        <b></b>
-                                    </td>
-                                    <td style={{border: '1px solid black', alignContent: 'center'}}>
-                                        <table style={{border: '1px solid black'}}>
-                                            <tr>
-                                                <td>
-                                                    Código
-                                                </td>
-                                                <td>
-                                                    {122}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Versión
-                                                </td>
-                                                <td>
-                                                    {123}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Fecha
-                                                </td>
-                                                <td>
-                                                    { new Date().toLocaleDateString() }
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br></br>
-                        </th>
-                    </thead>
-                    
-                </table>
+      <table style={{ width: "100%" }}>
+      <thead className="hhd">
+        <tr>
+          <th style={{ textAlign: "center" }}>
+            <table
+              className="my-table-header"
+              style={{ width: "100%", border: "1px solid black" }}
+            >
+              <tr>
+                <td
+                  style={{ border: "1px solid black", alignContent: "center" }}
+                >
+                  <img style={{ height: "50px", width: "50px" }} alt="Logo" />
+                </td>
+                <td style={{ textAlign: "center", width: "65%" }}>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      placeholder="Enter title..."
+                      value={title}
+                      onChange={handleTitleChange}
+                      onBlur={handleBlur}
+                      autoFocus
+                    />
+                  ) : (
+                    <b onClick={() => setIsEditing(true)} style={{ cursor: "pointer",  minWidth: "100px", display: "inline-block" }}>
+                      {title || "Nombre diagrama"}
+                    </b>
+                  )}
+                </td>
+                <td
+                  style={{ border: "1px solid black", alignContent: "center" }}
+                >
+                  <table style={{ border: "1px solid black" }}>
+                    <tr>
+                      <td>Código</td>
+                      <td>{122}</td>
+                    </tr>
+                    <tr>
+                      <td>Versión</td>
+                      <td>{123}</td>
+                    </tr>
+                    <tr>
+                      <td>Fecha</td>
+                      <td>{new Date().toLocaleDateString()}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <br />
+          </th>
+        </tr>
+      </thead>
+    </table>
             </div>
         <label>
           Selecciona un color:
@@ -155,9 +173,9 @@ function Editor() {
         </div>
       </div>
       {!id ? (
-        <Bpmn ref={childRef} xml={xml} />
+        <Bpmn ref={childRef} xml={xml} name={title} />
       ) : (
-        <Bpmn ref={childRef} xml={xml} id={id} />
+        <Bpmn ref={childRef} xml={xml} id={id} name={title} />
       )}
     </>
   );

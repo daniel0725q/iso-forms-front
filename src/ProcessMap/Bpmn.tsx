@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import "bpmn-js/dist/assets/diagram-js.css";
 import "bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
 import { Button } from 'antd';
+import { title } from 'process';
 const { REACT_APP_API_ENDPOINT } = process.env;
 
 type BpmnProps = {
   xml: string;
+  name?: string; 
   onEventClick?: (e: InternalEvent) => void;
   onSave?: (xmlSaved: string) => void;
   id?: string;
@@ -21,10 +23,11 @@ type BpmnChild = {
   getSelectedElement: () => any; // Método para obtener el elemento seleccionado
 };
 
-const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }, ref) => {
+const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml,name ,onEventClick, onSave, id }, ref) => {
   const bpmnRef = useRef<HTMLDivElement>(null);
   const [diagram, setDiagram] = useState("");
   const modeler = useRef<BpmnModeler | null>(null);
+  const [title, setTitle] = useState(name);
   const [selectedElement, setSelectedElement] = useState<any>(null); // Elemento seleccionado
   const navigate = useNavigate();
 
@@ -40,7 +43,15 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
     }
   }, [onEventClick]);
 
-  const saveDiagram = (xmlDiagram: string) => {
+  const saveDiagram = (xmlDiagram: string, diagramTitle?: string) => {
+    // const diagramTitle = title || "Diagrama nuevo";
+    // console.log(diagramTitle);
+  
+    const payload = {
+      title: diagramTitle, // <-- Agregar título al request
+      xml: xmlDiagram
+    };
+  
     if (!id) {
       fetch(`${REACT_APP_API_ENDPOINT}/diagrams`, {
         method: 'POST',
@@ -48,10 +59,10 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
         },
-        body: JSON.stringify({ xml: xmlDiagram }),
+        body: JSON.stringify(payload), // <-- Enviar título en POST
       })
         .then((r) => {
-          if (r.ok) alert("Diagrama guardado con éxito");
+          if (r.ok) alert(`Diagrama "${diagramTitle}" guardado con éxito!`);
           else alert("Error al guardar el diagrama");
         });
     } else {
@@ -61,14 +72,15 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')!).token}`
         },
-        body: JSON.stringify({ xml: xmlDiagram }),
+        body: JSON.stringify(payload), // <-- Enviar título en PATCH
       })
         .then((r) => {
-          if (r.ok) alert("Diagrama guardado con éxito");
-          else alert("Error al guardar el diagrama");
+          if (r.ok) alert(`Diagrama "${diagramTitle}" actualizado con éxito!`);
+          else alert("Error al actualizar el diagrama");
         });
     }
   };
+  
 
   const saveDiagram2 = () => {
     fetch(`${REACT_APP_API_ENDPOINT}/diagrams/${id}`, {
@@ -80,7 +92,10 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
     })
       .then((r) => r.json())
       .then((r) => {
+      
         setDiagram(r.xml);
+        setTitle(r.title)
+        console.log("Título actualizado:", r.title);
       });
   };
 
@@ -88,7 +103,8 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
     const result = await modeler.current?.saveXML({ format: true });
     if (result) {
       const { xml: xmlSaved } = result;
-      saveDiagram(xmlSaved!);
+      const title = name || "Diagrama sin título";
+      saveDiagram(xmlSaved!, title);
     } else {
       console.error("Error: No se pudo guardar el XML.");
     }
@@ -178,7 +194,7 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml, onEventClick, onSave, id }
 
   return (
     <>
-    
+    <h2 style={{textAlign: "center"}}>{title}</h2>
       <div
         ref={bpmnRef}
         style={{
