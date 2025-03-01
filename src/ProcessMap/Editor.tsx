@@ -47,6 +47,10 @@ function Editor() {
     setTitle(event.target.value);
   };
 
+  const onTitleChange = (t: string) => {
+    setTitle(t);
+  }
+
   const handleBlur = () => {
     setIsEditing(false);
   };
@@ -173,9 +177,9 @@ function Editor() {
         </div>
       </div>
       {!id ? (
-        <Bpmn ref={childRef} xml={xml} name={title} />
+        <Bpmn ref={childRef} xml={xml} name={title} onTitleChange={onTitleChange} />
       ) : (
-        <Bpmn ref={childRef} xml={xml} id={id} name={title} />
+        <Bpmn ref={childRef} xml={xml} id={id} name={title} onTitleChange={onTitleChange} />
       )}
     </>
   );

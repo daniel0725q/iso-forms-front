@@ -12,6 +12,7 @@ const { REACT_APP_API_ENDPOINT } = process.env;
 type BpmnProps = {
   xml: string;
   name?: string; 
+  onTitleChange: (t: string) => void;
   onEventClick?: (e: InternalEvent) => void;
   onSave?: (xmlSaved: string) => void;
   id?: string;
@@ -23,7 +24,7 @@ type BpmnChild = {
   getSelectedElement: () => any; // Método para obtener el elemento seleccionado
 };
 
-const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml,name ,onEventClick, onSave, id }, ref) => {
+const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml,name ,onEventClick, onSave, id, onTitleChange }, ref) => {
   const bpmnRef = useRef<HTMLDivElement>(null);
   const [diagram, setDiagram] = useState("");
   const modeler = useRef<BpmnModeler | null>(null);
@@ -98,6 +99,10 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml,name ,onEventClick, onSave,
         console.log("Título actualizado:", r.title);
       });
   };
+
+  useEffect(() => {
+    onTitleChange(title!);
+  }, [title])
 
   const getDiagram = async () => {
     const result = await modeler.current?.saveXML({ format: true });
@@ -194,7 +199,6 @@ const Bpmn = forwardRef<BpmnChild, BpmnProps>(({ xml,name ,onEventClick, onSave,
 
   return (
     <>
-    <h2 style={{textAlign: "center"}}>{title}</h2>
       <div
         ref={bpmnRef}
         style={{
